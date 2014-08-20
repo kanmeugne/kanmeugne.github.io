@@ -1,206 +1,106 @@
-# The Site Settings
-# v2.0
-# https://github.com/cotes2020/jekyll-theme-chirpy
-# © 2017-2019 Cotes Chung
-# MIT licensed
-
-
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
-# --------------------------
-title: Chirpy                          # the main title
-
-tagline: A text-focused Jekyll theme   # it will display as the sub-title
-
-description: >-                        # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
-
-# fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ''
-
-author: your_full_name                  # change to your full name
-
-github:
-  username: github_username             # change to your github username
-
-twitter:
-  username: twitter_username            # change to your twitter username
-
-social:
-  name: your_full_name                  # it will shows as the copyright owner in Footer
-  email: example@doamin.com             # change to your email address
-  links:
-    # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
-
-google_site_verification: google_meta_tag_verification # change to your verification string
-# --------------------------
-
-
-# Only if your site type is GitHub Project sites and doesn't have a custom domain,
-# change below value to '/projectname'.
-baseurl: ''
-
-# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
-
-google_analytics:
-  id: ''          # Fill with your Google Analytics ID
-  pv:
-    # The Google Analytics pageviews switch.
-    # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
-    enabled: false
-    # the next options only valid when `google_analytics.pv` is enabled.
-    proxy_url: ''
-    proxy_endpoint: ''
-    cache: false  # pv data local cache, good for the users from GFW area.
-
-disqus:
-  comments: false  # boolean type, the global switch for posts comments.
-  shortname: ''    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
-
-
-# Prefer color scheme setting.
+# ASCII-Font › http://patorjk.com/software/taag/#p=display&f=Slant&t=Phlow
 #
-# Note: Keep empty will follow the system prefer color by default,
-# and there will be a toggle to switch the theme between dark and light
-# on the bottom left of the sidebar.
+#      _____ _ __          _____      __  __  _                 
+#     / ___/(_) /____     / ___/___  / /_/ /_(_)___  ____ ______
+#     \__ \/ / __/ _ \    \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/
+#    ___/ / / /_/  __/   ___/ /  __/ /_/ /_/ / / / / /_/ (__  ) 
+#   /____/_/\__/\___/   /____/\___/\__/\__/_/_/ /_/\__, /____/  
+#                                                 /____/        
+title: "Feeling Responsive"
+slogan: "A Responsive Theme for Jekyll"
+description: "Feeling Responsive is built on the fabulous Foundation Framework and comes with lots of features to show your content right."
+logo: "logo.png"
+baseurl: ""
+paginate: 5
+paginate_path: "blog/page:num"
+
+url: "http://localhost:4000"
+# - url: "http://phlow.github.io/feeling-responsive"
+
+
+
+# Header
+language: "en"
+# google_author: ""
+
+
+#       _   __            _             __  _           
+#      / | / /___ __   __(_)___ _____ _/ /_(_)___  ____ 
+#     /  |/ / __ `/ | / / / __ `/ __ `/ __/ / __ \/ __ \
+#    / /|  / /_/ /| |/ / / /_/ / /_/ / /_/ / /_/ / / / /
+#   /_/ |_/\__,_/ |___/_/\__, /\__,_/\__/_/\____/_/ /_/ 
+#                       /____/                          
 #
-# Available options:
+#  Open _data/navigation.yml to adjust the left and right topbar navigation
 #
-#     light  - Use the light color scheme
+
+
+
+#     _____ __________ 
+#    / ___// ____/ __ \
+#    \__ \/ __/ / / / /
+#   ___/ / /___/ /_/ / 
+#  /____/_____/\____/    Verify Website to Webmaster Tools
+
+google_author: "https://plus.google.com/u/0/118311555303973066167"
+google_site_verification:   ""
+# bing_webmastertools_id:   ""
+# alexa_verify_id:          ""
+
+
+
+#       ______            _                      
+#      / ____/___ __   __(_)________  ____  _____
+#     / /_  / __ `/ | / / / ___/ __ \/ __ \/ ___/
+#    / __/ / /_/ /| |/ / / /__/ /_/ / / / (__  ) 
+#   /_/    \__,_/ |___/_/\___/\____/_/ /_/____/   Favicons, Apple Touch Buttons
+#                                                 More information » http://j.mp/apple-touch-icons
+
+favicon:                         "http://images.phlow.de/phlow/phlow-favicon-32x.png"                    # iOS7 Size 32x32
+apple_touch_icon_iphone:         "http://images.phlow.de/phlow/phlow-touch-icon-iphone-60x.png"          # iOS7 Size 60x60
+apple_touch_icon_iphone_retina:  "http://images.phlow.de/phlow/phlow-touch-icon-iphone-retina-120x.png"  # iOS7 Size 120x120
+apple_touch_icon_ipad:           "http://images.phlow.de/phlow/phlow-touch-icon-ipad-76x.png"            # iOS7 Size 76x76
+apple_touch_icon_ipad_retina:    "http://images.phlow.de/phlow/phlow-touch-icon-ipad-retina-152x.png"    # iOS7 Size 152x152
+apple_touch_icon_precomposed:    "http://images.phlow.de/phlow/phlow-touch-icon-android-152x.png"        # iOS7 Size 152x152
+
+
+#       ______                __                __  
+#      / ____/___ _________  / /_  ____  ____  / /__
+#     / /_  / __ `/ ___/ _ \/ __ \/ __ \/ __ \/ //_/
+#    / __/ / /_/ / /__/  __/ /_/ / /_/ / /_/ / ,<   
+#   /_/    \__,_/\___/\___/_.___/\____/\____/_/|_|      Facebook-Optimization › http://j.mp/fb_optimize
+
+og_image:                           "http://images.phlow.de/phlow/phlow_de-logo-512x.png"
+# og_locale:                        "de_DE"
+# og_type:                          "website"
+# og_title:                         ""
+# og_description:                   ""
+# og_url:                           ""
+# og_site_name:                     ""
+
+
+#      _____            _       __   __  ___         ___      
+#     / ___/____  _____(_)___ _/ /  /  |/  /__  ____/ (_)___ _
+#     \__ \/ __ \/ ___/ / __ `/ /  / /|_/ / _ \/ __  / / __ `/
+#    ___/ / /_/ / /__/ / /_/ / /  / /  / /  __/ /_/ / / /_/ / 
+#   /____/\____/\___/_/\__,_/_/  /_/  /_/\___/\__,_/_/\__,_/  
 #
-#     dark   - Use the dark color scheme
+#  Open _data/socialmedia.yml to adjust the left and right topbar navigation
 #
-theme_mode:   # [light|dark]
-
-# The CDN endpoint for images.
-# Notice that once it is assigned, the CDN url
-# will be added to all image (site avatar & posts' images) paths starting with '/'
-#
-# e.g. 'https://cdn.com'
-img_cdn: ''
-
-# the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
-
-# boolean type, the global switch for ToC in posts.
-toc: true
-
-paginate: 10
-
-kramdown:
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:   # Rouge Options › https://github.com/jneen/rouge#full-options
-    css_class: highlight
-    # default_lang: console
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
-      start_line: 1
-
-# DO NOT change this unless you're a Pro user on Jekyll and Web development,
-# or you think you're smart enough to change other relevant URLs within this template.
-permalink: /posts/:title/
-
-collections:
-  tabs:
-    output: true
-    sort_by: order
 
 
-defaults:
-  -
-    scope:
-      path: ''          # An empty string here means all files in the project
-      type: posts
-    values:
-      layout: post
-      comments: true    # Enable comments in posts.
-      toc: true         # Display TOC column in posts.
-      breadcrumb:
-        -
-          label: Posts
-          url: /
-  -
-    scope:
-      path: _drafts
-    values:
-      comments: false
-  -
-    scope:
-      path: index.html
-    values:
-      breadcrumb:
-        -
-          label: Posts
-  -
-    scope:
-      path: tags
-    values:
-      breadcrumb:
-        -
-          label: Home
-          url: /
-        -
-          label: Tags
-          url: /tabs/tags/
-  -
-    scope:
-      path: categories
-    values:
-      breadcrumb:
-        -
-          label: Home
-          url: /
-        -
-          label: Categories
-          url: /tabs/categories/
-  -
-    scope:
-      path: ''
-      type: tabs             # see `site.collections`
-    values:
-      layout: page
-      dynamic_title: true    # Hide title in mobile screens.
-      breadcrumb:
-        -
-          label: Home
-          url: /
 
-sass:
-  sass_dir: /assets/css
-  style: compressed
 
-compress_html:
-  clippings: all
-  comments: all
-  endings: all
-  profile: false
-  blanklines: false
-  ignore:
-    envs: [development]
+# Social Media
 
-exclude:
-  - vendor
-  - Gemfile.lock
-  - Gemfile
-  - tools
-  - docs
-  - README.md
-  - LICENSE
+username: phlow
 
-jekyll-archives:
-  enabled: [categories, tags]
-  layouts:
-    category: category
-    tag: tag
-  permalinks:
-    tag: /tags/:name/
-    category: /categories/:name/
+
+# Build settings
+markdown: kramdown
+permalink: /:categories/:title/
+highlight: pygments
+exclude: []
+include: ['.htaccess']
+
+
