@@ -19,11 +19,13 @@ header:
 
 ## Context
 
-Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Because the approach is very straightforward, I managed to test it with [SFML][6] on a simple graphical app.
+Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to test it with [SFML][6] on a simple graphical app.
 
 ## Presentation of the Approach
 
-In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project* and the configuration can be used almost as-is to add *SFML* dependencies as an *external project*. The main idea is to invoke *CMake* `ExternalProject` *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build* :
+In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project*. The configuration can be used almost as-is to add *SFML* dependencies as an *external project*.
+
+The main idea is to invoke *CMake* `ExternalProject` *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
 
 ### 1. CMakeLists.txt.in : external project references
 
@@ -339,6 +341,14 @@ Now that we have our project files ready, we need to type the following lines in
   $ cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug
   $ cmake --build ./ --target app 
 {% endhighlight %}
+
+At the end of the stage, you should ba able to launch the executable located in the bin folder.
+
+{% highlight shell %}
+  bin> ./Debug/app
+{% endhighlight %}
+
+![screenshot](/images/sfmlcmake.jpg)
 
 ## More like this
 {: .t60 }
