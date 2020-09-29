@@ -1,5 +1,6 @@
 ---
-layout: page
+layout: page-fullwidth
+sidebar: right
 subheadline: Development
 sidebar: right
 title:  "Building a portable C++ SFML app with CMake"
