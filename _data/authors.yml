@@ -6,7 +6,7 @@
 #
 # Resource › http://blog.sorryapp.com/blogging-with-jekyll/2014/02/06/adding-authors-to-your-jekyll-site.html
 kanmeugne: # replace this with your info
-  name: "Phlow"
+  name: "Patrick S. Kanmeugne"
   siterole: "AI (distributed) scientist, developer, copywriter, teacher"
   uri: http://kanmeugne.github.io/
   email:
