@@ -1,5 +1,5 @@
 ---
-layout: page-fullwidth
+layout: page
 sidebar: right
 subheadline: Development
 sidebar: right
@@ -28,6 +28,9 @@ In his article, [Craig Scott][3] explained how to build *GoogleTest* and *Google
 
 The approach uses a `CMakeList.txt.in` to invoke the external project.
 
+All you need to know is the location of the official git repository of your external project and you are all set dfor this part.
+You might need to use a specific tag though. 
+
 {% highlight cmake %}
 cmake_minimum_required(VERSION 3.8)
 project(googletest-download NONE)
@@ -45,9 +48,9 @@ ExternalProject_Add(googletest
 )
 {% endhighlight %}
 
-### The configration file used to build the targets
+### 2. CMakeLists.txt : the configration file
 
-The `CMakeList.txt` to be used as the sub project `CMakeList.txt`.
+This is where you define the targets. Note that the external project build is triggered before the target definitions.
 
 {% highlight cmake %}
 # Download and unpack googletest at configure time
@@ -71,8 +74,7 @@ endif()
 # Now simply link your own targets against gtest, gmock
 {% endhighlight %}
 
-This is where you define the targets. Note that the external project build is triggered before the target definitions.
-With those two files at hand, all we need to do is to call *CMake configuration* and *build* commands at the root of the project folder.
+With *CMakeLists.txt.in* and *CMakeLists.txt*, all we need to do is to call *CMake configuration* and *build* commands at the root of the project folder.
 
 ## Adaptation to SFML : Hello World app
 
@@ -94,6 +96,8 @@ project/
 {% endhighlight %}
 
 ### App/src/main.cpp
+
+The main file will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
 
 {% highlight c++ %}
 #include "App.h"
@@ -182,6 +186,8 @@ The `App` Object is defined by the following *header file* and *source file* :
 
 ### App.h
 
+Logic and display functions are defined inside an *App* object.
+
 {% highlight c++ %}
 #ifndef APP_H
 #define APP_H
@@ -255,12 +261,9 @@ void App::run(){
 }
 {% endhighlight %}
 
-Before we move to the CMake configuration files, two remarks about the source code :
-- Our application will be using two threads : one for the logic and a rendering thread
-- Our window is designed as a 2D-grid (see you in futur posts !)
-Now, the final touch ! We will use the following CMake files mimicking the approach use for *GoogleTest*
+### App/CMakeLists.txt.in
 
-### CMakeList.txt.in
+Here, the *CMakeLists.txt.in* will hold references to the SFML official library.
 
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
@@ -279,6 +282,7 @@ ExternalProject_Add(sfml
 {% endhighlight %}
 
 ### CMakeList.txt
+
 
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
@@ -352,14 +356,15 @@ You can download the full code [here][1] and type the following in a terminal.
     > cmake ./build -G "Visual Studio 15 2017"
 
 Now that we have our project files ready, we need to type the following lines in a terminal at the root of the project folder (**with the right generator**).
-If you are on linux, you might need to check [this][2] first.
 
-**Configuration and build**
+**Note**: If you are on linux, you might need to check [this][2] first.
+
 {% highlight shell %}
-  // on windows
+  # on windows
   $ cmake  -G "Visual Studio 15 2017" -S . -B ./build 
   $ cmake  --build ./build --config Debug --target app
-  // on linux
+
+  # on linux
   $ mkdir build  
   $ cd build
   $ cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug
