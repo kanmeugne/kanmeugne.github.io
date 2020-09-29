@@ -1,7 +1,7 @@
 ---
 layout: page
 sidebar: right
-subheadline: Development
+subheadline: Software Development
 sidebar: right
 title:  "Building a portable C++ SFML app with CMake"
 teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS your working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
