@@ -20,15 +20,11 @@ header:
 
 ## Context
 
-Few months ago, I found an [article](https://crascit.com/2015/07/25/cmake-gtest/ "Building GoogleTest and GoogleMock directly in a CMake project") that explains how to build [GoogleTest and GoogleMock](https://github.com/google/googletest "Welcome to Google Test, Google's C++ test framework!") directly in a [CMake](https://cmake.org/ "CMAKE Official Website") project. The approach is very straightforward, so I managed to test it with [SFML](https://www.sfml-dev.org/documentation/2.5.1/) on a simple graphical app.
-
-## The Approach
-
-[Craig Scott](https://crascit.com/2015/07/25/cmake-gtest/ "Building GoogleTest and GoogleMock directly in a CMake project") explained how to build GoogleTest and GoogleMock directly in a CMake project and the configuration can be used almost as-is to add SFML dependencies. The main idea is to invoke `ExternalProject` an perform the build at configure time. This fully integrate the external project to your build and gives you access to all the targets. 
+Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Because the approach is very straightforward, I managed to test it with [SFML][6] on a simple graphical app.
 
 In the [original article](https://crascit.com/2015/07/25/cmake-gtest/ "Building GoogleTest and GoogleMock directly in a CMake project"), the author uses two sets of rules to configure the build :
 
-### Invoking the external project
+In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project* and the configuration can be used almost as-is to add *SFML* dependencies as an *external project*. The main idea is to invoke *CMake* `ExternalProject` *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build* :
 
 The approach uses a `CMakeList.txt.in` to invoke the external project.
 
@@ -334,9 +330,18 @@ We are all set ! All we have to do now is run the configuration and the make pro
 {% highlight cmake %}
 # CMakeList.txt : Upper level configuration file
 cmake_minimum_required (VERSION 3.10)
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/${CONFIG}/ )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/${CONFIG}/ )
-set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_GENERATOR_PLATFORM}/${CONFIG}/)
+set(
+  CMAKE_RUNTIME_OUTPUT_DIRECTORY
+  ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/
+)
+set(
+  CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  ${CMAKE_SOURCE_DIR}/lib/${CMAKE_BUILD_TYPE}/
+)
+set(
+  CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+  ${CMAKE_SOURCE_DIR}/build/${CMAKE_GENERATOR_PLATFORM}/${CMAKE_BUILD_TYPE}/
+)
 project (SFMLCMAKE C CXX)
 # sub projects
 add_subdirectory ("App")
@@ -346,12 +351,28 @@ You can download the full code [here][1] and type the following in a terminal.
 
     > cmake ./build -G "Visual Studio 15 2017"
 
-Then, in the `build` folder,
+Now that we have our project files ready, we need to type the following lines in a terminal at the root of the project folder (**with the right generator**).
+If you are on linux, you might need to check [this][2] first.
 
-    > cmake --build --config Debug --target app
+**Configuration and build**
+{% highlight shell %}
+  // on windows
+  $ cmake  -G "Visual Studio 15 2017" -S . -B ./build 
+  $ cmake  --build ./build --config Debug --target app
+  // on linux
+  $ mkdir build  
+  $ cd build
+  $ cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug
+  $ cmake --build ./ --target app 
+{% endhighlight %}
 
 ## More like this
 {: .t60 }
 {% include list-posts tag='post format' %}
 
- [1]: https://github.com/kanmeugne/sfmlcmake
+[1]: https://github.com/kanmeugne/sfmlcmake
+[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php
+[3]: https://crascit.com/2015/07/25/cmake-gtest/
+[4]: https://github.com/google/googletest
+[5]: https://cmake.org/
+[6]: https://www.sfml-dev.org/documentation/2.5.1/
