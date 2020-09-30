@@ -350,6 +350,8 @@ At the end of the stage, you should ba able to launch the executable located in 
 
 ![screenshot](/images/sfmlcmake.jpg)
 
+Enjoy and feel free to send me your feedbacks!
+
 ## More like this
 {: .t60 }
 {% include list-posts tag='sfml cmake c++' %}
