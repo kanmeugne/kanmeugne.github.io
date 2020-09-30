@@ -14,6 +14,7 @@ categories:
 image:
     thumb: SFMLCMAKE.png
     title: SFMLCMAKE.png
+    caption: This is a caption for the header image with link
     caption_url: http://unsplash.com
 header:
    image_fullwidth: "header_homepage_13.jpg"
