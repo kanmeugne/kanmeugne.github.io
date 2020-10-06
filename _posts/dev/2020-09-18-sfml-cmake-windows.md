@@ -82,7 +82,7 @@ With *CMakeLists.txt.in* and *CMakeLists.txt*, all we need to do is to call *CMa
 
 ## Adaptation to SFML : Hello World app
 
-We will implement this approach and build a simple *Hello World App* that display a window. Our project folder will match the following tree :
+We will implement this approach and build a simple *Hello World App* that displays a window. Our project folder will match the following tree :
 
 {% highlight shell %}
 project/
@@ -349,7 +349,7 @@ At the end of the stage, you should ba able to launch the executable located in 
 
 ![screenshot](/images/sfmlcmake.jpg)
 
-Enjoy and feel free to send me your feedbacks!
+Now you are ready to take your graphical app everywhere you want. Enjoy and feel free to send me your feedbacks!
 
 ## More like this
 {: .t60 }
