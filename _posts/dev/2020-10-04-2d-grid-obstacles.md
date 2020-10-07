@@ -86,14 +86,14 @@ class Grid implements IGrid {
     - int sizex
     - int sizey
 }
-IGrid ..> CELL
+IGrid ..> CELL : defines
 Grid *-- CELL
 App --> IGrid
 App o-- AbstractViewer
 Segment *-- Point
 ISegmentFunctor ..> Segment
 GridViewer ..> geometry
-IGrid ..> ICellFunctor
+IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
 
@@ -140,10 +140,10 @@ interface IGrid {
     .. functor broadcast ..
 	+ virtual void iApplyOnCells(ICellFunctor&) const
 }
-IGrid ..> CELL
+IGrid ..> CELL : defines
 App --> IGrid
 App o-- AbstractViewer
-IGrid ..> ICellFunctor
+IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
 
