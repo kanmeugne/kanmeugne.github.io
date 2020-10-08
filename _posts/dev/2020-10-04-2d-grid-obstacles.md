@@ -235,9 +235,7 @@ bool App::removeObstacle (int posx, int posy)
 
 ## Bundle
 
-We have an even better architecture since we can manipulate several views in a simple way.
-
-The main file below shows how everything gets together.
+At the end, we have an even better architecture since we can manipulate several views in a simple way. The way we deal with obstacle very straightforward - there is an obstacle where `CELL`'s mask is set to `1`. With all this settings we can finally get everything together. The **main.cpp** file looks like below.
 
 {% highlight c++ %}
 #include "App.h"
