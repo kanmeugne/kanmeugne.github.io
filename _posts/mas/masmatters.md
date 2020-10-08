@@ -10,8 +10,6 @@ tags:
     - stigmergy
     - mas
     - stigmergie
-header:
-    image: header_unsplash_2-970x.jpg
 ---
 
 Parmi les différentes tendances qui déterminent l'évolution du métier de développeur informatique, on peut distinguer : 
