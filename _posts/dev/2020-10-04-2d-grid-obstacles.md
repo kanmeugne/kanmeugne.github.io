@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 subheadline: "Modeling and Simulation"
-title:  "2D-Grid model with obstacles for simulation"
+title:  "2D-Grid with obstacles in Simulation"
 teaser: "In a previous article, I shared a C++ code for grid manipulation. I presented an architecture that could be easily extended to include different type of controls and views. In this post, I am showing how easy it is to add obstacle and to keep track of them in the model."
 tags:
     - sfml
@@ -227,7 +227,7 @@ bool App::removeObstacle (int posx, int posy)
 
 ### IGrid, ICellFunctor, ObstacleViewer and ViewerMgr
 
-`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `ICellFunctor` - as parameter and applies it on every cell of the grid. 
+`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as parameter and applies it on every cell of the grid. 
 
 `ObstacleViewer` is in charge of displaying the obstacle and should define an `ICellFunctor` for that purpose (that explains the relation on the Fig.1.).
 
@@ -315,7 +315,7 @@ int main()
 }
 {% endhighlight %}
 
-The interested reader can fork the complete source code from here[3] and run the following in a terminal at the project folder root :
+The interested reader can fork the complete source code from [here][3] and run the following in a terminal at the project folder root :
 
 {% highlight shell %}
   # on windows
