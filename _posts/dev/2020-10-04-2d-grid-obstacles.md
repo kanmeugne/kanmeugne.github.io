@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 subheadline: "Modeling and Simulation"
-title:  "2D-Grid model with obstacles for simulation"
+title:  "2D-Grid with obstacles in Simulation"
 teaser: "In a previous article, I shared a C++ code for grid manipulation. I presented an architecture that could be easily extended to include different type of controls and views. In this post, I am showing how easy it is to add obstacle and to keep track of them in the model."
 tags:
     - sfml
@@ -79,14 +79,14 @@ class Grid implements IGrid {
     - int sizex
     - int sizey
 }
-IGrid ..> CELL
+IGrid ..> CELL : defines
 Grid *-- CELL
 App --> IGrid
 App o-- AbstractViewer
 Segment *-- Point
 ISegmentFunctor ..> Segment
 GridViewer ..> geometry
-IGrid ..> ICellFunctor
+IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
 hide members
@@ -132,10 +132,10 @@ interface IGrid {
     .. functor broadcast ..
 	+ virtual void iApplyOnCells(ICellFunctor&) const
 }
-IGrid ..> CELL
+IGrid ..> CELL : defines
 App --> IGrid
 App o-- AbstractViewer
-IGrid ..> ICellFunctor
+IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
 
@@ -218,7 +218,7 @@ bool App::removeObstacle (int posx, int posy)
 
 ### Other objects : IGrid, ICellFunctor, ObstacleViewer and ViewerMgr
 
-`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `ICellFunctor` - as parameter and applies it on every cell of the grid. 
+`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as parameter and applies it on every cell of the grid. 
 
 `ObstacleViewer` is in charge of displaying the obstacle and should define an `ICellFunctor` for that purpose (that explains the relation on the Fig.1.).
 
@@ -226,7 +226,7 @@ bool App::removeObstacle (int posx, int posy)
 
 ## Bundle
 
-We have an even better architecture since we can manipulate several views in a simple way. The main file below shows how everything gets together.
+At the end, we have an even better architecture since we can manipulate several views in a simple way. The way we deal with obstacle very straightforward - there is an obstacle where `CELL`'s mask is set to `1`. With all this settings we can finally get everything together. The **main.cpp** file looks like below.
 
 {% highlight c++ %}
 #include "App.h"
@@ -304,7 +304,7 @@ int main()
 }
 {% endhighlight %}
 
-The interested reader can fork the complete source code from here[3] and run the following in a terminal at the project folder root :
+The interested reader can fork the complete source code from [here][3] and run the following in a terminal at the project folder root :
 
 {% highlight shell %}
   # on windows
