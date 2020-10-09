@@ -8,6 +8,7 @@ tags:
     - sfml
     - cmake
     - c++
+    - modeling
 categories:
     - dev
 image:

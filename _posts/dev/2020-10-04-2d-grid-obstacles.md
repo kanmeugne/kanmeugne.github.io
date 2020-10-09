@@ -8,7 +8,7 @@ tags:
     - cmake
     - c++
     - simulation
-    - pheromon
+    - modeling
 categories:
     - dev
 image:
@@ -16,17 +16,10 @@ image:
     caption_url: http://unsplash.com
 ---
 
-## Context
+As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework where we need to model a trackable space. **Fig.1.** is a small modification of the architecture I presented in a previous post. Comparing to the previous architecture, some little changes have been made (see **Fig.2.**) on `IGrid` and `App` and have 3 new objects which are `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`.
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework where we need to model a trackable space.
-
-## The architecture
-
-Fig 1 is a small modification of the architecture I presented in a previous post. Comparing to the previous architecture, some little changes have been made (see Fig.2.) on `IGrid` and `App` and have 3 new objects which are `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`.
-
-**Fig 1**
+**Fig.1. The new Architecture with more methods in `App`, `IGrid` and 3 new objects : `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`**
 {% plantuml %}
-
 @startuml
 package geometry <<Frame>>
 {
@@ -96,15 +89,14 @@ GridViewer ..> geometry
 IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
-
 hide members
-
 {% endplantuml %}
 
+## What's new ?
 
 **Fig.2. (below) Details about the evolution of the architecture comparing to the previous one.**
-{% plantuml %}
 
+{% plantuml %}
 @startuml
 interface ICellFunctor {
     + virtual void operator(const CELL)
@@ -153,11 +145,13 @@ hide CELL members
 hide ICellFunctor fields
 hide ObstacleViewer fields
 @enduml
-
 {% endplantuml %}
+
 ### App
 
-The `App` object defines two more methods in order to handle obstacle-related actions. Here, I will use mouse events to add and remove obstacle on the grid attached to the `App`. As mentionned in the [first post of this serie][2], the logic will be held by the `App::run` method. Below, an extract of the implementation of `App::run` (more details [here][3]).
+The `App` object defines two more methods in order to handle obstacle-related actions. Here, I will use mouse events to add and remove obstacle on the grid attached to the `App`. As mentionned in the [first post of this serie][2], the logic will be held by the `App::run` method.
+
+Below, an extract of the implementation of `App::run` (more details [here][3]). Keep in mind that the `App::run` method will add obstacles on the right-click and remove obstacle on the left-click.
 
 {% highlight c++ %}
 void App::run()
@@ -194,9 +188,6 @@ void App::run()
     }
 }
 {% endhighlight %}
-
-Here the run method will add obstacle on right-click and remove obstacle on left-click.
-
 Considering the location checks methods properly defined in IGrid, the implemenation of `App::addObstacle` and `App::removeObstacle` is straightforward. Our obstacle model is very simple thanks to the grid approach for the space representation : adding or removing an obstacle in the space is equivalent to changing the state value of one or several cells !
 
 {% highlight c++ %}
@@ -225,7 +216,7 @@ bool App::removeObstacle (int posx, int posy)
 {% endhighlight %}
 
 
-### IGrid, ICellFunctor, ObstacleViewer and ViewerMgr
+### Other objects : IGrid, ICellFunctor, ObstacleViewer and ViewerMgr
 
 `IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as parameter and applies it on every cell of the grid. 
 
@@ -235,7 +226,7 @@ bool App::removeObstacle (int posx, int posy)
 
 ## Bundle
 
-At the end, we have an even better architecture since we can manipulate several views in a simple way. The way we deal with obstacle very straightforward - there is an obstacle where `CELL`'s mask is set to `1`. With all this settings we can finally get everything together. The **main.cpp** file looks like below.
+We have an even better architecture since we can manipulate several views in a simple way. The main file below shows how everything gets together.
 
 {% highlight c++ %}
 #include "App.h"
