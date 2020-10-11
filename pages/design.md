@@ -1,7 +1,7 @@
 ---
 layout: page
 show_meta: false
-title: "Design Articles"
+title: "Design"
 subheadline: "Catalog"
 header:
    image_fullwidth: "header_unsplash_5.jpg"
