@@ -1,7 +1,6 @@
 ---
 layout: page
 sidebar: right
-subheadline: "Modeling and Simulation"
 title:  "Portable C++ SFML app with CMake"
 teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS your working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
 tags:
@@ -10,7 +9,7 @@ tags:
     - c++
     - modeling
 categories:
-    - dev
+    - modeling & simulation
 image:
     thumb: SFMLCMAKE-thumb.png
     caption: This is a caption for the header image with link
