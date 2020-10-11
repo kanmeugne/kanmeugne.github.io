@@ -1,11 +1,10 @@
 ---
 layout: page
 sidebar: right
-title:  "Sur l'importance du paradigme multi-agents pour les informaticiens"
-subheadline:  "Multi-Agent Systems"
-teaser: "Cet article présente l'intérêt de l'approche multi-agents pour la conception et le développement de solutions informatiques modernes."
+title:  "Sur l'importance de l'approche multi-agents pour les développeurs"
+teaser: "L'approche <em>multi-agents</em> pour la conception et le développement de solutions informatiques modernes apporte au moins deux avantages pour le développeur. la prise en compte ressources matérielles très tôt dans la conception et une meilleure appréhension de la complexité des solutions."
 categories:
-    - mas
+    - multi-agent systems
 tags:
     - sma
     - stigmergy
