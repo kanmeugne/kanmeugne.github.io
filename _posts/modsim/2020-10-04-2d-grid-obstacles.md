@@ -1,8 +1,7 @@
 ---
 layout: page-fullwidth
-subheadline: "Modeling and Simulation"
 title:  "2D-Grid with obstacles in Simulation"
-teaser: "In a previous article, I shared a C++ code for grid manipulation. I presented an architecture that could be easily extended to include different type of controls and views. In this post, I am showing how easy it is to add obstacle and to keep track of them in the model."
+teaser: "In a previous article, I shared a C++ code for grid manipulation. I presented an architecture that could be easily extended to include different types of controls and views. In this post, I am showing how easy it is to add obstacles and to keep track of them in the model."
 tags:
     - sfml
     - cmake
@@ -10,15 +9,17 @@ tags:
     - simulation
     - modeling
 categories:
-    - dev
+    - modeling & simulation
 image:
     thumb: 2D-Grid-obstacles-thumb.png
     caption_url: http://unsplash.com
 ---
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework where we need to model a trackable space. **Fig.1.** is a small modification of the architecture I presented in a previous post. Comparing to the previous architecture, some little changes have been made (see **Fig.2.**) on `IGrid` and `App` and have 3 new objects which are `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`.
+As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework where we need to model a trackable space.
 
-**Fig.1. The new Architecture with more methods in `App`, `IGrid` and 3 new objects : `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`**
+**Fig.1.** is a small modification of the architecture I presented in a previous post. Comparing to the previous architecture, some little changes have been made (see **Fig.2.**) on `IGrid` and `App` and have 3 new objects which are `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`.
+
+_**Fig.1. The new Architecture with more methods in `App`, `IGrid` and 3 new objects : `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`**_
 {% plantuml %}
 @startuml
 package geometry <<Frame>>
@@ -94,7 +95,7 @@ hide members
 
 ## What's new ?
 
-**Fig.2. (below) Details about the evolution of the architecture comparing to the previous one.**
+_**Fig.2. (below) Details about the evolution of the architecture comparing to the previous one.**_
 
 {% plantuml %}
 @startuml
@@ -149,9 +150,7 @@ hide ObstacleViewer fields
 
 ### App
 
-The `App` object defines two more methods in order to handle obstacle-related actions. Here, I will use mouse events to add and remove obstacle on the grid attached to the `App`. As mentionned in the [first post of this serie][2], the logic will be held by the `App::run` method.
-
-Below, an extract of the implementation of `App::run` (more details [here][3]). Keep in mind that the `App::run` method will add obstacles on the right-click and remove obstacle on the left-click.
+The `App` object defines two *methods* in order to handle obstacle-related actions : `App::addObstacles` and App::`App::removeObstacles`. Both methods will be called in the `App::run` method (see implementation below).
 
 {% highlight c++ %}
 void App::run()
@@ -188,7 +187,7 @@ void App::run()
     }
 }
 {% endhighlight %}
-Considering the location checks methods properly defined in IGrid, the implemenation of `App::addObstacle` and `App::removeObstacle` is straightforward. Our obstacle model is very simple thanks to the grid approach for the space representation : adding or removing an obstacle in the space is equivalent to changing the state value of one or several cells !
+Our obstacle model is very simple thanks to the grid approach for the space representation. In fact, adding or removing an obstacle in the space is equivalent to changing the state value of one or several cells (from 0 to 1 and vice versa). So, considering the location checks methods properly defined in `IGrid`, the implemenation of `App::addObstacle` and `App::removeObstacle` is straightforward.
 
 {% highlight c++ %}
 bool App::addObstacle(int posx, int posy)
@@ -216,11 +215,9 @@ bool App::removeObstacle (int posx, int posy)
 {% endhighlight %}
 
 
-### Other objects : IGrid, ICellFunctor, ObstacleViewer and ViewerMgr
+### Viewers
 
-`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as parameter and applies it on every cell of the grid. 
-
-`ObstacleViewer` is in charge of displaying the obstacle and should define an `ICellFunctor` for that purpose (that explains the relation on the Fig.1.).
+`IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as the only parameter and applies it on every cell of the grid. This methods will be called in `ObstacleViewer::drawObstacles` method, in charge of displaying the obstacles of the grid.
 
 `ViewerMgr` is a special `AbstractViewer` that agregates (cf. Composite pattern) other `AbstractViewer`'s with the method `ViewerMgr::iAddViewer`. I introduce this object in order to separate view concerns and to be able to activate several views at the same time without complicating the relationship between `App` and `AbstractViewer`.
 
@@ -304,7 +301,7 @@ int main()
 }
 {% endhighlight %}
 
-The interested reader can fork the complete source code from [here][3] and run the following in a terminal at the project folder root :
+The interested reader can fork the complete source code from [here][2] and run the following in a terminal at the project folder root :
 
 {% highlight shell %}
   # on windows
@@ -322,7 +319,7 @@ The interested reader can fork the complete source code from [here][3] and run t
 
 The program should display a clickable 2D Grid where the right-click adds an obstacle on the selected cell and the left-click removes it.
 
-![screenshot](/images/2d-grid-demo.png)
+![screenshot](/images/2d-grid-obstacles.gif)
 
 Enjoy and feel free to send me your feedbacks!
 
@@ -330,9 +327,5 @@ Enjoy and feel free to send me your feedbacks!
 {: .t60 }
 {% include list-posts tag='sfml' %}
 
-[1]: https://github.com/kanmeugne/sfml2dgrid
-[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php
-[3]: https://crascit.com/2015/07/25/cmake-gtest/
-[4]: https://github.com/google/googletest
-[5]: https://cmake.org/
-[6]: https://www.sfml-dev.org/documentation/2.5.1/
+[1]: /modeling%20&%20simulation/sfml-2d-grid/
+[2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid
