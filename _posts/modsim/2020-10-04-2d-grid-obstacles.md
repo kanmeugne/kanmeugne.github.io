@@ -14,7 +14,7 @@ image:
     thumb: 2D-Grid-obstacles-thumb.png
 ---
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, let's extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D Grid with some given controls. 
+As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, I am going to extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D-Grid environment with some given controls. 
 
 {% plantuml %}
 @startuml
@@ -78,21 +78,23 @@ class Grid implements IGrid {
     - int sizey
 }
 IGrid ..> CELL : defines
-Grid *-- CELL
-App --> IGrid
+Grid *--> CELL : is composed of
+App o--> IGrid : manipulates
 App o-- AbstractViewer
-Segment *-- Point
-ISegmentFunctor ..> Segment
-GridViewer ..> geometry
+Segment *--> Point : is bounded by
+ISegmentFunctor ..> Segment : uses
+GridViewer ..> geometry : uses
 IGrid ..> ICellFunctor : defines
-ICellFunctor ..> CELL
-ObstacleViewer ..> ICellFunctor
+ICellFunctor ..> CELL : uses
+ObstacleViewer ..> ICellFunctor : runs
 hide members
 {% endplantuml %}
 
 For that purpose, I have made some improvements on the [previous architecture][1], as you can see in **Fig. 1**. Briefly, I have updated 3 existing objects --- `App`, `IGrid` and `Grid` --- and created 3 new objects --- `ObstacleViewer`, `ICellFunctor` and `ViewerMgr`. More details, about the improvements below.
 
-## App
+## The App Object
+
+The App object is augmented with two more methods responsible of adding and removing obstacles in the 2D Grid respectively. We will discuss the storage model for obstacle management in the next section. 
 
 {% plantuml %}
 @startuml
@@ -104,11 +106,13 @@ class App {
     + {static} const int DEFAULT_RESY
     + void run()
     + void display()
+    + bool addObstacle(int, int)
+    + bool removeObstacle(int, int)
 }
 abstract class AbstractViewer
 interface IGrid
 App o-- AbstractViewer
-App --> IGrid
+App o--> IGrid
 hide IGrid members
 hide AbstractViewer members
 
