@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 title:  "2D-Grid with obstacles in Simulation"
-teaser: "In a previous article, I shared a C++ code for grid manipulation. I presented an architecture that could be easily extended to include different types of controls and views. In this post, I am showing how easy it is to add obstacles and to keep track of them in the model."
+teaser: "In a previous article, I shared a C++ project for grid manipulation. I presented an architecture that could be easily extended to include different types of controls and views. In this post, I am showing a way it is to add obstacles manipulation to the porject and to keep track of them."
 tags:
     - sfml
     - cmake
@@ -14,15 +14,11 @@ image:
     thumb: 2D-Grid-obstacles-thumb.png
 ---
 
-## Introduction
+As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, let's extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D Grid with some given controls. 
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework where we need to model a trackable space.
-
-**Fig.1.** is a small modification of the architecture I presented in a previous post. Comparing to the previous architecture, some little changes have been made (see **Fig.2.**) on `IGrid` and `App` and have 3 new objects which are `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`.
-
-_**Fig.1. The new Architecture with more methods in `App`, `IGrid` and 3 new objects : `ICellFunctor`, `ObstacleViewer` and `ViewerMgr`**_
 {% plantuml %}
 @startuml
+title: <size:20>Fig. 1. Updated Architecture (with obstacle manipulation features)</size>
 package geometry <<Frame>>
 {
     class Point {
@@ -92,6 +88,31 @@ IGrid ..> ICellFunctor : defines
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor
 hide members
+{% endplantuml %}
+
+For that purpose, I have made some improvements on the [previous architecture][1], as you can see in **Fig. 1**. Briefly, I have updated 3 existing objects --- `App`, `IGrid` and `Grid` --- and created 3 new objects --- `ObstacleViewer`, `ICellFunctor` and `ViewerMgr`. More details, about the improvements below.
+
+## App
+
+{% plantuml %}
+@startuml
+title: <size:20>Fig. 2. App Object</size>
+class App {
+    + {static} const int DEFAULT_HEIGHT
+    + {static} const int DEFAULT_WIDTH
+    + {static} const int DEFAULT_RESX
+    + {static} const int DEFAULT_RESY
+    + void run()
+    + void display()
+}
+abstract class AbstractViewer
+interface IGrid
+App o-- AbstractViewer
+App --> IGrid
+hide IGrid members
+hide AbstractViewer members
+
+@enduml
 {% endplantuml %}
 
 ## What's new ?
