@@ -12,7 +12,6 @@ categories:
     - modeling & simulation
 image:
     thumb: 2D-Grid-obstacles-thumb.png
-    caption_url: http://unsplash.com
 ---
 
 As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, let's extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D Grid with some given controls. 

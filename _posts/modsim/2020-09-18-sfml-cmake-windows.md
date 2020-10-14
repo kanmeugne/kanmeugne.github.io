@@ -12,11 +12,9 @@ categories:
     - modeling & simulation
 image:
     thumb: SFMLCMAKE-thumb.png
-    caption: This is a caption for the header image with link
-    caption_url: http://unsplash.com
 ---
 
-## Context
+## Introduction
 
 Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to test it with [SFML][6] on a simple graphical app.
 

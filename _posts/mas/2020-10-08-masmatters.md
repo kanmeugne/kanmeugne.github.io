@@ -2,7 +2,7 @@
 layout: page
 sidebar: right
 title:  "Sur l'importance de l'approche multi-agents pour les développeurs"
-teaser: "L'approche <em>multi-agents</em> pour la conception et le développement de solutions informatiques modernes apporte au moins deux avantages pour le développeur. la prise en compte ressources matérielles très tôt dans la conception et une meilleure appréhension de la complexité des solutions."
+teaser: "L'approche <em>multi-agents</em> pour la conception et le développement de solutions informatiques apporte au moins deux avantages pour le développeur : la prise en compte ressources matérielles, très tôt dans la conception, et une meilleure appréhension de la complexité des solutions."
 categories:
     - multi-agent systems
 tags:
@@ -12,8 +12,6 @@ tags:
     - stigmergie
 image:
     thumb: Why-MAS-Matters.png
-    caption: This is a caption for the header image with link
-    caption_url: http://unsplash.com
 ---
 
 Le développement informatique a connu d'importantes évolutions ces dernières années.
@@ -26,7 +24,7 @@ Parmi les différentes tendances qui déterminent l'évolution du métier de dé
    
 2. **Le développement des technologies de mise en réseau**. Internet a complètement changé le rapport à l'ordinateur pour un développeur informatique. L'ordinateur ne peut plus être vu comme une ressource de calcul isolée et les réseaux informatiques sont devenus la norme. La possibilité de monter plusieurs centaines de milliers d'ordinateurs en réseau et tirer ainsi profit de la somme des ressources de calcul pour l'exécution des programmes informatiques incite à repenser la manière de les concevoir.
    
-3. **L'évolution de la complexité des solutions informatiques**. Pour des raisons à la fois économiques et techniques, il devient de plus en plus difficile de penser une application sans l'intégrer dans un système d'interactions avec des serveurs de base de données ou d'applications tierces. En effet, plusieurs fournisseurs d'application se spécialisent dans des tâches bien précises accessibles via des interfaces d'utilisations rendue publiques. Par ailleurs, il n'est pas toujours possible matériellement, de mettre en place des ressources informatique réunissant toutes les caractéristiques nécessaires au bon fonctionnement d'une application (capacité de stockage, vitesse d'exécution, communication réseau, etc.), d'où le besoin de les spécialiser.
+3. **L'évolution de la complexité des solutions informatiques**. Pour des raisons à la fois économiques et techniques, il devient de plus en plus difficile de penser une application sans l'intégrer dans un système d'interactions avec des serveurs de base de données ou d'applications tierces. En effet, plusieurs fournisseurs d'application se spécialisent dans des tâches bien précises accessibles via des interfaces d'utilisations rendue publiques. Par ailleurs, il n'est pas toujours possible matériellement, de mettre en place des ressources informatiques réunissant toutes les caractéristiques nécessaires au bon fonctionnement d'une application (capacité de stockage, vitesse d'exécution, communication réseau, etc.), d'où le besoin de les spécialiser.
    
 4. **Le besoin d'automatisation du traitement de l'information et la robotisation massive du travail manuel**. L'informatique fait de plus en plus de choses pour nous, et ce, sans notre intervention. Des applications M2M (Machine to Machine) se développent de plus en plus, promues par les besoins des utilisateurs et la transformation digitale dans les entreprises et les espaces publiques. Les solutions informatiques se veulent plus pro-actives et embarquées.
    
@@ -44,20 +42,20 @@ Le croisement de ces différentes tendances entraîne un changement de perspecti
 
 ## Pourquoi les systèmes multi-agents ?
 
-L'ingénieur informatique doit dont penser *système* et pas n'importe quel système! L'ingénieur doit penser __*systèmes multi-agents*__ (SMA), c’est-à-dire, des programmes  situés dans des machines et interagissant entre eux pour réaliser une tâche.
+L'ingénieur informatique doit dont penser *système* et pas n'importe quel système! L'ingénieur doit penser __*systèmes multi-agents*__ (SMA), c’est-à-dire, des programmes  situés dans des machines et interagissant entre eux pour réaliser une tâche. Il pourra profiter d'une abondante littérature sur les actes de langages, les architectures de décision des agents rationnels, des agents réactifs, ou encore, des modèles d'action inspirés de la robotique et adaptés à un environnement dynamique.
 
 > Les SMA offrent au modélisateur informatique une plus grande liberté de conception pour penser les solutions aux problèmes qui lui sont posés et une manière naturelle d'intégrer les ressources de calculs et de stockage dès la conception.
 
 Un autre avantage, et non des moindres, est le parallèle extrêmement enrichissant que l'on peut faire entre les ecosystèmes naturels et l'architecture de solutions informatiques. La dimension réseau étant devenue la norme, comme mentionné plus haut, il est possible de s'inspirer de la nature (fourmis, araignées, bactéries, plantes, etc. rechercher *nature-inspired algorithms*) pour imaginer des modèles d'interactions efficaces entre les programmes.
 
-Très prochainement, je reviendrai en détails et plus concrètement sur l'intérêt du paradigme SMA pour l'informatique aujourd'hui. Je parlerai :
+## Conclusion
+
+Voilà en quelques mots ce qui me motive à mettre en avant l'approche multi-agent pour les développeurs informatiques. Bien entendu, il faudra apporter des preuves par la pratiques. C'est pourquoi, très prochainement, je reviendrai en détails et plus concrètement sur l'intérêt du paradigme SMA pour  :
 - **le développement web et les microservices**
 - **l'apprentissage automatique et l'optimisation** 
 - **la simulation comportementale**
 
-A très bientôt!
-
-*NB*: Vos retours (constructifs ou non) sont les bienvenus.
+D'ici là, merci de vos retours (constructifs ou non).
 
 
 ## Articles similaires
