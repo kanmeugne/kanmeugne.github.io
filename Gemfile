@@ -8,6 +8,7 @@ group :jekyll_plugins do
   gem "jekyll-asciidoc"
   gem "jekyll-plantuml"
   gem "jekyll-graphviz"
+  gem "jekyll-latex"
 end
 
 gem 'asciidoctor', '~> 1.5.4'
