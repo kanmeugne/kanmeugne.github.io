@@ -14,66 +14,26 @@ image:
     thumb: 2D-Grid-obstacles-thumb.png
 ---
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, I am going to extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D-Grid environment with some given controls. 
+As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, I am going to extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D-Grid environment with some given controls.
 
 {% plantuml %}
 @startuml
 title: <size:10>Fig. 1. Updated Architecture with obstacle manipulation features and better integration of viewers</size>
 package geometry <<Frame>>
 {
-    class Point {
-        + int x
-        + int y
-    }
-    class Segment {
-        + Point init
-        + Point end
-    }
-    interface ISegmentFunctor {
-        + virtual void operator(const Segment&)
-    }
+    class Point 
+    class Segment 
+    interface ISegmentFunctor 
 }
-interface ICellFunctor {
-    + virtual void operator(const CELL)
-}
-abstract class AbstractViewer {
-    + virtual void iActivate()
-    + virtual void iDeactivate()
-    + virtual void iIsActive() const
-    + virtual void iSetApp(App*)
-    + virtual void iDisplay();
-    # {abstract} virtual void iDraw()
-    # bool _active = false
-}
-class App {
-    + void addObstacle(int, int)
-    + void removeObstacle(int, int)
-}
-class CELL {
-    + int id
-    + int state
-}
-class GridViewer extends AbstractViewer {
-    - void drawLines(geometry::ISegmentFunctor&)
-    + void initialize()
-}
-class ViewerMgr extends AbstractViewer {
-    + void iAddViewer(AbstractManager*)
-}
-class ObstacleViewer extends AbstractViewer {
-    - drawObstacles(ICellFunctor&)
-}
-interface IGrid {
-    ...
-    .. functor broadcast ..
-	+ virtual void iApplyOnCells(ICellFunctor&) const
-}
-class Grid implements IGrid {
-    - int resx
-    - int resy
-    - int sizex
-    - int sizey
-}
+interface ICellFunctor 
+abstract class AbstractViewer 
+class App 
+class CELL 
+class GridViewer extends AbstractViewer 
+class ViewerMgr extends AbstractViewer
+class ObstacleViewer extends AbstractViewer 
+interface IGrid 
+class Grid implements IGrid 
 IGrid ..> CELL : defines >
 Grid *--> CELL 
 App o-> IGrid : controls >
