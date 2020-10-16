@@ -51,6 +51,7 @@ plugins:
     - jekyll-paginate
     - jekyll-plantuml
     - jekyll/graphviz
+    - jekyll-latex
 
 
 #       ____              _             __  _
