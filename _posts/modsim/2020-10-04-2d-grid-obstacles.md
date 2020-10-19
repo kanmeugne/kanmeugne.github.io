@@ -154,7 +154,7 @@ interface IGrid {
     + virtual int iGetResolutionY() const
     + virtual int iGetNumberOfCells() const
     + virtual bool iGetCellPosition(CELL, int&, int&) const
-    + virtual bool iGetCellCoordinates(CELL, int&, int&) const
+    + virtual bool iGetCellLocation(CELL, int&, int&) const
     + virtual bool iGetCellNumber(int, int, CELL&) const
     + virtual bool iGetContainingCell(const int, const int, CELL) const
     + virtual bool iIsWithinCell(const int, const int, CELL) const
