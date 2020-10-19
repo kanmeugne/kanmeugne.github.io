@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 title:  "Portable C++ SFML app with CMake"
-teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS your working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
+teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
 tags:
     - sfml
     - cmake
@@ -21,9 +21,9 @@ Few months ago, I found an [article][3] that explains how to build [GoogleTest a
 
 In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project*. The configuration can be used almost as-is to add *SFML* dependencies as an *external project*.
 
-The main idea is to invoke *CMake* `ExternalProject` *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
+The main idea is to invoke *CMake* *ExternalProject* *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
 
-### 1. CMakeLists.txt.in : external project references
+#### 1. CMakeLists.txt.in : external project references
 
 All you need to know is the location of the official git repository of your external project and you are all set dfor this part.
 You might need to use a specific tag though. 
@@ -45,7 +45,7 @@ ExternalProject_Add(googletest
 )
 {% endhighlight %}
 
-### 2. CMakeLists.txt : the configration file
+#### 2. CMakeLists.txt : the configration file
 
 This is where you define the targets. Note that the external project build is triggered before the target definitions.
 
@@ -96,7 +96,7 @@ project/
 └── build
 {% endhighlight %}
 
-### App/src/main.cpp
+#### App/src/main.cpp
 
 The main file will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
 
@@ -139,7 +139,7 @@ int main(){
 }
 {% endhighlight %}
 
-### App/include/App.h
+#### App/include/App.h
 
 Logic and display functions are defined inside an *App* object.
 
@@ -168,7 +168,7 @@ public:
 #endif // !APP_H
 {% endhighlight %}
 
-### App/src/App.cpp
+#### App/src/App.cpp
 
 {% highlight c++ %}
 #include "App.h"
@@ -217,7 +217,7 @@ void App::run(){
 }
 {% endhighlight %}
 
-### App/CMakeLists.txt.in
+#### App/CMakeLists.txt.in
 
 Here, the *CMakeLists.txt.in* will hold references to the SFML official library.
 
@@ -237,7 +237,7 @@ ExternalProject_Add(sfml
 )
 {% endhighlight %}
 
-### App/CMakeLists.txt
+#### App/CMakeLists.txt
 
 
 {% highlight cmake %}
@@ -297,7 +297,7 @@ We are almost set ! All we have to do now is run the *configuration* and the *bu
 
 We will need one more *CMakeLists.txt* file (the global one) that will be at the root of the project folder.
 
-### CMakeLists.txt
+#### CMakeLists.txt
 
 {% highlight cmake %}
 # CMakeList.txt : Upper level configuration file
