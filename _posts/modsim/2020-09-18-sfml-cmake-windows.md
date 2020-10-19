@@ -338,7 +338,7 @@ Now you are ready to take your graphical app everywhere you want. Enjoy and feel
 
 ## More like this
 {: .t60 }
-{% include list-posts tag='post format' %}
+{% include list-posts tag='sfml' %}
 
 [1]: https://github.com/kanmeugne/sfmlcmake
 [2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php
