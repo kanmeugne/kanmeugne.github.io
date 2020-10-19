@@ -24,9 +24,9 @@ You can see pheromon like a chemical substance that is dropped somewhere, as a m
 
 In this post, I am going to detail the architecture that allows me to mimic an ant-like pheromon evaporation. The objects are the same, comparing to the [previous architecture][1]. Simply put, I am going to do the following : 
 
-1. add another viewer for pheromon --- `PheromonViewer` --- and more controls in the `App` object -- `App::addPheromon`
-2. upgrade `IGrid`, and consequently `Grid`,  to declare and implement pheromon related methods
-3. define a new method --- `App::evaporate` --- responsible of the evaporation process.
+1. add another viewer for pheromon --- *PheromonViewer* --- and more controls in the *App* object -- *App::addPheromon*
+2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
+3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
 
 
