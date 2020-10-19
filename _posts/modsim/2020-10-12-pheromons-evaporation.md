@@ -17,7 +17,7 @@ image:
 
 ## Introduction
 
-You should now be familiar with our [2D Grid app][1] so I won't present it again. In a [previous post][1], I updated the architecture in order to implement the add/remove obstacles feature. Here, I am going to upgrade the architecture again in order to implement a pheromon evaporation feature.
+You should now be familiar with our [2D Grid app][1] so I won't introduce it again. In a [previous post][1], I updated the architecture in order to implement the add/remove obstacles feature. Here, I am going to upgrade the architecture again in order to implement another feature : pheromon.
 
 You can see pheromon like a chemical substance that is dropped somewhere --- as a mark of an organic activity --- and then evaporates overtime. It is a very productive way to implement a *stigmergic* behavior --- which is a type of behavior based on indirect communication through a common and shared space. Stigmergy explains the emergence of collective behavior among several social species with limited intellectual abilities. The concept has been first introduced by the french biologist [Pierre-Paul Grassé][2] and systematically studied by [Deneubourg][3] for different ants species.
 
