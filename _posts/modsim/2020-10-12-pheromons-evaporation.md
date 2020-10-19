@@ -18,7 +18,7 @@ image:
 
 ## Introduction
 
-You should now be familiar with our [2D Grid app][1] so I won't introduce it this time. In a [previous post][1], I updated the architecture in order to implement the add/remove obstacles feature. Here, I am going to upgrade the architecture again in order to implement pheromon management.
+You should now be familiar with our [2D Grid app][1] so I won't introduce it again. In a [previous post][1], I updated the architecture in order to implement the add/remove obstacles feature. Here, I am going to upgrade the architecture again in order to implement another feature : pheromon.
 
 You can see pheromon like a chemical substance that is dropped somewhere, as a mark of a given organic activity, and then evaporates overtime. This the basic way to implements a stigmergic behavior --- which is a type of behavior based on indirect communication through a common and shared space. Stigmergy explains the emergence of collective behavior in social insects colonies, where one can witness very complex organization among intellectually limited agents. The concept has been first introduced by the french biologist [Pierre-Paul Grassé][2] and systematically studied by [Deneubourg][3] for different ants species. In the following section I am going to detail the architecture that allows me to mimic an ant-like pheromon evaporation. Basically the objects are the same, comparing to the previous architecture. I am just going to add another viewer for pheromon -- `PheromonViewer` -- and more controls in the `App` object -- `App::addPheromon`. `IGrid`, and consequently `Grid`, will be upgraded in order to pheromon related methods. Finally, I will introduce the `App::evaporate` function, which will be responsible of the evaporation process.
 
