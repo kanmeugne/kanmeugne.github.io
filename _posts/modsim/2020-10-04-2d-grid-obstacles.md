@@ -25,16 +25,7 @@ package geometry <<Frame>>
     class Segment 
     interface ISegmentFunctor 
 }
-interface ICellFunctor 
-abstract class AbstractViewer 
-class App 
-class CELL 
-class GridViewer extends AbstractViewer 
-class ViewerMgr extends AbstractViewer
-class ObstacleViewer extends AbstractViewer 
-interface IGrid 
-class Grid implements IGrid 
-IGrid ..> CELL : defines >
+IGrid <.. CELL : subtype <
 Grid *--> CELL 
 App o-> IGrid : controls >
 App o-- AbstractViewer
@@ -42,7 +33,7 @@ ViewerMgr o--> AbstractViewer
 Segment *-> Point : has 2 >
 ISegmentFunctor .> Segment
 GridViewer ..> geometry
-IGrid ..> ICellFunctor : defines >
+IGrid <.. ICellFunctor : subtype <
 ICellFunctor ..> CELL
 ObstacleViewer ..> ICellFunctor : runs >
 hide members
@@ -50,11 +41,11 @@ hide members
 
 For that purpose, I have made some improvements on the [previous architecture][1], as you can see in **Fig. 1**.
 
-Briefly, I have updated 3 existing objects --- `App`, `IGrid` and `Grid` --- and created 3 new objects --- `ObstacleViewer`, `IGrid::ICellFunctor` and `ViewerMgr`. More details below.
+Briefly, I have updated 3 existing objects --- *App*, *IGrid* and *Grid* --- and created 3 new objects --- *ObstacleViewer*, *IGrid::ICellFunctor* and *ViewerMgr*. More details below.
 
 ## App
 
-The `App` object is augmented with `App::addObstacle` and `App::removeObstacle` both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). To keep things simple, an obstacle is represented as a non-zero value in a cell --- so `App::addObstacle` and `App::removeObstacle` effect will be to set the value of a given `IGrid::CELL` object (selected by the mouse click).
+The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). To keep things simple, an obstacle is represented as a non-zero value in a cell --- so *App::addObstacle* and *App::removeObstacle* effect will be to set the value of a given *IGrid::CELL* object (selected by the mouse click).
 {% plantuml %}
 @startuml
 title: <size:10>Fig. 2. App Object (with <i>addObstacle</i> and <i>removeObstacle</i>)</size>
@@ -86,7 +77,7 @@ hide AbstractViewer members
 
 ## IGrid
 
-The `IGrid` interface is augmented with 3 more methods --- `IGrid::iAddObstacle`, `IGrid::iRemoveObstacle` and `IGrid::iIsObstacle` --- necessary to edit the status of a `IGrid::CELL` status (`IGrid::iAddObstacle` and `IGrid::iRemoveObstacle`) and to check whether a given `IGrid::CELL` is an obstacle or not (`IGrid::iIsObstacle`). `IGrid` defines one more method called `IGrid::iApplyOnCells` which takes a functor on cells - `IGrid::ICellFunctor` - as the only parameter and applies it on every cell of the grid. For the record, this method is called in `ObstacleViewer::drawObstacles` method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the `IGrid` new look and its relations with other classes definitions.
+The *IGrid* interface is augmented with 3 more methods --- *IGrid::iAddObstacle*, *IGrid::iRemoveObstacle* and *IGrid::iIsObstacle* --- necessary to edit the status of a *IGrid::CELL* status (*IGrid::iAddObstacle* and *IGrid::iRemoveObstacle*) and to check whether a given *IGrid::CELL* is an obstacle or not (*IGrid::iIsObstacle*). *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells - *IGrid::ICellFunctor* - as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
 {% plantuml %}
 @startuml
@@ -134,8 +125,8 @@ class Grid implements IGrid {
     - int sizex
     - int sizey
 }
-IGrid ..> CELL : defines >
-IGrid ..> ICellFunctor : defines >
+IGrid <.. CELL : subtype <
+IGrid <.. ICellFunctor : subtype <
 ICellFunctor ..> CELL
 Grid *--> CELL
 App o--> IGrid : controls >
@@ -149,7 +140,7 @@ hide ICellFunctor fields
 
 ## ViewerMgr and ObstacleViewer
 
-`ViewerMgr` is a special `AbstractViewer` that agregates (cf. Composite pattern) other `AbstractViewer` with the method `ViewerMgr::iAddViewer`. I introduce this object in order to separate view concerns and to be able to activate several views at the same time without complicating the relationship between `App` and `AbstractViewer`. We will use this *meta* viewer to attach en `ObstacleViewer` to the App in order to display the grid lines and the obstacles at the same time.
+*ViewerMgr* is a special *AbstractViewer* that agregates (cf. Composite pattern) other *AbstractViewer* with the method *ViewerMgr::iAddViewer*. I introduce this object in order to separate view concerns and to be able to activate several views at the same time without complicating the relationship between *App* and *AbstractViewer*. We will use this *meta* viewer to attach en *ObstacleViewer* to the App in order to display the grid lines and the obstacles at the same time.
 
 {% plantuml %}
 @startuml

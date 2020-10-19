@@ -23,9 +23,9 @@ You can see pheromon like a chemical substance that is dropped somewhere --- as 
 
 The proposed improvements of the previous [object-oriented architecture][1] --- will focus on mimicking and illustrating an ant-like pheromon evaporation. Simply put, I am going to do the following : 
 
-1. add another viewer for pheromon --- `PheromonViewer` --- and more controls in the `App` object -- `App::addPheromon`
-2. upgrade `IGrid` --- and consequently `Grid` --- to declare and implement pheromon related methods
-3. define a new method --- `App::evaporate` --- responsible of the evaporation process
+1. add another viewer for pheromon --- *PheromonViewer* --- and more controls in the *App* object -- *App::addPheromon*
+2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
+3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
 {% plantuml %}
 @startuml
