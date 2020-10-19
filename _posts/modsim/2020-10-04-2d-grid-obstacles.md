@@ -18,7 +18,11 @@ As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the
 
 {% plantuml %}
 @startuml
-title: <size:10>Fig. 1. Updated Architecture with obstacle manipulation features and better integration of viewers</size>
+header
+<font color=blue>Fig. 1.</font> Updated Architecture with obstacle manipulation features and better integration of viewers.
+I have updated 3 existing objects — App, IGrid and Grid — and created 3 new objects — ObstacleViewer, IGrid::ICellFunctor and ViewerMgr.
+endheader
+scale 0.8
 package geometry <<Frame>>
 {
     class Point 
@@ -281,3 +285,4 @@ Enjoy and feel free to send me your feedbacks!
 
 [1]: /modeling%20&%20simulation/sfml-2d-grid/
 [2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid
+
