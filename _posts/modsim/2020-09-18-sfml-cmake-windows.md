@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 title:  "Portable C++ SFML app with CMake"
-teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS your working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
+teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
 tags:
     - sfml
     - cmake
@@ -21,9 +21,9 @@ In the [original article](https://crascit.com/2015/07/25/cmake-gtest/ "Building 
 
 In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project*. The configuration can be used almost as-is to add *SFML* dependencies as an *external project*.
 
-The main idea is to invoke *CMake* `ExternalProject` *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
+The main idea is to invoke *CMake* *ExternalProject* *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
 
-The approach uses a `CMakeList.txt.in` to invoke the external project.
+#### 1. CMakeLists.txt.in : external project references
 
 All you need to know is the location of the official git repository of your external project and you are all set dfor this part.
 You might need to use a specific tag though. 
@@ -45,7 +45,7 @@ ExternalProject_Add(googletest
 )
 {% endhighlight %}
 
-### 2. CMakeLists.txt : the configration file
+#### 2. CMakeLists.txt : the configration file
 
 This is where you define the targets. Note that the external project build is triggered before the target definitions.
 
@@ -92,7 +92,7 @@ project/
 └── build
 {% endhighlight %}
 
-### App/src/main.cpp
+#### App/src/main.cpp
 
 The main file will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
 
@@ -135,53 +135,7 @@ int main(){
 }
 {% endhighlight %}
 
-## Adaptation to SFML : A simple hello world app
-
-To adapt this approach and build a simple *Hello World App* that display a window. Our project will match the following tree:
-
-
-we will use an object called `App` and call it in a `main` function defined as follows : 
-
-### main.cpp
-
-{% highlight c++ %}
-#include "App.h"
-#include <thread>
-#include <SFML/Graphics.hpp>
-
-#ifdef __linux__
-#include <X11/Xlib.h>
-#endif
-
-int main(){
-#ifdef __linux__
- XInitThreads();
-#endif
- sf::ContextSettings settings;
- settings.antialiasingLevel = 10;
- const unsigned int width = (App::DEFAULT_WIDTH*App::DEFAULT_RESX);
- const unsigned int height = (App::DEFAULT_HEIGHT*App::DEFAULT_RESY);
- sf::RenderWindow window (
-  sf::VideoMode(width, height),
-  "SFML & CMAKE",
-  sf::Style::Titlebar | sf::Style::Close,
-  settings
- );
- window.clear(sf::Color::Cyan);
- window.setFramerateLimit(120);
- window.setActive(false);
- App app;
- app.setWindow(&window);
- std::thread rendering_thread(&App::display, &app);
- app.run();
- rendering_thread.join();
- return 0;
-}
-{% endhighlight %}
-
-The `App` Object is defined by the following *header file* and *source file* :
-
-### App.h
+#### App/include/App.h
 
 Logic and display functions are defined inside an *App* object.
 
@@ -210,7 +164,7 @@ public:
 #endif // !APP_H
 {% endhighlight %}
 
-### App.cpp
+#### App/src/App.cpp
 
 {% highlight c++ %}
 #include "App.h"
@@ -258,7 +212,7 @@ void App::run(){
 }
 {% endhighlight %}
 
-### App/CMakeLists.txt.in
+#### App/CMakeLists.txt.in
 
 Here, the *CMakeLists.txt.in* will hold references to the SFML official library.
 
@@ -278,7 +232,7 @@ ExternalProject_Add(sfml
 )
 {% endhighlight %}
 
-### CMakeList.txt
+#### App/CMakeLists.txt
 
 
 {% highlight cmake %}
@@ -326,7 +280,11 @@ source_group("src" FILES ${APP_SRC_FILES})
 source_group("include" FILES ${APP_INCLUDE_DIR}/*.h)
 {% endhighlight %}
 
-We are all set ! All we have to do now is run the configuration and the make process. We will need one more CMakeLists file (the global one) that will be at the root of the project.
+We are almost set ! All we have to do now is run the *configuration* and the *build* processes.
+
+We will need one more *CMakeLists.txt* file (the global one) that will be at the root of the project folder.
+
+#### CMakeLists.txt
 
 {% highlight cmake %}
 # CMakeList.txt : Upper level configuration file
