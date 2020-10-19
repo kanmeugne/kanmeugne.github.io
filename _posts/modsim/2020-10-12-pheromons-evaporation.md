@@ -236,7 +236,7 @@ int main()
 }
 {% endhighlight %}
 
-The interested reader can fork the complete source code from [here][2] and run the following in a terminal at the project folder root :
+The interested reader can fork the complete source code from [here][5] and run the following in a terminal at the project folder root :
 
 {% highlight shell %}
   # on windows
@@ -266,4 +266,4 @@ Enjoy and feel free to send me your feedbacks!
 [2]: https://fr.wikipedia.org/wiki/Stigmergie
 [3]: http://homepages.ulb.ac.be/~jldeneub/images/Deneubourgetal1990.pdf
 [4]: https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Clock.php
-[5]: https://github.com/kanmeugne/sfml2dgrid/
+[5]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-pheromons
