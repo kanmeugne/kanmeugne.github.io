@@ -21,7 +21,7 @@ As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the
 header
 <font color=blue>Fig. 1.</font> Updated Architecture with obstacle manipulation features and better integration of viewers.
 I have updated 3 existing objects — App, IGrid and Grid — and created 3 new objects — ObstacleViewer, IGrid::ICellFunctor and ViewerMgr.
-endheader
+end header
 scale 0.8
 package geometry <<Frame>>
 {
@@ -101,7 +101,8 @@ Briefly, I have updated 3 existing objects --- *App*, *IGrid* and *Grid* --- and
 The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). To keep things simple, an obstacle is represented as a non-zero value in a cell --- so *App::addObstacle* and *App::removeObstacle* effect will be to set the value of a given *IGrid::CELL* object (selected by the mouse click).
 {% plantuml %}
 @startuml
-title: <size:10>Fig. 2. App Object (with <i>addObstacle</i> and <i>removeObstacle</i>)</size>
+header: <font color=blue>Fig. 2.</font> App Object (with <i>addObstacle</i> and <i>removeObstacle</i>)
+scale 0.9
 class App {
     + {static} const int DEFAULT_HEIGHT
     + {static} const int DEFAULT_WIDTH
@@ -134,7 +135,11 @@ The *IGrid* interface is augmented with 3 more methods --- *IGrid::iAddObstacle*
 
 {% plantuml %}
 @startuml
-title: <size:10>Fig. 3. Evolution of the IGrid interface, with 3 more methods : <i>iAddObstacle</i>, <i>iRemoveObstacle</i> and <i>iIsObstacle</i></size>
+header
+<font color=blue>Fig. 3.</font> Evolution of the IGrid interface, with 3 more methods :
+<i>iAddObstacle</i>, <i>iRemoveObstacle</i> and <i>iIsObstacle</i>
+end header
+scale 0.9
 class App {
     + {static} const int DEFAULT_HEIGHT
     + {static} const int DEFAULT_WIDTH
@@ -197,10 +202,12 @@ hide ICellFunctor fields
 
 {% plantuml %}
 @startuml
-title
-<size:10> Fig. 4. ViewerMgr is a meta viewer that agregates more than one viewer. It will be used to add a viewer for obstacle (ObstacleViewer) next to the viewer for </size>
-<size:10> lines (GridViewer) without changing the relationship between App and AbstractObject</size>
-end title
+header
+<font color=blue>Fig. 4.</font> ViewerMgr is a meta viewer that agregates more than one viewer.
+It will be used to add a viewer for obstacle (ObstacleViewer) next to the viewer for
+lines (GridViewer) without changing the relationship between App and AbstractObject
+end header
+scale 0.9
 interface ICellFunctor {
     + virtual void operator(const CELL)
 }
