@@ -23,7 +23,7 @@ In his article, [Craig Scott][3] explained how to build *GoogleTest* and *Google
 
 The main idea is to invoke CMake *ExternalProject* command and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
 
-1. CMakeLists.txt.in defines the external project references. All you need to know is the location of the official git repository of your external project and you are all set for this part. You might need to use a specific tag though. 
+__CMakeLists.txt.in__ defines the external project references. All you need to know is the location of the official git repository of your external project and you are all set for this part. You might need to use a specific tag though. 
 
 {% highlight cmake %}
 cmake_minimum_required(VERSION 3.8)
@@ -42,7 +42,7 @@ ExternalProject_Add(googletest
 )
 {% endhighlight %}
 
-2. CMakeLists.txt is the configration file. This is where you define the targets. Note that the external project build is triggered before the target definitions.
+__CMakeLists.txt__ is the configration file. This is where you define the targets. Note that the external project build is triggered before the target definitions.
 
 {% highlight cmake %}
 # Download and unpack googletest at configure time
