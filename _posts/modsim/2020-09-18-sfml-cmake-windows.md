@@ -21,7 +21,7 @@ Few months ago, I found an [article][3] that explains how to build [GoogleTest a
 
 In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project*. The configuration can be used almost as-is to add *SFML* dependencies as an *external project*.
 
-The main idea is to invoke *CMake* *ExternalProject* *command* and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
+The main idea is to invoke CMake *ExternalProject* command and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
 
 __CMakeLists.txt.in__ defines the external project references. All you need to know is the location of the official git repository of your external project and you are all set for this part. You might need to use a specific tag though. 
 
@@ -91,9 +91,8 @@ project/
 └── build
 {% endhighlight %}
 
-#### App/src/main.cpp
 
-The main file will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
+Our main file __App/src/main.cpp__ will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
 
 {% highlight c++ %}
 #include "App.h"
@@ -134,9 +133,8 @@ int main(){
 }
 {% endhighlight %}
 
-#### App/include/App.h
 
-Logic and display functions are defined inside an *App* object.
+__App/include/App.h__ defines logic and display functions are defined inside an *App* object.
 
 {% highlight c++ %}
 #ifndef APP_H
@@ -163,7 +161,7 @@ public:
 #endif // !APP_H
 {% endhighlight %}
 
-#### App/src/App.cpp
+Finally, __App/src/App.cpp__ implements our App project.
 
 {% highlight c++ %}
 #include "App.h"
@@ -212,9 +210,7 @@ void App::run(){
 }
 {% endhighlight %}
 
-#### App/CMakeLists.txt.in
-
-Here, the *CMakeLists.txt.in* will hold references to the SFML official library.
+To mimic the same approoach, here is our SFML *CMakelists.txt.in* :
 
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
@@ -232,8 +228,7 @@ ExternalProject_Add(sfml
 )
 {% endhighlight %}
 
-#### App/CMakeLists.txt
-
+The target for our simple application are defined in __App/CMakeLists.txt__. Notice how we build the sfml library at configuration time :
 
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
@@ -288,11 +283,7 @@ source_group("src" FILES ${APP_SRC_FILES})
 source_group("include" FILES ${APP_INCLUDE_DIR}/*.h)
 {% endhighlight %}
 
-We are almost set ! All we have to do now is run the *configuration* and the *build* processes.
-
-We will need one more *CMakeLists.txt* file (the global one) that will be at the root of the project folder.
-
-#### CMakeLists.txt
+We are almost set ! All we have to do now is run the *configuration* and the *build* processes. The global __CMakeLists.txt__ at the root folder is as follows :
 
 {% highlight cmake %}
 # CMakeList.txt : Upper level configuration file
@@ -313,13 +304,7 @@ project (SFMLCMAKE C CXX)
 add_subdirectory ("App")
 {% endhighlight %}
 
-**Note** : You can fork everything from [here][1]
-
-## Configure and build the project
-
-Now that we have our project files ready, we need to type the following lines in a terminal at the root of the project folder (**with the right generator**).
-
-**Note**: If you are on linux, you might need to check [this][2] first.
+We need to type the following lines in a terminal at the root of the project folder (**with the right generator**). If you are on linux, you might need to check [this][2] first.
 
 {% highlight shell %}
   # on windows
@@ -330,10 +315,10 @@ Now that we have our project files ready, we need to type the following lines in
   $ mkdir build  
   $ cd build
   $ cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug
-  $ cmake --build ./ --target app 
+  $ cmake --build ./ --target app --config Debug 
 {% endhighlight %}
 
-At the end of the stage, you should ba able to launch the executable located in the bin folder.
+At the end of the stage, you should be able to launch the executable located in the bin folder.
 
 {% highlight shell %}
   bin> ./Debug/app
@@ -342,6 +327,8 @@ At the end of the stage, you should ba able to launch the executable located in 
 ![screenshot](/images/sfmlcmake.jpg)
 
 Now you are ready to take your graphical app everywhere you want. Enjoy and feel free to send me your feedbacks!
+
+**Note** : You can fork everything from [here][1]
 
 ## More like this
 {: .t60 }
