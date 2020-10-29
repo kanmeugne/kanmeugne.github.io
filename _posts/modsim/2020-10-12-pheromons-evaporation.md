@@ -8,6 +8,7 @@ tags:
     - modeling
     - pheromon
     - evaporation
+    - simulation
 categories:
     - modeling & simulation
 math: true
