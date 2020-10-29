@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
 title:  "Portable C++ SFML app with CMake"
-teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on - especially if you don't want to carry over binary files inside your source code repositories. This post presents a straightforward and simple way to package a project with external dependencies using CMake."
+teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on (especially if you don't want to carry over binary files inside your source code repositories). In this post, I wanted to share an approach, that I have found very straigthforward, for packaging a project with external dependencies using CMake."
 tags:
     - sfml
     - cmake
@@ -13,18 +13,15 @@ image:
     thumb: SFMLCMAKE-thumb.png
 ---
 
-## Introduction
-
 Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to test it with [SFML][6] on a simple graphical app.
 
-## Presentation of the Approach
+The configuration used in the article can be exploited almost as-is to add *SFML* dependencies as an *external project* in a CMake-packaged app. The main idea is to invoke CMake *ExternalProject* command and perform the build at *configure time*. This fully integrates the *external project* to the build and gives access to all the *targets*. 
 
-In his article, [Craig Scott][3] explained how to build *GoogleTest* and *GoogleMock* directly in a *CMake project*. The configuration can be used almost as-is to add *SFML* dependencies as an *external project*.
+### The Hack
 
-The main idea is to invoke CMake *ExternalProject* command and perform the build at *configure time*. This fully integrates the *external project* to your build and gives you access to all the *targets*. The author uses two sets of rules to configure the *build*.
+In the original post, the author used two sets of definitions to achieve this marvelous hack with googletest as the external project. First, a *CMakeLists.txt.in* file, that holds the external project references -- all you need to know is the location of the official git repository (or whatever compatible location) of your external project and you are all set for this part. 
 
-__CMakeLists.txt.in__ defines the external project references. All you need to know is the location of the official git repository of your external project and you are all set for this part. You might need to use a specific tag though. 
-
+**CMakeList.txt.in**
 {% highlight cmake %}
 cmake_minimum_required(VERSION 3.8)
 project(googletest-download NONE)
@@ -42,8 +39,9 @@ ExternalProject_Add(googletest
 )
 {% endhighlight %}
 
-__CMakeLists.txt__ is the configration file. This is where you define the targets. Note that the external project build is triggered before the target definitions.
+Second, you need to define your *CMakeLists.txt* for the targets of your application or your library. This is where the magic occurs! The external file is invoked at the beginning of the file, before the target definitions, as you can see in its content below. So when the targets are defined, it is possible to link with whatever dependencies we need.
 
+**CMakeList.txt**
 {% highlight cmake %}
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -70,11 +68,11 @@ endif()
 # Now simply link your own targets against gtest, gmock
 {% endhighlight %}
 
-With *CMakeLists.txt.in* and *CMakeLists.txt*, all we need to do is to call *CMake configuration* and *build* commands at the root of the project folder.
+This is it! All you need to do is to call the call the proper cmake commands to configure and build your project. Now, this is how I copy the approach to build a little SFML Graphic App.
 
-## Adaptation to SFML : Hello World app
+### Adaptation to build an SFML app
 
-We will implement this approach and build a simple *Hello World App* that displays a window. Our project folder will match the following tree :
+First, here is the project folder I have been using for the test :
 
 {% highlight shell %}
 project/
@@ -92,126 +90,11 @@ project/
 {% endhighlight %}
 
 
-Our main file __App/src/main.cpp__ will basicaly launch two threads. One for the logic of the application - the main thread - and the other for the display routines. The SFML window should be initialized in the main thread.
+The main file *App/src/main.cpp*  basically launches two threads : one for the logic of the application --- the main thread --- and the other, for the display routines (the SFML window should be initialized in the main thread). *App/include/App.h* and *App/src/App.cpp* defines the *App* object that will hold the logic and display functions.
 
-{% highlight c++ %}
-#include "App.h"
-#include <thread>
-#include <SFML/Graphics.hpp>
+To mimic the same approach, here is our SFML *CMakelists.txt.in*.
 
-#ifdef __linux__
-#include <X11/Xlib.h>
-#endif
-
-int main(){
-#ifdef __linux__
-  XInitThreads();
-#endif
-  sf::ContextSettings settings;
-  settings.antialiasingLevel = 10;
-
-  const unsigned int width = (App::DEFAULT_WIDTH*App::DEFAULT_RESX);
-  const unsigned int height = (App::DEFAULT_HEIGHT*App::DEFAULT_RESY);
-
-  sf::RenderWindow window (
-    sf::VideoMode(width, height),
-    "SFML & CMAKE",
-    sf::Style::Titlebar | sf::Style::Close,
-    settings
-  );
-  window.clear(sf::Color::Cyan);
-  window.setFramerateLimit(120);
-  window.setActive(false);
-
-  App app;
-  app.setWindow(&window);
-  std::thread rendering_thread(&App::display, &app);
-  app.run();
-  rendering_thread.join();
-
-  return 0;
-}
-{% endhighlight %}
-
-
-__App/include/App.h__ defines logic and display functions are defined inside an *App* object.
-
-{% highlight c++ %}
-#ifndef APP_H
-#define APP_H
-namespace sf
-{
- class RenderWindow;
-};
-class App
-{
-private:
- sf::RenderWindow* _window = nullptr;
-public:
- static const unsigned int DEFAULT_WIDTH;
- static const unsigned int DEFAULT_HEIGHT;
- static const unsigned int DEFAULT_RESX;
- static const unsigned int DEFAULT_RESY;
- App(){};
- virtual ~App();
- void setWindow(sf::RenderWindow*);
- void run();
- void display();
-};
-#endif // !APP_H
-{% endhighlight %}
-
-Finally, __App/src/App.cpp__ implements our App project.
-
-{% highlight c++ %}
-#include "App.h"
-#include <SFML/Graphics.hpp>
-const unsigned int App::DEFAULT_WIDTH = 400;
-const unsigned int App::DEFAULT_HEIGHT = 300;
-const unsigned int App::DEFAULT_RESX = 2;
-const unsigned int App::DEFAULT_RESY = 2;
-
-void App::setWindow(sf::RenderWindow *w){
-  _window = w;
-}
-App::~App(){
-  _window = nullptr;
-}
-void App::display(){
-  if (_window != nullptr){
-    _window->setActive(true);
-    while (_window->isOpen())
-      _window->display();
-  }
-}
-void App::run(){
-  _window->setActive(false);
-  while (_window->isOpen())
-  {
-    sf::Event event;
-    while (_window->pollEvent(event)){
-      if (event.type == sf::Event::Closed)
-        _window->close();
-      if (event.type == sf::Event::MouseButtonPressed){
-        if (event.mouseButton.button == sf::Mouse::Right){
-          int posx = event.mouseButton.x;
-          int posy = event.mouseButton.y;
-          printf("right mouse clicked.\nx=%d, y=%d\n", posx, posy);
-        }
-        if (event.mouseButton.button == sf::Mouse::Left){
-          int posx = event.mouseButton.x;
-          int posy = event.mouseButton.y;
-          printf("left mouse clicked.\nx=%d, y=%d\n", posx, posy);
-        }
-      }
-      if (event.type == sf::Event::MouseMoved){}
-    }
-  }
-}
-{% endhighlight %}
-
-To mimic the same approoach, here is our SFML *CMakelists.txt.in* :
-
+**App/CMakelists.txt.in**
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
 project(sfml-download NONE)
@@ -228,63 +111,55 @@ ExternalProject_Add(sfml
 )
 {% endhighlight %}
 
-The target for our simple application are defined in __App/CMakeLists.txt__. Notice how we build the sfml library at configuration time :
+*App/CMakeLists.txt* defines the target of the application --- namely the **app** executable --- set the sfml library dependencies to be built at configuration time.
 
+**App/CMakeLists.txt**
 {% highlight cmake %}
 cmake_minimum_required (VERSION 3.8)
-
 project (app C CXX)
-
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt.in
   ${CMAKE_SOURCE_DIR}/build/sfml-download/CMakeLists.txt
 )
-
 execute_process(
   COMMAND ${CMAKE_COMMAND} -G ${CMAKE_GENERATOR} .
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/build/sfml-download
 )
-
 if(result)
   message(FATAL_ERROR "CMake step for sfml failed: ${result}")
 endif()
-
 execute_process(
   COMMAND ${CMAKE_COMMAND} --build .
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/build/sfml-download
 )
-
 if(result)
   message(FATAL_ERROR "Build step for sfml failed: ${result}")
 endif()
-
 add_subdirectory(
   ${CMAKE_SOURCE_DIR}/build/sfml-src
   ${CMAKE_SOURCE_DIR}/build/sfml-build
 )
-
 set(SFML_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/build/sfml-build/include/)
 set(APP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 file(GLOB_RECURSE APP_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 include_directories(${SFML_INCLUDE_DIR} ${APP_INCLUDE_DIR})
-
-add_executable (app ${APP_SRC_FILES})
-
+# app target
+add_executable (app ${APP_SRC_FILES}) 
 if(WIN32 OR WIN64)
   target_link_libraries(app sfml-window sfml-system sfml-graphics)
 else()
   target_link_libraries(app sfml-window sfml-system
   sfml-graphics pthread X11)
 endif()
-
 source_group("src" FILES ${APP_SRC_FILES})
 source_group("include" FILES ${APP_INCLUDE_DIR}/*.h)
 {% endhighlight %}
 
-We are almost set ! All we have to do now is run the *configuration* and the *build* processes. The global __CMakeLists.txt__ at the root folder is as follows :
+The global *CMakeLists.txt* at the root folder is supposed to bundle everything up.
 
+**./CMakeLists.txt**
 {% highlight cmake %}
 # CMakeList.txt : Upper level configuration file
 cmake_minimum_required (VERSION 3.10)
@@ -304,7 +179,9 @@ project (SFMLCMAKE C CXX)
 add_subdirectory ("App")
 {% endhighlight %}
 
-We need to type the following lines in a terminal at the root of the project folder (**with the right generator**). If you are on linux, you might need to check [this][2] first.
+### Configuration and build
+
+If you have followed the steps above (and downloaded the source code available [here][1]), you should be able to type the following lines in a terminal at the root of the project folder --- for linux user, you might need to check [this][2] first.
 
 {% highlight shell %}
   # on windows
@@ -318,7 +195,7 @@ We need to type the following lines in a terminal at the root of the project fol
   $ cmake --build ./ --target app --config Debug 
 {% endhighlight %}
 
-At the end of the stage, you should be able to launch the executable located in the bin folder.
+You should be able to launch the executable located in the bin folder with the command below and see a nice cyan window.
 
 {% highlight shell %}
   bin> ./Debug/app
@@ -326,9 +203,7 @@ At the end of the stage, you should be able to launch the executable located in 
 
 ![screenshot](/images/sfmlcmake.jpg)
 
-Now you are ready to take your graphical app everywhere you want. Enjoy and feel free to send me your feedbacks!
-
-**Note** : You can fork everything from [here][1]
+Smile! Now you are ready to take your graphical app everywhere you want. Enjoy and feel free to send me your feedbacks!
 
 ## More like this
 {: .t60 }
