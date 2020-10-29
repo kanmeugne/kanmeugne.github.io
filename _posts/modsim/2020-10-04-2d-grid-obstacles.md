@@ -90,7 +90,7 @@ header
 <font color=blue>Fig. 3.</font> Evolution of the IGrid interface, with 3 more methods :
 <i>iAddObstacle</i>, <i>iRemoveObstacle</i> and <i>iIsObstacle</i>
 end header
-scale 0.9
+scale 0.8
 class App {
     + {static} const int DEFAULT_HEIGHT
     + {static} const int DEFAULT_WIDTH
