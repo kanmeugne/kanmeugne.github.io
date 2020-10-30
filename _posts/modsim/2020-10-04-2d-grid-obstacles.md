@@ -1,5 +1,4 @@
 ---
-layout: page-fullwidth
 title:  "2D-Grid with obstacles"
 teaser: "In a previous article, I shared a C++ project for 2D-grid manipulation. I presented an architecture that could be easily extended to include different types of controls and views. In this post, I am showing a way it is to add obstacles manipulation to the porject and to keep track of them."
 tags:
@@ -10,8 +9,6 @@ tags:
     - modeling
 categories:
     - modeling & simulation
-image:
-    thumb: SFMLCMAKE-thumb.png
 ---
 
 As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, I am going to extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D-Grid environment with some given controls.
@@ -295,9 +292,6 @@ The program should display a clickable 2D Grid where the right-click adds an obs
 
 Enjoy and feel free to send me your feedbacks!
 
-## More like this
-{: .t60 }
-{% include list-posts tag='sfml' %}
 
 [1]: /modeling%20&%20simulation/sfml-2d-grid/
 [2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid

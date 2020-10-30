@@ -1,5 +1,4 @@
 ---
-layout: page-fullwidth
 title:  "Portable C++ SFML app with CMake"
 teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on (especially if you don't want to carry over binary files inside your source code repositories). In this post, I wanted to share an approach, that I have found very straigthforward, for packaging a project with external dependencies using CMake."
 tags:
@@ -9,8 +8,6 @@ tags:
     - modeling
 categories:
     - modeling & simulation
-image:
-    thumb: SFMLCMAKE-thumb.png
 ---
 
 Few months ago, I found an [article][3] that explains how to build [GoogleTest and GoogleMock][4] directly in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to test it with [SFML][6] on a simple graphical app.
@@ -205,9 +202,6 @@ You should be able to launch the executable located in the bin folder with the c
 
 Smile! Now you are ready to take your graphical app everywhere you want. Enjoy and feel free to send me your feedbacks!
 
-## More like this
-{: .t60 }
-{% include list-posts tag='sfml' %}
 
 [1]: https://github.com/kanmeugne/sfmlcmake
 [2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php

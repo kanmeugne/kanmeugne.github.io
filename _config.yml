@@ -1,48 +1,201 @@
-# ASCII-Font › http://patorjk.com/software/taag/#p=display&f=Slant&t=Phlow
-#
-#      _____ _ __          _____      __  __  _
-#     / ___/(_) /____     / ___/___  / /_/ /_(_)___  ____ ______
-#     \__ \/ / __/ _ \    \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/
-#    ___/ / / /_/  __/   ___/ /  __/ /_/ /_/ / / / / /_/ (__  )
-#   /____/_/\__/\___/   /____/\___/\__/\__/_/_/ /_/\__, /____/
-#                                                 /____/
-#
-# Title of your website
-title: "kanmeugne's blog"
+# The Site Settings
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT licensed
 
-# The slogan describes your website and is used on homepage in <title> and other important places
-slogan: 'stigmergy matters'
 
-# The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
-description: 'Scientific and technical articles on computer sciences'
+# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
+#--------------------------
 
-# The credits show up in the includes/_footer.html – It would be nice of you to leave a link to Phlow or Feeling Responsive as a thank you :)
-credits: '<p>Made with &hearts; by <a href="http://kanmeugne.github.io/">P. S. Kanmeugne</a> with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> based on <a href="http://phlow.github.io/feeling-responsive/">Feeling Responsive</a>.</p>'
+title: Kanmeugne's Blog                          # the main title
 
-# Main author of the website
-# See > authors.yml
-author: kanmeugne
+tagline: stigmergy matters  # it will display as the sub-title
 
-# This URL is the main address for absolute links. Don't include a slash at the end.
-#
-url: 'kanmeugne.github.io'
+description: >-                        # used by seo meta and the atom feed
+  Personal blog where I share my work, projects, thoughts on computer sciences essentially.
+
+# Replace with the website url, e.g. 'https://username.github.io'
+url: 'protocol://domain'
+
+author: Patrick S. Kanmeugne                  # change to your full name
+
+avatar: /assets/img/0.jpeg   # support internet resources
+
+github:
+  username: kanmeugne             # change to your github username
+
+twitter:
+  username: patricksimok            # change to your twitter username
+
+social:
+  name: Patrick S. Kanmeugne                  # it will shows as the copyright owner in Footer
+  email: patrick.simokanmeugne@outlook.com             # change to your email address
+  links:
+    # The first element serves as the copyright owner's link
+    - https://twitter.com/patricksimok      # change to your twitter homepage
+    - https://github.com/kanmeugne       # change to your github homepage
+    # Uncomment below to add more social links
+    # - https://www.facebook.com/username
+    - https://www.linkedin.com/in/patskan
+
+google_site_verification: google_meta_tag_verification # change to your verification string
+
+#--------------------------
+
+
+# Only if your site type is GitHub Project sites and doesn't have a custom domain,
+# change below value to '/projectname'.
 baseurl: ''
 
-# This is for the editing function in _/includes/improve_content
-# Leave it empty if your site is not on GitHub/GitHub Pages
-improve_content: https://github.com/Phlow/feeling-responsive/edit/gh-pages
+# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
+timezone: Asia/Shanghai
 
-# This URL points directly to the images directory making
-# things easier to link to images in posts and templates. It needs a slash at the end.
+google_analytics:
+  id: ''          # Fill with your Google Analytics ID
+  pv:
+    # The Google Analytics pageviews switch.
+    # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
+    enabled: false
+    # the next options only valid when `google_analytics.pv` is enabled.
+    proxy_url: ''
+    proxy_endpoint: ''
+    cache: false  # pv data local cache, good for the users from GFW area.
+
+disqus:
+  comments: false  # boolean type, the global switch for posts comments.
+  shortname: ''    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+
+
+# Prefer color scheme setting, available values:
 #
-# Example: <img src="{{ site.urlimg }}{{ post.image.title }}" />
-# Markdown-Example for posts ![Image Text]({{ site.urlimg }}image.jpg)
+#     dual   - Follow the system prefer color by default, and a toggle will display
+#              in the left bottom of Sidebar, which used for switch the theme between dark and light.
 #
-urlimg: '/images/'
+#     light  - Use the light color scheme
+#
+#     dark   - Use the dark color scheme
+#
+theme_mode: dual
+
+# boolean type, global switch for ToC in posts.
+toc: true
+
+paginate: 10
+
+markdown: kramdown
+
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
+    css_class: 'highlight'
+    # default_lang: console
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+# DO NOT change this unless you're a Pro user on Jekyll and Web development,
+# or you think you're smart enough to change other relevant URLs within this template.
+permalink: /posts/:title/
+
+defaults:
+  -
+    scope:
+      path: ""          # An empty string here means all files in the project
+      type: posts
+    values:
+      layout: post
+      comments: true    # Enable comments in posts.
+      toc: true         # Display TOC column in posts.
+      location: Post
+      breadcrumb:
+        -
+          label: Posts
+          url: /
+  -
+    scope:
+      path: _drafts
+    values:
+      comments: false
+  -
+    scope:
+      path: tags
+    values:
+      tab_active: Tags
+      location: Tag
+      breadcrumb:
+        -
+          label: Home
+          url: /
+        -
+          label: Tags
+          url: /tabs/tags/
+  -
+    scope:
+      path: categories
+    values:
+      tab_active: Categories
+      location: Category
+      breadcrumb:
+        -
+          label: Home
+          url: /
+        -
+          label: Categories
+          url: /tabs/categories/
+  -
+    scope:
+      path: tabs
+    values:
+      layout: page
+      dynamic_title: true    # Hide title in mobile screens.
+      breadcrumb:
+        -
+          label: Home
+          url: /
 
 
-# Logo size is 600x80 pixels
-logo: "logo.png"
+sass:
+  sass_dir: /assets/css
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: []
+
+exclude:
+  - vendor        # Avoid Jekyll mistakenly read the vendor directory on Travis-CI's VM .
+  - Gemfile.lock
+  - Gemfile
+  - tools
+  - docs
+  - README.md
+  - LICENSE
+
+sitemap_exclude:  # Sitemap will exclude the following items.
+  fuzzy:
+    - /assets/
+  accurate:
+    - /norobots/
+    - /tabs/
+    - /categories/
+    - /tags/
+    - /posts/
+    - 404.html
+    - feed.xml
+    - sitemap.xml
+    - robots.txt
+    - redirects.json
 
 # Plugins
 plugins:
@@ -51,225 +204,7 @@ plugins:
     - jekyll-paginate
     - jekyll-plantuml
     - jekyll/graphviz
-    - jekyll-latex
 
-
-#       ____              _             __  _
-#      / __ \____ _____ _(_)___  ____ _/ /_(_)___  ____
-#     / /_/ / __ `/ __ `/ / __ \/ __ `/ __/ / __ \/ __ \
-#    / ____/ /_/ / /_/ / / / / / /_/ / /_/ / /_/ / / / /
-#   /_/    \__,_/\__, /_/_/ /_/\__,_/\__/_/\____/_/ /_/
-#               /____/
-#
-paginate: 5                      # Paginates all X entries
-paginate_path: "blog/page:num"   # Pagination path › Important for blog page in /blog/ to work
-
-
-# Theme works best with Kramdown (using the table of contents function)
-markdown           : kramdown
-permalink          : /:categories/:title/
-highlight          : rouge
-excerpt_separator  : "<!--more-->"
-include            : ['.htaccess']
-# Exclude these files from your production _site
-exclude:
-    - .sass-cache
-    - Gemfile
-    - Gemfile.lock
-    - LICENSE
-    - README.md
-    - INSTALL.md
-    - vendor
-
-
-# The language setting is used in /includes/header.html for html-settings
-language: 'en'
-
-
-# Used › default.html front-matter and compress.html
-# Options › http://jch.penibelst.de
-compress_html:
-  clippings: all
-  comments: ["<!-- ", " -->"]
-  endings: all
-  profile: false
-  ignore:
-    envs: [development]
-
-
-#
-#       ____       ____            ____
-#      / __ \___  / __/___ ___  __/ / /_
-#     / / / / _ \/ /_/ __ `/ / / / / __/
-#    / /_/ /  __/ __/ /_/ / /_/ / / /_
-#   /_____/\___/_/  \__,_/\__,_/_/\__/
-#
-# Default Settings
-
-defaults:
-  -
-    scope:
-      path: '' # an empty string here means all files in the project
-      type: 'pages'
-    values:
-      show_meta: false 	# Hide metadata for all pages
-      # sidebar:    		# Possible values › left, right › by default there will be no sidebar
-      comments: false
-      author: kanmeugne     # Default author for pages
-  -
-    scope:
-      path: ''
-      type: 'posts'
-    values:
-      show_meta: true   # Show metadata for all posts
-      # sidebar:        # Possible values › left, right › by default there will be no sidebar
-      comments: false
-      author: kanmeugne     # Default author for posts
-
-
-
-#       _   __            _             __  _
-#      / | / /___ __   __(_)___ _____ _/ /_(_)___  ____
-#     /  |/ / __ `/ | / / / __ `/ __ `/ __/ / __ \/ __ \
-#    / /|  / /_/ /| |/ / / /_/ / /_/ / /_/ / /_/ / / / /
-#   /_/ |_/\__,_/ |___/_/\__, /\__,_/\__/_/\____/_/ /_/
-#                       /____/
-#
-#  Open _data/navigation.yml to adjust the left and right topbar navigation
-#
-
-
-
-#     _____ __________
-#    / ___// ____/ __ \
-#    \__ \/ __/ / / / /
-#   ___/ / /___/ /_/ /
-#  /____/_____/\____/    Verify Website to Webmaster Tools
-
-google_author:             ''
-google_site_verification:  ''
-bing_webmastertools_id:    ''
-# yandex_site_verification:  ''
-# alexa_verify_id:           ''
-
-
-
-#       ______            _
-#      / ____/___ __   __(_)________  ____  _____
-#     / /_  / __ `/ | / / / ___/ __ \/ __ \/ ___/
-#    / __/ / /_/ /| |/ / / /__/ /_/ / / / (__  )
-#   /_/    \__,_/ |___/_/\___/\____/_/ /_/____/   Favicon-Crap: Favicons, Chrome, Android & Apple Touch Buttons
-#                                                 More information » https://mathiasbynens.be/notes/touch-icons
-
-favicon-32x32:                          'favicon-32x32.png'
-touch-icon-192x192:                     'touch-icon-192x192.png'
-apple-touch-icon-180x180-precomposed:   'apple-touch-icon-180x180-precomposed.png'
-apple-touch-icon-152x152-precomposed:   'apple-touch-icon-152x152-precomposed.png'
-apple-touch-icon-144x144-precomposed:   'apple-touch-icon-144x144-precomposed.png'
-apple-touch-icon-120x120-precomposed:   'apple-touch-icon-120x120-precomposed.png'
-apple-touch-icon-114x114-precomposed:   'apple-touch-icon-114x114-precomposed.png'
-apple-touch-icon-76x76-precomposed:     'apple-touch-icon-76x76-precomposed.png'
-apple-touch-icon-72x72-precomposed:     'apple-touch-icon-72x72-precomposed.png'
-apple-touch-icon-precomposed:           'apple-touch-icon-precomposed.png'
-msapplication_tileimage:                'msapplication_tileimage.png'               # Size 144x144
-msapplication_tilecolor:                '#fabb00'
-
-
-#       ______                __                __
-#      / ____/___ _________  / /_  ____  ____  / /__
-#     / /_  / __ `/ ___/ _ \/ __ \/ __ \/ __ \/ //_/
-#    / __/ / /_/ / /__/  __/ /_/ / /_/ / /_/ / ,<
-#   /_/    \__,_/\___/\___/_.___/\____/\____/_/|_|      Facebook-Optimization › http://j.mp/fb_optimize
-
-og_image:                           'http://images.phlow.de/phlow/phlow_de-logo-512x.png'
-og_locale:                          'en_EN'
-og_type:                            'website'
-
-
-#      _____            _       __   __  ___         ___
-#     / ___/____  _____(_)___ _/ /  /  |/  /__  ____/ (_)___ _
-#     \__ \/ __ \/ ___/ / __ `/ /  / /|_/ / _ \/ __  / / __ `/
-#    ___/ / /_/ / /__/ / /_/ / /  / /  / /  __/ /_/ / / /_/ /
-#   /____/\____/\___/_/\__,_/_/  /_/  /_/\___/\__,_/_/\__,_/
-#
-#  Open _data/socialmedia.yml to adjust the left and right topbar navigation
-#
-
-socialmedia:
-    twitter: patricksimok
-
-
-#        ____  _
-#       / __ \(_)________ ___  _______
-#      / / / / / ___/ __ `/ / / / ___/
-#     / /_/ / (__  ) /_/ / /_/ (__  )
-#    /_____/_/____/\__, /\__,_/____/
-#                    /_/
-#
-# used in _includes/comments
-
-disqus_shortname: patskan
-
-
-#      _____
-#     / ___/____ ___________
-#     \__ \/ __ `/ ___/ ___/
-#    ___/ / /_/ (__  |__  )     More › http://sass-lang.com/
-#   /____/\__,_/____/____/      More › http://jekyllrb.com/docs/assets/#sassscss
-#
-
-sass:
-    sass_dir : _sass
-    style    : :compressed
-
-
-#       ___                __      __  _
-#      /   |  ____  ____ _/ /_  __/ /_(_)_________
-#     / /| | / __ \/ __ `/ / / / / __/ / ___/ ___/
-#    / ___ |/ / / / /_/ / / /_/ / /_/ / /__(__  )
-#   /_/  |_/_/ /_/\__,_/_/\__, /\__/_/\___/____/      https://www.google.com/analytics/
-#                        /____/
-#
-# used in _includes/footer_scripts
-
-# google_analytics_tracking_id:
-
-
-
-#   _                 _     _
-#  | |_ __ ___      _| | __| |_ ___
-#  | __/ _` \ \ /\ / / |/ /| __/ _ \
-#  | || (_| |\ V  V /|   < | || (_) |
-#   \__\__,_| \_/\_/ |_|\_(_)__\___/     More › https://www.tawk.to/knowledgebase/
-#
-#  tawk.to is a free live chat app that lets you monitor and chat
-#  with visitors on your website or from a free customizable page
-#
-#  To load the script add tawkto: true in front matter of each page
-#
-# used in _includes/footer_scripts
-
-# tawkto_embed_uri:
-
-
-#     ___              _     __           __
-#    /   |  __________(_)___/ /___  _____/ /_____  _____
-#   / /| | / ___/ ___/ / __  / __ \/ ___/ __/ __ \/ ___/
-#  / ___ |(__  ) /__/ / /_/ / /_/ / /__/ /_/ /_/ / /
-# /_/  |_/____/\___/_/\__,_/\____/\___/\__/\____/_/
-#
-#  Asciidoctor is a fast text processor and publishing toolchain for converting
-#  AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
-#
-#  https://github.com/asciidoctor/jekyll-asciidoc
-#  https://github.com/asciidoctor
-#
-#
-
-asciidoctor-enabled: false
-asciidoctor:
-  description: 
-  attributes:
-    source-highlighter: coderay
-    coderay-css: style
-    icons: font
+graphviz:
+  options: "-Tsvg" # 'dot' command option
+  command: "dot"   # execute this string. specify full path to 'dot' if you need

@@ -1,5 +1,4 @@
 ---
-layout: page-fullwidth
 title:  "Pheromon evaporation on a 2D Grid"
 teaser: "In a previous article, I presented a C++ SFML application that models a 2D Grid with the possibility to add and remove obstacles. In this post, I am going to add a very nice feature : <i>pheromon evaporation</i>. I will discuss how this kind of feature could profit operational research and online optimization modelers."
 tags:
@@ -11,8 +10,6 @@ tags:
     - evaporation
 categories:
     - modeling & simulation
-image:
-    thumb: SFMLCMAKE-thumb.png
 ---
 
 ## Introduction
@@ -258,9 +255,6 @@ The program should display a clickable 2D Grid where the right-click adds an obs
 
 Enjoy and feel free to send me your feedbacks!
 
-## More like this
-{: .t60 }
-{% include list-posts tag='sfml' %}
 
 [1]: /modeling%20&%20simulation/sfml-2d-grid-obstacles/
 [2]: https://fr.wikipedia.org/wiki/Stigmergie
