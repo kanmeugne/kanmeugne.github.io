@@ -12,5 +12,3 @@ const proxyEndpoint = "{{ site.google_analytics.pv.proxy_endpoint }}";
 {% endif %}
 
 const pvCacheEnabled = {{ enabled }};
-
-const pvCacheData = "{{ '/assets/js/data/pageviews.json' | relative_url }}";

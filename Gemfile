@@ -1,16 +1,20 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'jekyll'
+gem "jekyll", ">=3.8.6"
 
+# Official Plugins
 group :jekyll_plugins do
+  gem "jekyll-paginate"
+  gem "jekyll-redirect-from"
+  gem "jekyll-seo-tag", "~> 2.6.1"
   gem 'jekyll-gist'
-  gem 'jekyll-paginate'
   gem "jekyll-asciidoc"
   gem "jekyll-plantuml"
   gem "jekyll-graphviz"
-  gem "jekyll-latex"
+
+  
 end
 
-gem 'asciidoctor', '~> 1.5.4'
-gem 'coderay', '1.1.1'
-
+group :test do
+  gem "html-proofer"
+end

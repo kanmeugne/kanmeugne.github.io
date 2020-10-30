@@ -1,6 +1,4 @@
 ---
-layout: page
-sidebar: right
 title:  "Sur l'importance de l'approche multi-agents pour les développeurs"
 teaser: "L'approche <em>multi-agents</em> pour la conception et le développement de solutions informatiques apporte au moins deux avantages pour le développeur : la prise en compte ressources matérielles, très tôt dans la conception, et une meilleure appréhension de la complexité des solutions."
 categories:
@@ -56,8 +54,3 @@ Voilà en quelques mots ce qui me motive à mettre en avant l'approche multi-age
 - **la simulation comportementale**
 
 D'ici là, merci de vos retours (constructifs ou non).
-
-
-## Articles similaires
-
-{% include list-posts tag='sma' %}
