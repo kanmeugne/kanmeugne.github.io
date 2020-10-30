@@ -1,15 +1,22 @@
 ---
 layout: page
 title: "About"
-subheadline: "Why another Jekyll Theme?"
-teaser: "Since years I am programming and designing websites. I love to work with open source tools and learn via code from others. This time I want to try to give something back..."
+subheadline: "Welcome to my homepage"
+teaser: "Since years I am studying computing program and "
 permalink: "/info/"
 header:
     image_fullwidth: "header_drop.jpg"
 ---
-...and learn at the same time.
 
-*Feeling Responsive* is my first theme which I let into the world. It's built on work and knowledge of others. While I am still designing it, you read about whats behind this theme in the – *hopefully* – near future.
+Hello and welcome to my personal page. I will share various and multi disciplinary projects, personal thoughts on computer sciences, and collaboration with others scientists. I am currently a teacher in a computer science Engineering School and also working on side projects on my own.
+
+My favourite subjects are: 
+- Machine Learning
+- Multi-agent simulation
+- Optimisation
+- Microservices
+
+You will find some of my publications, code, etc. in the footer of this page.
 
 
 ## Features
