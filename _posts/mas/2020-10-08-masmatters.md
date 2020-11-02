@@ -7,9 +7,6 @@ tags:
     - sma
     - stigmergy
     - mas
-    - stigmergie
-image:
-    thumb: Why-MAS-Matters.png
 ---
 
 Le développement informatique a connu d'importantes évolutions ces dernières années.
