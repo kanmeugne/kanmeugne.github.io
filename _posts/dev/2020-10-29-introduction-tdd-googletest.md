@@ -16,7 +16,7 @@ Le [TDD][9] --- **Test-Driven Development** --- fait référence à une approche
 
 Le développeur qui adopte le *TDD* suit nécessairement [le cycle suivant][9] :
 1. Écrire des petits tests
-2. s'assurer que les tests échouent dans un premier temps
+2. S'assurer que les tests échouent dans un premier temps
 3. Écrire le code qui permet passer le test
 4. S'assurer que le test passe
 5. Nettoyer ou réfactorer le code
@@ -113,9 +113,9 @@ file(GLOB_RECURSE TOOLSET_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 include_directories(${TOOLSET_INCLUDE_DIR})
 add_library(${BINARY} ${TOOLSET_SRC_FILES})
 ```
-> **Note**: Le fichier indique que les entêtes se trouvent dans le  dossier `./toolset/include/` (ligne 9) et les sources, dans le dossier .`/toolset/src/` (lignes 8 et 10). Le nom de la cible est indiqué à la ligne 11 en utilisant la varibale `${CMAKE_PROJECT_NAME}`, définie dans le `CMakeLists.txt` du projet.
+> **Note**: Le fichier indique que les entêtes se trouvent dans le  dossier `./toolset/include/` (ligne 9) et les sources, dans le dossier .`/toolset/src/` (lignes 8 et 10). Le nom de la cible est indiqué à la ligne 11 en utilisant la varibale `${CMAKE_PROJECT_NAME}`, définie dans le `CMakeLists.txt` global du projet.
 
-Après le makefile de la lib *toolset*, on remplit le fichier `./tests/CMakeLists.txt` pour les *tests unitaires*. Pour cela, on se sert d'une [astuce][6] qui consiste à définir *googletest* comme une dépendance extérieure et à générer toutes les cibles au moment de la configuration --- la dépendance à googletest est déclarée dans un fichier de configuration intermédiaire, `./deps/gtest/CMakeLists.txt.in`.
+Après le makefile de la lib *toolset*, on remplit le fichier `./tests/CMakeLists.txt` pour les *tests unitaires*. Pour cela, on se sert d'une [astuce][5] qui consiste à définir *googletest* comme une dépendance extérieure et à générer toutes ses cibles au moment de la configuration --- la dépendance à *googletest* est déclarée dans un fichier de configuration intermédiaire, `./deps/gtest/CMakeLists.txt.in`.
 
 ### Makefile pour les tests
 
@@ -237,7 +237,7 @@ int main(int argc, char** argv)
 
 ### Validation du test zero
 
-La production de code fournie ci-dessus valide notre test *zero* ! La commande `cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..` génère un makefile système (ou fichier `.sln` sous windows avec [visual studio][7]), et la commande `cmake --build . --config Debug` génère les bonnes cibles, comme on peut le voir sur l'arborescence ci-dessous.
+La production de code fournie ci-dessus valide notre test *zero* ! La commande `cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..` génère un makefile système (ou fichier `.sln` sous windows avec [visual studio][7]), et la commande `cmake --build . --config Debug` génère les bonnes cibles comme on peut le voir sur l'arborescence ci-dessous.
 
 {% highlight bash %}
 .
@@ -262,9 +262,9 @@ La production de code fournie ci-dessus valide notre test *zero* ! La commande `
     └── src
         └── MyParser.cpp
 {% endhighlight %}
-> **Note**: résultat de la commande `cmake --build . --config Debug` sur une machine ubuntu avec gcc-7.5. La lib *toolset* --- `./lib/Debug/libtoolset.a` --- est correctement générée, ainsi que l'exécutable pour les *tests* --- `./bin/Debug/toolset`.
+> **Note**: résultat de la commande `cmake --build . --config Debug` sur une machine ubuntu avec gcc-7.5. La lib *toolset* --- `./lib/Debug/libtoolset.a` --- est correctement générée ainsi que l'exécutable pour les *tests* --- `./bin/Debug/toolset`.
 
-Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qui nous indique qu'aucun test n'a été défini --- ce qui est tout à fait normal.
+Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qui nous indique qu'aucun test n'a été défini --- ce qui est tout à fait normal. La suite de l'exercice consiste à définir les tests unitaires qui permettront de valider chacune des fonctionnalités de la lib toolset à terme. 
 
 {% highlight bash %}
 > ./bin/Debug/toolset
@@ -275,7 +275,7 @@ Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qu
 {% endhighlight %}
 > **Note**: les sources sont disponibles sur [github][8], pour les impatients.
 
-La suite de l'exercice consiste à définir les tests unitaires qui permettront de valider chacune des fonctionnalités de la lib toolset à terme. Maintenant que la mise en place de l'espace de travail est faite, on peut véritablement entrer dans le cycle vertueux des *TDD*.
+Maintenant que la mise en place de l'espace de travail est faite, on peut véritablement entrer dans le cycle vertueux des *TDD*.
 
 ## Conclusion
 
@@ -283,7 +283,7 @@ Le plus dur du travail est fait avec cette mise en place. C'est très important 
 
 Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implémentation des fonctionnalités de la lib. On verra que l'approche TDD eprmet d'envisager sereinement l'évolution du code et le refactoring.
 
-[1]: https://cmake.org/
+[1]: https://cmake.org/cmake/help/v3.8/
 [2]: https://git-scm.com/
 [3]: https://github.com/
 [4]: https://github.com/google/googletest
