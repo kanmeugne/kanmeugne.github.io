@@ -9,13 +9,13 @@ tags:
     - tdd
 ---
 
-Dans la [première partie][9] de cet exercice, je me suis concentrer sur la mise en place de l'espace de travail et la validation du test zero, qui est tout simplement la compilation.
+Dans la [première partie][6] de cet exercice, je me suis concentré sur la mise en place de l'espace de travail et la validation du test zero (qui est tout simplement la compilation).
 
-On va se concentrer maintenant sur l'implémentation des fonctionnalités de la lib. On verra en quoi l'approche TDD permet d'envisager sereinement l'évolution du code et le refactoring.
+On va se concentrer maintenant sur l'implémentation des fonctionnalités de la lib témoin. On verra en quoi l'approche TDD permet d'envisager sereinement l'évolution du code et le refactoring.
 
 ## Le mindset
 
-Pour rappel, le [developpeur TDD][9] respecte le cycle suivant :
+Pour rappel, le [developpeur TDD][6] respecte le cycle suivant :
 1. Écrire des petits tests
 2. S'assurer que les tests échouent dans un premier temps
 3. Écrire le code qui permet passer le test
@@ -24,12 +24,11 @@ Pour rappel, le [developpeur TDD][9] respecte le cycle suivant :
 6. S'assurer que le test passe toujours
 7. Retourner à l'étape 1.
 
-La particularité de cette approche est qu'on définit les tests en premier lieu, et la production de code a pour objectif de les valider.
+La particularité de cette approche est qu'on définit les tests en premier lieu --- la production de code a pour objectif de les valider.
 
 ## Le premier test
 
-Pour commencer la production de notre lib toolset, il faut donc prélablement définir un test qui sensé échoué dans l'état actuel du code. Commençons par le test ci-dessous qui pourrait se traduire par :
-> **Traduction en langage naturel** : La fonction `convertToLowerCase` du parser convertit la lettre "L" majuscule en "l" minuscule
+Pour commencer la production de notre lib *toolset*, il faut donc prélablement définir un test qui est sensé échoué dans l'état actuel du code. Commençons par le test ci-dessous : 
 
 ```c++
 class ParserTest : public Test{};
@@ -46,9 +45,11 @@ TEST(ParserTest, Parser_LowerSingleLetter)
 // ...
 ```
 
+> **Traduction en langage naturel** : La fonction `convertToLowerCase` du parser convertit la lettre "L" majuscule en "l" minuscule
+
 Quelques mots clefs dans cette définition nécessitent une petite explication :
-- `TEST` est une macro qui permet de définir un test unitaire, et `ASSERT_EQ` une autre MACRO qui permet de tester si 2 variables ont la même valeur (voir la [documentation de googletest][4] pour plus d'infos sur les macros disponibles).
-- La déclaration de la classe `ParserTest` (dérivée de `testing::Test`) permet de regrouper les tests par thématique --- comme on le verra plus bas, ce mécanisme de classe permet aussi de définir des [fixtures][4].
+- `TEST` est la macro *googletest* qui permet de définir un test unitaire. `ASSERT_EQ` est une autre MACRO qui permet de tester si 2 variables ont la même valeur (voir la [documentation de googletest][4] pour plus d'infos sur les macros disponibles).
+- La déclaration de la classe `ParserTest` (dérivée de `testing::Test`) permet de regrouper les tests par thématique --- comme on le verra plus bas, ce mécanisme permet aussi de définir des [fixtures][4].
 - `Parser_LowerSingleLetter` : est le nom du test. Très utile quand il faudra lire les résultats des tests sur la console.
 
 Le test défini ci-dessus est simple (une assertion) avec un objectif exprimable en langage naturel : *le parseur doit transformer la lettre L (majuscule) en la lettre l (minuscule)*. Produisons maintenant qui permet de le valider.
@@ -99,9 +100,9 @@ Expected equality of these values:
  1 FAILED TEST
 ```
 
-En d'autre termes, le test `Parser_LowerSingleLetter` échoue car la valeur obtenue par le *parser* --- la chaine de caractère vide --- ne correspond pas à la valeur attendue --- "l". Pour que le test soit validé, il faut produire une implémentation correcte de la fonction `MyParser::convertToLowerCase` dans `MyParser.cpp`.
+En d'autre termes, le test `Parser_LowerSingleLetter` échoue car la valeur obtenue par le *parser* --- la chaine de caractère vide --- ne correspond pas à la valeur attendue --- "l".
 
-Pour cela, disons que la fonction **parcourt la chaine de caractères, transforme en minuscules tous les caractères et les rajoute dans la variable de sortie**. Ce qui nous donne l'implémentation suivante :
+Pour que le test soit validé, il faut produire une implémentation correcte de la fonction `MyParser::convertToLowerCase` dans `MyParser.cpp`. Pour cela, disons que la fonction **parcourt la chaine de caractères, transforme en minuscules tous les caractères et les rajoute dans la variable de sortie**. Ce qui nous donne l'implémentation suivante :
 
 ```c++
 //MyParser::convertToLowerCase
@@ -113,7 +114,7 @@ void MyParser::convertToLowerCase(const std::string &input, std::string &output)
 }
 ```
 
-Avec cette implémentation, le test est OK. On a produit le code qui valide notre premier test unitaire --- je laisseau lecteur le soin de rajouter d'autres tests sur cette première fonction pour éprouver le code s'il le souhaite.
+Avec cette implémentation, le test est OK. On a produit le code qui valide notre premier test unitaire --- je laisse au lecteur le soin de rajouter d'autres tests sur cette première fonction pour éprouver le code s'il le souhaite.
 
 ```bash
 [==========] Running 1 test from 1 test suite.
@@ -131,7 +132,7 @@ Avec cette implémentation, le test est OK. On a produit le code qui valide notr
 
 ## Red, Green, Refactor
 
-Ecrivons notre deuxième test pour la deuxième fonction, 
+Ecrivons notre deuxième test pour la deuxième fonction :
 
 ```c++
 TEST(ParserTest, Parser_UpperSingleLetter)
@@ -145,7 +146,9 @@ TEST(ParserTest, Parser_UpperSingleLetter)
 }
 ```
 
-Comme le premier, le deuxième test échoue puisque la fonction `MyParser::convertToUpperCase` n'est pas définie. Effectuons les modifications de code qui permettent de valider le test. Tout d'abord, la mise à jour des définitions dans le fichier `./toolset/include/MyParser.h`,
+Comme le premier, le deuxième test échoue puisque la fonction `MyParser::convertToUpperCase` n'est pas définie. Effectuons les modifications de code qui permettent de valider le test.
+
+Tout d'abord, la mise à jour des définitions dans le fichier `./toolset/include/MyParser.h`,
 
 ```c++
 class MyParser
@@ -189,14 +192,14 @@ L'exécution des tests renvoie maintenant le résultat suivant :
 
 On voit que le premier test reste valide --- ce qui signifie qu'il n'y a pas eu de regression --- et que le deuxième test est également OK. La logique de production est toujours la même et peut se résumer en une formule synthétique : **Red**, **Green**, **Refactor** :
 - **Red** (le test échoue d'abord),
-- **Green** (le test passe après une modification du code, tous les tests précédents doivent toujours être valide)
+- **Green** (le test passe après une modification du code, tous les tests précédents doivent toujours être valides)
 - **Refactor** (on restructure le code pour une cohérence d'ensemble et on revérifie que tous les tests passent toujours)
 On remarque le cycle vertueux qui oblige à avancer lentement mais surement en faisant le moins de dégâts possible.
 
 
 ## Cas d'usage de Refactoring
 
-L'approche *TDD* se prête également bien aux tâches de refactoring pures. Dans ces cas on profite des tests déjà définis pour controler la qualité du code.
+L'approche *TDD* se prête également bien aux tâches de refactoring pures. Dans ces cas, on profite des tests déjà définis pour controler la qualité du code.
 
 Pour notre exemple, essayons un refactoring en deux étapes :
 1. Création d'un namespace `utils`, qui contiendra les définitions de la classe `MyParser`.
@@ -204,7 +207,7 @@ Pour notre exemple, essayons un refactoring en deux étapes :
 
 ### Refactoring 1 : ajouter un namespace
 
-Pour la première étape, modifions tout d'abord les tests qui doivent valider le code. La logique des tests n'est pas modifiée (ce qui serait une faute grave), mais juste l'initialisation du *parser*.
+Pour la première étape, modifions tout d'abord les tests qui doivent valider le code. La logique des tests n'est pas modifiée --- ce qui serait une faute grave --- juste l'initialisation du *parser*.
 
 ```c++
 TEST(ParserTest, Parser_LowerSingleLetter)
@@ -228,7 +231,7 @@ TEST(ParserTest, Parser_UpperSingleLetter)
 }
 ```
 
-Naturellement et heureusement, ces tests échouent dans un premier temps puisque `MyParser.h` n'est pas défini dans le bon namespace. Les modifications suivantes vont permettre de les valider.
+Naturellement --- et heureusement --- ces tests échouent dans un premier temps puisque `MyParser.h` n'est pas défini dans le bon namespace. Les modifications suivantes vont permettre de les valider.
 
 D'abord le fichier `./toolset/include/MyParser.h`, 
 ```c++
@@ -256,7 +259,9 @@ Puis le fichier `./toolset/src/MyParser.cpp`, dans lequel il suffira de rajouter
 using namespace utils;
 ```
 
-Les tests refonctionnent! Refactoring réussi en toute sérénité. Maintenant voyons pour le deuxième refactoring.
+Les tests refonctionnent! Refactoring réussi en toute sérénité.
+
+Maintenant voyons pour le deuxième refactoring.
 
 ### Refactoring 2: utiliser une référence unique
 
@@ -272,9 +277,9 @@ public:
 };
 ```
 
-La classe `UniqueParserTest` définit une fixture `UniqueParserTest::_parser` qui est initialisée dans son constructeur.
+La classe `UniqueParserTest` définit une fixture `UniqueParserTest::_parser` qui est initialisée dans `UniqueParserTest::UniqueParserTest()`.
 
-Les tests `UniqueParserTest` vont permettre de valider, d'une part, que la fonction `utils::getParseur` retoune toujours la même instance, et d'autre part, que toutes les fonctionnalités du parseur sont bien présente par cette instance.
+Les tests `UniqueParserTest` vont permettre de valider, d'une part, que la fonction `utils::getParseur` retoune toujours la même instance, et d'autre part, que toutes les fonctionnalités du parseur sont bien présentes par cette instance.
 
 On définit les nouveaux tests suivants --- on notera l'utilisation de la macro `TEST_F` à la place de `TEST`, ce qui permet exploiter les fixtures dans le test :
 
@@ -304,7 +309,9 @@ TEST_F(UniqueParserTest, Parser_UniqueParserUpperSingleLetter)
 ```
 On notera que le test prévoit l'utilisation du type `MyParser_t` -- à définir dans le code à produire -- pour stocker l'instance unique de `MyParser`.
 
-Bonne nouvelle, les tests échouent dans un premier temps, puis (après plusieurs essais), les modifications suivantes permettent de les valider. Dans le fichier `MyParser.h`, 
+Bonne nouvelle, les tests échouent dans un premier temps, puis (après plusieurs essais), les modifications suivantes permettent de les valider.
+
+Tout d'abord le fichier `MyParser.h` :
 
 ```c++
 #ifndef MYPARSER_H
@@ -330,7 +337,7 @@ namespace utils
 #endif // MYPARSER_H
 ```
 
-puis dans le fichier `MyParser.cpp`,
+puis, le fichier `MyParser.cpp` :
 
 ```c++
 #include "MyParser.h"
@@ -370,7 +377,9 @@ On obtient le résulat suivant après l'exécution des tests:
 
 ```bash
 > cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
+## truncated ##
 build> cmake --build . --config Debug
+## truncated ##
 build> ../bin/Debug/toolset_test
 
 ==========] Running 5 tests from 2 test suites.
@@ -396,25 +405,33 @@ build> ../bin/Debug/toolset_test
 [  PASSED  ] 5 tests.
 ```
 
-Le refactoring et l'ajout de la fonction se sont bien déroulés et l'ensemble des tests unitaires définis depuis le début permettent de controler la qualité du code tout au long du refactoring. Ce qui me permet d'insister sur un aspect intéressant de l'approche TDD : les tests ne sont pas jettables. On peut les faire évoluer, comme tout à l'heure avec l'ajout du namespace, mais ce serait dommage de les supprimer car il permettent de contrôler la qualité du code.
+Le refactoring et l'ajout de la fonction se sont bien déroulés et l'ensemble des tests unitaires définis depuis le début permettent de controler la qualité du code tout au long de la production. Ce qui me permet d'insister sur un aspect intéressant de l'approche TDD : les tests ne sont pas jettables --- on peut les faire évoluer, comme tout à l'heure avec l'ajout du namespace, mais ce serait dommage de les supprimer car il permettent de contrôler la qualité du code.
 
 ## Conclusion
 
 Le TDD est une approche et pas une technique toute faite. Ce qui signifie qu'il faut s'exercer sur des projets avec rigueur et patience. Plus on s'exerce, plus on a de bons réflexes.
 
-Même si les styles de programmation et les langages varient et qu'il est difficile de faire des généralités, on peut quand même définir quelques bonnes pratiques, valable pour tous types de projet.
-
-J'en cite 3 :
+Même si les styles de programmation et les langages varient et qu'il est difficile de faire des généralités, on peut quand même définir quelques bonnes pratiques, valable pour tous types de projet. J'en cite 3 :
 - les tests doivents êtres simples et exprimables en langage naturel
-- on doit absolument s'interdire de faire évoluer le code sans avoir défini les tests qui permettront de valider la production,
-- il faut diversifier au maximum l'objet des tests (ne pas tester les même choses), ce sera possible en envisageant le maximum de cas d'usage possible. Le lecteur pourra consulter les ouvrages sur le sujet pour se faire une idée plus complète des [méthologies TDD][9].
+- on doit absolument s'interdire de faire évoluer le code sans avoir défini les tests qui permettront de valider la production
+- il faut diversifier au maximum l'objet des tests (ne pas tester les même choses) --- ce qui sera possible en envisageant le maximum de cas d'usage possible. Le lecteur pourra consulter les ouvrages sur le sujet pour se faire une idée plus complète des [méthologies TDD][9].
 
-Le code utilisé dans le post est disponible ici. J'attends vos commentaires.
+Le code utilisé dans le post est disponible [ici][8]. J'attends vos commentaires...
+
+## Resources
+
+- [https://cmake.org/cmake/help/v3.8/][1]
+- [https://github.com/google/googletest][4]
+- [https://crascit.com/2015/07/25/cmake-gte][5]
+- [https://github.com/kanmeugne/cppexperiments/tddwithgtest][8]
+- [https://en.wikipedia.org/wiki/Test-driven_development][9]
 
 
-[1]: https://cmake.org/
+[1]: https://cmake.org/cmake/help/v3.8/
 [2]: https://git-scm.com/
 [4]: https://github.com/google/googletest
 [5]: https://crascit.com/2015/07/25/cmake-gte
+[6]: /posts/introduction-tdd-googletest
 [7]: https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
-[9]: /posts/introduction-tdd-googletest
+[9]: https://en.wikipedia.org/wiki/Test-driven_development
+[8]: https://github.com/kanmeugne/cppexperiments/tddwithgtest
