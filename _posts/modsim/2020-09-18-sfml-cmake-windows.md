@@ -1,11 +1,13 @@
 ---
-title:  "Portable C++ SFML app with CMake <it><small> (linux and windows)</small></it> "
+title:  "Building a Portable & Cross-Platform SFML app with CMake and C++"
 teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on (especially if you don't want to carry over binary files inside your source code repositories). In this post, I wanted to share an approach, that I have found very straigthforward, for packaging a project with external dependencies using CMake."
 tags:
     - sfml
     - cmake
     - c++
     - modeling
+    - linux
+    - windows
 categories:
     - modeling & simulation
 ---
@@ -41,7 +43,7 @@ project/
 ├── lib
 └── build
 ```
-> **Note**: there is a global CMakeLists.txt file to set the targets folder locations. The graphical app target and the SFML dependency configuration are defined in a sub-folder.
+> **Note**: there is a global CMakeLists.txt file to set the targets folders locations. The graphical app target and the SFML dependency configuration are defined in a sub-folder.
 
 ### The Global *CMakeList.txt*
 
@@ -173,12 +175,12 @@ int main()
   return 0;
 }
 ```
-> **Note**: The main.cpp file lauches two threads : one for the logic of the application. The source code is cross-platform (Linux and Windows)
+> **Note**: The main.cpp file launches two threads : one for the logic of the application and another for the display. The source code is cross-platform (Linux and Windows)
 
 
 ## Configuration and build
 
-If you forked the full source code from [here][1] (to get `App.h` and `App.cpp`), you should be able to type the following lines in a terminal at the root of the project folder.
+If you fork the full source code from [here][1] (to get `App.h` and `App.cpp`), you should be able to type the following lines in a terminal at the root of the project folder.
 
 On windows
 ```shell
