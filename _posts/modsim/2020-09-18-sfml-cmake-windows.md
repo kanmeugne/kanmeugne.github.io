@@ -1,6 +1,6 @@
 ---
-title:  "Building a Portable & Cross-Platform SFML app with CMake and C++"
-teaser: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on (especially if you don't want to carry over binary files inside your source code repositories). In this post, I wanted to share an approach, that I have found very straigthforward, for packaging a project with external dependencies using CMake."
+title:  "Building a Portable C++ Graphical App with CMake"
+description: "Building a portable <a href='https://www.sfml-dev.org/documentation/2.5.1/'> SFML </a> application can be a huge pain, disregarding the OS you are working on (especially if you don't want to carry over binary files inside your source code repositories). In this post, I wanted to share an approach, that I have found very straigthforward, for packaging a project with external dependencies using CMake."
 tags:
     - sfml
     - cmake
