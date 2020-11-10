@@ -11,60 +11,84 @@ categories:
     - modeling & simulation
 ---
 
-Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents. In fact, 2D Grids can be seen as partitions of the space and therefore provide an excellent framework for path planning and collision avoidance algorithms deployment. More, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. This is what I am going to show in this post. I am upgrading an existing *object oriented architecture* that [I shared recently][1]. Back then, I was proposing a starting point for those who wanted to have a 2D Grid in their simulation app and the features were limited to grid dimension setting and visualization. Now, I am attaching state variables to grid cells in order to add a simple obstacles management feature. A short implementation in C++ is provided for demonstration.
+Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. 
+
+In this post, I am upgrading an existing *object oriented architecture* that [I shared recently][1] as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells --- a complete implementation in C++ is also provided for demonstration.
+
 
 {% plantuml %}
 @startuml
-header
-<font color=blue>Fig. 1.</font> Updated Architecture with obstacle manipulation features and better integration of viewers.
-I have updated 3 existing objects — App, IGrid and Grid — and created 3 new objects — ObstacleViewer, IGrid::ICellFunctor and ViewerMgr.
-end header
-scale 0.8
-package geometry <<Frame>>
+header: <size:10> <font color=blue>Fig. 1.</font> Architecture of our 2D Grid App </size>
+
+class App {}
+
+package env 
 {
-    class Point 
-    class Segment 
-    interface ISegmentFunctor 
+    
 }
-interface ICellFunctor 
-abstract class AbstractViewer 
-class App 
-class CELL 
-class GridViewer extends AbstractViewer 
-class ViewerMgr extends AbstractViewer
-class ObstacleViewer extends AbstractViewer 
-interface IGrid 
-class Grid implements IGrid 
-IGrid <.. CELL : subtype <
-Grid *--> CELL 
-App o-> IGrid : controls >
-App o-- AbstractViewer
-ViewerMgr o--> AbstractViewer
-Segment *-> Point : has 2 >
-ISegmentFunctor .> Segment
-GridViewer ..> geometry
-IGrid <.. ICellFunctor : subtype <
-ICellFunctor ..> CELL
-ObstacleViewer ..> ICellFunctor : runs >
+
+package viewers
+{
+}
+
+package geometry
+{
+}
+
+App ..> viewers
+App ..> env
+viewers ..> geometry
+
 hide members
+@enduml
+
 {% endplantuml %}
 
-For that purpose, I have made some improvements on the [previous architecture][1], as you can see in **Fig. 1**.
+```terminal
+sfml2dgrid
+.
+├── CMakeLists.txt
+├── deps
+│   └── sfml
+│       └── CMakeLists.txt.in
+└── sfml2dgrid
+    ├── CMakeLists.txt
+    ├── main.cpp
+    ├── app
+    │   ├── include
+    │   │   └── App.h
+    │   └── src
+    │       └── App.cpp
+    ├── env
+    │   ├── include
+    │   │   ├── Grid.h
+    │   │   └── IGrid.h
+    │   └── src
+    │       └── Grid.cpp
+    ├── geometry
+    │   └── include
+    │       └── geometry.h
+    └── viewers
+        ├── include
+        │   ├── AbstractViewer.h
+        │   └── GridViewer.h
+        └── src
+            ├── AbstractViewer.cpp
+            └── GridViewer.cpp
+```
+> **Note**: the file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
 
-Briefly, I have updated 3 existing objects --- *App*, *IGrid* and *Grid* --- and created 3 new objects --- *ObstacleViewer*, *IGrid::ICellFunctor* and *ViewerMgr*. More details below.
+Comparing to the [previous version][1], I have updated 3 existing objects --- *App*, *env::IGrid* and *env::Grid* --- and created 3 new objects --- *viewers::ObstacleViewer*, *env::ICellFunctor* and *viewers::ViewerMgr*. More details below.
 
 ## App
 
-The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). To keep things simple, an obstacle is represented as a non-zero value in a cell --- so *App::addObstacle* and *App::removeObstacle* effect will be to set the value of a given *IGrid::CELL* object (selected by the mouse click).
+The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). As I teased in the introdution, state variables are associated to grid cells in order to store occupancy information --- this is how the model handle obstacles : if a cell occupied, it is considered as an obstacle.
+
 {% plantuml %}
 @startuml
 header: <font color=blue>Fig. 2.</font> App Object (with <i>addObstacle</i> and <i>removeObstacle</i>)
 scale 0.9
 class App {
-    + {static} const int DEFAULT_HEIGHT
-    + {static} const int DEFAULT_WIDTH
-    + {static} const int DEFAULT_RESX
-    + {static} const int DEFAULT_RESY
     + void run()
     + void display()
     + bool addObstacle(int, int)
@@ -86,9 +110,77 @@ hide AbstractViewer members
 @enduml
 {% endplantuml %}
 
+**App.h**
+
+```c++
+#ifndef APP_H
+#define APP_H
+
+namespace sf
+{
+	class RenderWindow;
+};
+
+namespace env
+{
+	class IGrid;
+};
+
+namespace viewers
+{
+	class AbstractViewer;
+};
+
+class App
+{
+private:
+	// sfml render window
+	sf::RenderWindow *_window = nullptr;
+	// the 2D grid pointer
+	env::IGrid *_grid = nullptr;
+	// a pointer to the viewer
+	// this could be a set of viewer actually
+	// if we consider component behavior
+	viewers::AbstractViewer *_viewer = nullptr;
+
+public:
+	// theorical width of the environment
+	// will match the grid width in terms of number of cells.
+	static const int DEFAULT_WIDTH;
+	// theorical height of the environment.
+	static const int DEFAULT_HEIGHT;
+	// x-resolution of the grid i.e. the x-size of a cell
+	static const int DEFAULT_RESX;
+	// y-resolution of the grid i.e. the y-size of a cell
+	static const int DEFAULT_RESY;
+	// attach window to the app
+	void setWindow(sf::RenderWindow *);
+	// attach a specific viewer
+	void setViewer(viewers::AbstractViewer *);
+	// attach a grid (should have been initialized)
+	void setGrid(env::IGrid *);
+	// return the attached grid
+	env::IGrid *getGrid();
+	// return the attached window
+	sf::RenderWindow *getWindow();
+	// run the application (the logic)
+	void run();
+	// show content (display routines)
+	void display();
+	// add obstacle control
+	bool addObstacle(int, int);
+	// remove obstacle control
+	bool removeObstacle (int, int);
+
+	App() = default;
+	virtual ~App();
+};
+#endif // !APP_H
+```
+
 ## IGrid
 
-The *IGrid* interface is augmented with 3 more methods --- *IGrid::iAddObstacle*, *IGrid::iRemoveObstacle* and *IGrid::iIsObstacle* --- necessary to edit the status of a *IGrid::CELL* status (*IGrid::iAddObstacle* and *IGrid::iRemoveObstacle*) and to check whether a given *IGrid::CELL* is an obstacle or not (*IGrid::iIsObstacle*). *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells - *IGrid::ICellFunctor* - as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
+The *IGrid* interface is augmented with 3 more methods --- *IGrid::iAddObstacle*, *IGrid::iRemoveObstacle* and *IGrid::iIsObstacle* --- necessary to edit the state of a *CELL* status (*IGrid::iAddObstacle* and *IGrid::iRemoveObstacle*) and to check whether a given *CELL* is an obstacle or not (*IGrid::iIsObstacle*). *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells - *env::ICellFunctor* - as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
 {% plantuml %}
 @startuml
