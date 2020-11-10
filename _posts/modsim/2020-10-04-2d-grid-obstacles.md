@@ -1,6 +1,6 @@
 ---
-title:  "2D-Grid with obstacles"
-teaser: "In a previous article, I shared a C++ project for 2D-grid manipulation. I presented an architecture that could be easily extended to include different types of controls and views. In this post, I am showing a way it is to add obstacles manipulation to the porject and to keep track of them."
+title:  "2D Grid with obstacles"
+teaser: "Building a 2D Grid is a very common exercice in computer vision, fluid simulation, navigation flow simulation, etc. In this post, I am sharing a C++ code for 2D Grid manipulation with obstacle management."
 tags:
     - sfml
     - cmake
@@ -11,7 +11,7 @@ categories:
     - modeling & simulation
 ---
 
-As I mentioned in a [previous post][1], having a 2D-Grid alone is not really the point of this work. The source code I am sharing is meant to be used within a simulation framework, where we need to model a trackable space. With that in mind, I am going to extend the original architecture in order to add obstacle manipulation, i.e. the possibility to add and remove obstacles in our 2D-Grid environment with some given controls.
+Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents. In fact, 2D Grids can be seen as partitions of the space and therefore provide an excellent framework for path planning and collision avoidance algorithms deployment. More, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. This is what I am going to show in this post. I am upgrading an existing *object oriented architecture* that [I shared recently][1]. Back then, I was proposing a starting point for those who wanted to have a 2D Grid in their simulation app and the features were limited to grid dimension setting and visualization. Now, I am attaching state variables to grid cells in order to add a simple obstacles management feature. A short implementation in C++ is provided for demonstration.
 
 {% plantuml %}
 @startuml
