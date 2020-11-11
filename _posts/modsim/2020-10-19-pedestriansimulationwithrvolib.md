@@ -7,4 +7,5 @@ tags:
     - sma
     - stigmergy
     - mas
+published: false
 ---
