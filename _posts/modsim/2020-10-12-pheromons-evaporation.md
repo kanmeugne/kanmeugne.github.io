@@ -396,7 +396,7 @@ The interested reader can fork the complete source code from [here][5] and run t
 
 {% highlight shell %}
   # on windows
-  $ cmake  -G "Visual Studio 15 2017" -S . -B ./build 
+  $ cmake  -G "Visual Studio $(Version)" -S . -B ./build 
   $ cmake  --build ./build --config Debug --target app
   $ ./bin/Debug/app
 
