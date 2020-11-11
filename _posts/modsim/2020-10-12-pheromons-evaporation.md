@@ -27,7 +27,7 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
-{% plantuml %}
+<!-- {% plantuml %}
 @startuml
 header: <size:10> <font color=blue>Fig. 1.</font> Architecture of our 2D Grid App </size>
 
@@ -53,7 +53,7 @@ viewers ..> geometry
 hide members
 @enduml
 
-{% endplantuml %}
+{% endplantuml %} -->
 
 ```terminal
 sfml2dgrid
@@ -100,7 +100,7 @@ sfml2dgrid
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
 
-{% plantuml %}
+<!-- {% plantuml %}
 @startuml
 scale 0.9
 title: <size:10>Fig. 2. App and IGrid improvements</size>
@@ -160,7 +160,7 @@ hide Grid members
 hide ICellFunctor members
 hide App fields
 @enduml
-{% endplantuml %}
+{% endplantuml %} -->
 
 *App::evaporate* will take a *time interval* as parameter in order to schedule the *evaporation process* --- I use [SFML *clocks*][4] to implement this.
 
@@ -356,7 +356,7 @@ The interested reader can refer to the [source code][5] to check/set the value f
 To visualize *pheromons* and especially the *evaporation process*, I added a *PheromonViewer* that will be called in the *App::display* method. *PheromonViewer::iDraw*  applies an *ICellFunctor* on every cell of the grid --- if their corresponding amount of pheromon is greater than zero --- that draws a red mark on the screen according to their current state.
 
 
-{% plantuml %}
+<!-- {% plantuml %}
 @startuml
 header
 <font color=blue>Fig. 4.</font> ViewerMgr is a meta viewer that agregates more than one viewer.
@@ -387,7 +387,7 @@ PheromonViewer ..> ICellFunctor : runs >
 hide PheromonViewer field
 hide ICellFunctor field
 hide ViewerMgr field
-{% endplantuml %}
+{% endplantuml %} -->
 
 **PheromonViewer.h**
 ```c++
