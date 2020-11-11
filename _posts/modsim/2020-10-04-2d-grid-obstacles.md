@@ -16,34 +16,6 @@ Using a regular 2D Grid to model the navigable space is a good choice if you wan
 In this post, I am upgrading an existing *object oriented architecture* that [I shared recently][1] as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells --- a complete implementation in C++ is also provided for demonstration.
 
 
-<!-- {% plantuml %}
-@startuml
-header: <size:10> <font color=blue>Fig. 1.</font> Architecture of our 2D Grid App </size>
-
-class App {}
-
-package env 
-{
-    
-}
-
-package viewers
-{
-}
-
-package geometry
-{
-}
-
-App ..> viewers
-App ..> env
-viewers ..> geometry
-
-hide members
-@enduml
-
-{% endplantuml %} -->
-
 ```terminal
 sfml2dgrid
 .
@@ -86,32 +58,6 @@ Comparing to the [previous version][1], I have updated 3 existing objects --- *A
 
 The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). As I teased in the introdution, state variables are associated to grid cells in order to store occupancy information --- this is how the model handle obstacles : if a cell occupied, it is considered as an obstacle.
 
-<!-- {% plantuml %}
-@startuml
-header: <font color=blue>Fig. 2.</font> App Object (with <i>addObstacle</i> and <i>removeObstacle</i>)
-scale 0.9
-class App {
-    + void run()
-    + void display()
-    + bool addObstacle(int, int)
-    + bool removeObstacle(int, int)
-}
-
-note right
-App object has 2 more methods
-# App::addObstacle
-# App::removeObstacle
-end note
-abstract class AbstractViewer <<viewers>>
-interface IGrid <<env>>
-App o-- AbstractViewer
-App o--> IGrid : controls >
-hide IGrid members
-hide AbstractViewer members
-hide App fields
-
-@enduml
-{% endplantuml %} -->
 
 **App.h**
 
@@ -187,59 +133,6 @@ The *IGrid* interface is augmented with 3 obstacle-related methods --- *IGrid::i
 
 *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells --- *env::ICellFunctor* --- as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
-<!-- {% plantuml %}
-@startuml
-header
-<font color=blue>Fig. 3.</font> Evolution of the IGrid interface, with 3 more methods :
-<i>iAddObstacle</i>, <i>iRemoveObstacle</i> and <i>iIsObstacle</i>
-end header
-scale 0.8
-class App 
-class CELL <<env>> {
-    + int id
-    + bool mask
-}
-interface ICellFunctor <<env>> {
-    + void operator(const CELL&)
-}
-interface IGrid <<env>> {
-    + bool iInitialize()
-    + int iGetSizeX()
-    + int iGetSizeY()
-    + int iGetResolutionX()
-    + int iGetResolutionY()
-    + int iGetNumberOfCells()
-    + bool iGetCellPosition(CELL, int&, int&)
-    + bool iGetCellLocation(CELL, int&, int&)
-    + bool iGetCellNumber(int, int, CELL&)
-    + bool iGetContainingCell(const int, const int, CELL&)
-    + bool iIsWithinCell(const int, const int, const CELL&)
-    + bool iAddObstacle(const CELL&)
-    + bool iRemoveObstacle(const CELL&)
-    + bool iIsObstacle(const CELL&)
-    + void iApplyOnCells(ICellFunctor &)
-}
-note right
-IGrid defines 4 more methods :
-# IGrid::iAddObstacle : add an obstacle in the grid
-# IGrid::iRemoveObstacle : remove an obstacle from the grid
-# IGrid::iIsObstacle : to check whether a cell is an obstacle or not
-# IGrid::iApplyOnCells : to apply a function on grid cells
-end note
-class Grid <<env>> implements IGrid {
-}
-IGrid ..> CELL
-IGrid .> ICellFunctor
-ICellFunctor .> CELL
-Grid *--> CELL
-App o--> IGrid
-hide App members
-hide IGrid fields
-hide CELL methods
-hide Grid members
-hide ICellFunctor fields
-@enduml
-{% endplantuml %} -->
 
 **IGrid.h**
 ```c++
@@ -330,39 +223,6 @@ namespace env
 ## ViewerMgr and ObstacleViewer
 
 *ViewerMgr* is a special *AbstractViewer* that agregates (cf. Composite pattern) other *AbstractViewer* with the method *ViewerMgr::iAddViewer*. I introduce this pattern in order to separate view concerns and to be able to activate several views at the same time. We will use this *meta* viewer to attach an *ObstacleViewer* to the App in order to display the grid lines and the obstacles at the same time.
-
-<!-- {% plantuml %}
-@startuml
-header
-<font color=blue>Fig. 4.</font> ViewerMgr is a meta viewer that agregates more than one viewer.
-It will be used to add a viewer for obstacle (ObstacleViewer) next to the viewer for
-lines (GridViewer) without changing the relationship between App and AbstractViewer
-end header
-scale 0.9
-interface ICellFunctor <<env>> {
-    + virtual void operator(const CELL)
-}
-abstract class AbstractViewer <<viewers>> {
-    + void iActivate()
-    + void iDeactivate()
-    + void iIsActive()
-    + void iSetApp(App*)
-    + void iDisplay();
-    # {abstract} void iDraw()
-    # bool _active = false
-}
-class ObstacleViewer <<viewers>> extends AbstractViewer {
-    - drawObstacles(ICellFunctor&)
-}
-class ViewerMgr <<viewers>> extends AbstractViewer {
-    + void iAddViewer(AbstractManager*)
-}
-ViewerMgr o--> AbstractViewer
-ObstacleViewer ..> ICellFunctor : runs >
-hide ObstacleViewer field
-hide ICellFunctor field
-hide ViewerMgr field
-{% endplantuml %} -->
 
 **AbstractViewer.h**
 ```c++

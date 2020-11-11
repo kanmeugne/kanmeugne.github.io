@@ -27,33 +27,6 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
-<!-- {% plantuml %}
-@startuml
-header: <size:10> <font color=blue>Fig. 1.</font> Architecture of our 2D Grid App </size>
-
-class App {}
-
-package env 
-{
-    
-}
-
-package viewers
-{
-}
-
-package geometry
-{
-}
-
-App ..> viewers
-App ..> env
-viewers ..> geometry
-
-hide members
-@enduml
-
-{% endplantuml %} -->
 
 ```terminal
 sfml2dgrid
@@ -99,68 +72,6 @@ sfml2dgrid
 ## Pheromon modeling and evaporation
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
-
-<!-- {% plantuml %}
-@startuml
-scale 0.9
-title: <size:10>Fig. 2. App and IGrid improvements</size>
-class App {
-    + void run()
-    + void display()
-    + bool addObstacle(int, int)
-    + bool removeObstacle(int, int)
-    + bool addPheromon(int, int)
-    + void evaporate(int)
-}
-note right
-<i>App::evaporate</i> will be responsible of the evaporation process
-<i>App::addPheromon</i> will be used to add pheromon on a selected cell
-end note
-class CELL <<env>> {
-    + int id
-    + bool mask
-    + float tau
-}
-interface ICellFunctor <<env>> {
-    + virtual void operator(const CELL)
-}
-interface IGrid <<env>> {
-    + bool iInitialize()
-    + int iGetSizeX()
-    + int iGetSizeY()
-    + int iGetResolutionX()
-    + int iGetResolutionY()
-    + int iGetNumberOfCells()
-    + bool iGetCellPosition(const CELL&, int&, int&)
-    + bool iGetCellCoordinates(const CELL&, int&, int&)
-    + bool iGetCellNumber(int, int, CELL&)
-    + bool iGetContainingCell(const int, const int, CELL&)
-    + bool iIsWithinCell(const int, const int, const CELL&)
-    + bool iAddObstacle(const CELL&)
-    + bool iRemoveObstacle(const CELL&)
-    + bool iIsObstacle(const CELL&)
-    + bool iAddPheromon(const CELL&)
-    + void iUpdatePheromon(const CELL&)
-}
-note right
-<i>IGrid</i> defines <i>iAddPheromon</i>,
-to add an amount of pheromon in a given CELL
-
-and <i>iUpdatePheromon</i> to apply evaporation.
-end note
-class Grid implements IGrid 
-IGrid ..> CELL
-IGrid ..> ICellFunctor
-ICellFunctor ..> CELL
-Grid *---> CELL
-App o--> IGrid
-hide IGrid fields
-hide CELL methods
-hide Grid members
-hide ICellFunctor members
-hide App fields
-@enduml
-{% endplantuml %} -->
 
 *App::evaporate* will take a *time interval* as parameter in order to schedule the *evaporation process* --- I use [SFML *clocks*][4] to implement this.
 
@@ -355,39 +266,6 @@ The interested reader can refer to the [source code][5] to check/set the value f
 
 To visualize *pheromons* and especially the *evaporation process*, I added a *PheromonViewer* that will be called in the *App::display* method. *PheromonViewer::iDraw*  applies an *ICellFunctor* on every cell of the grid --- if their corresponding amount of pheromon is greater than zero --- that draws a red mark on the screen according to their current state.
 
-
-<!-- {% plantuml %}
-@startuml
-header
-<font color=blue>Fig. 4.</font> ViewerMgr is a meta viewer that agregates more than one viewer.
-It will be used to add a viewer for pheromon (PheromonViewer) next to the viewers for
-lines (GridViewer) and obstacles (ObstacleViewer) without changing the relationship between App and AbstractViewer
-end header
-scale 0.9
-interface ICellFunctor <<env>> {
-    + virtual void operator(const CELL)
-}
-abstract class AbstractViewer <<viewers>> {
-    + void iActivate()
-    + void iDeactivate()
-    + void iIsActive()
-    + void iSetApp(App*)
-    + void iDisplay();
-    # {abstract} void iDraw()
-    # bool _active = false
-}
-class PheromonViewer <<viewers>> extends AbstractViewer {
-    - drawPheromon(env::ICellFunctor &)
-}
-class ViewerMgr <<viewers>> extends AbstractViewer {
-    + void iAddViewer(AbstractManager*)
-}
-ViewerMgr o--> AbstractViewer
-PheromonViewer ..> ICellFunctor : runs >
-hide PheromonViewer field
-hide ICellFunctor field
-hide ViewerMgr field
-{% endplantuml %} -->
 
 **PheromonViewer.h**
 ```c++
