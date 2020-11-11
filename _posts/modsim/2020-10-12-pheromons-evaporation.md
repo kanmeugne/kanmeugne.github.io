@@ -27,6 +27,8 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
+![Fig. 1.](http://www.plantuml.com/plantuml/svg/JOzHJe0m38RVUugUO8YFP2wG63t7s0eiRenq6qQ9TvSfKVhsV_tx9UrJrfnByB2GjiGTokG-gMiV5CefhXbDz96VHbz8lRXPO2jaKnSA1pQBosHoOS8uOIoCZy_uoixYi6qecwfI0CRhb7xGyGMmQVEcPq9QTuG3y1ouuTtHEt62umvdYe4oV_pIQX92_LMlN8rmiPh_hs1nbZ1G66kzfzMU7ty3)
+
 
 ```terminal
 sfml2dgrid
@@ -72,6 +74,8 @@ sfml2dgrid
 ## Pheromon modeling and evaporation
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
+
+![Fig. 2.](http://www.plantuml.com/plantuml/svg/bPJVRzCm4CVV_LVS4-fWwmPlL5MqgM9JfObDGuZnwCRNzeJZY-nBqORutx7TBBYq555LINptkH-sxklB8DfBrrWLQcqHBiRlbP1OdC0qq3DEtbvKrxGQmxinNBKjQ6TWVkF903Mjvmqsw2HCpnDRgThg43BtGq7ylO4DHzHtRdHI6Wo5rkgdmRXWjg2DkLi4qRN54JavXVZO0JmsiU0n9YUvNwFdXbq15ALnerlsMd2KFJ-LOq7mj5gBcb8LUvzC1cPwJXLy9sjX4HaCBRj02ul0Iv0r3ic87RIUQmnXI59qifEc2sX0E7KARGz0_6i8QB6MwAtHMeNEGEgjFzJPXzjRc4xHRQfgE5ro0cJA_JSwVElNIyjQG7GNDnb1z4jT8yndQErrvsfXlvTlGruwRRSdnIrw7QbHpIv8Rk2aJDNFGPbZQ8FcZeIqfMSSdPJDtg1yYiR7WzQlUzO736oxTBwFHtpxSH-xPe7-Rfas6tR6BBkJ-Pu3fU1YUw_okFJFWq4pPc_8QS7mNt7RVeQ9FCrX1r1seicHMwMWlaBcXy-3eVFmXMHDxaXK_ZmKUrN8xg_Gmo2zuzmy_9kvAYHQGgLAwNDhjE0XRb-pUGwpnWmkoM60Q2pB9D-fwZMd7UY6EoT9n8C0ALfXHHjqkOfIsfcSPhUHN2KbQblxLCf__ATUN-v8kxqXUx6exMiyhdAPObdgKfMBtt1cNv-TdVNhTCzoMkKiQaq6-p9BGcj2jcGK6fGrlrWoqc2QoDvIrjlrf1fzjajqfcliBm00)
 
 *App::evaporate* will take a *time interval* as parameter in order to schedule the *evaporation process* --- I use [SFML *clocks*][4] to implement this.
 
@@ -266,6 +270,7 @@ The interested reader can refer to the [source code][5] to check/set the value f
 
 To visualize *pheromons* and especially the *evaporation process*, I added a *PheromonViewer* that will be called in the *App::display* method. *PheromonViewer::iDraw*  applies an *ICellFunctor* on every cell of the grid --- if their corresponding amount of pheromon is greater than zero --- that draws a red mark on the screen according to their current state.
 
+![Fig. 4.](http://www.plantuml.com/plantuml/svg/ZP91Yzim48Nl_XKF2iNU4hU7NffcJSEsMmAxj53ejKoiYIrG92EDaotB_lVAZjnWqqCF0V5cvdjvu_aKXBpqHvErJ8fzjZauAwYTSVvsRtgkxdLJudsvUJiKAlpKV6R_s7Ze0CAHXN0QDKXB0ceyDoGSS7IU1yt2MKuzPROJdBKns3Fwm0hYG4hXB-JWFBgMlJiwY_nxUbrS2rX-4eYBs8aOXedCQCi1-LUlrTHALi7jOxpQ3ALlwJcLprfQrmlgbcoZRJCYFHiIxMneTOSzovdPOjjr8smR2PvgkH0oZbBQMQZ9CDwL7p9jXVs1QiRkZesvxsqjpcEpONkgAZnd0F069-sb9uEJqmgkOq-nAw-ZiU3koyD3aRrabEnG6mfXuHw9AVwLUg7fRItwHC9vCPC_C_sxi0lZn5B-mHA3v_5tim3fq1dwdHSVH_aLdgT_-Z9rU3hdHQhkdJFuDNepRd4W4pYckuIQVzvPA7uIjcgPEsLTGKMFQJgForslPmj_NKmUruFz3_nobIfTKpwrFPAbXltDWB-2tMfLBSzZ4Qqig_b9hE5x6r1bhLQyNCH1ir53PNP7CtroJ-8V)
 
 **PheromonViewer.h**
 ```c++
