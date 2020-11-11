@@ -7,6 +7,7 @@ tags:
     - cmake
     - c++
     - tdd
+comments: true
 ---
 
 Dans la [première partie][6] de cet exercice, je me suis concentré sur la mise en place de l'espace de travail et la validation du test zero (qui est tout simplement la compilation).

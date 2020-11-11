@@ -9,6 +9,7 @@ tags:
     - modeling
 categories:
     - modeling & simulation
+comments: true
 ---
 
 Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. 

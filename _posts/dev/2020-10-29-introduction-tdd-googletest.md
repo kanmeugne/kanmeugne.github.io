@@ -8,6 +8,7 @@ tags:
     - cmake
     - c++
     - tdd
+comments: true
 ---
 
 Le [TDD][9] --- **Test-Driven Development** --- fait référence à une approche de developpement informatique dans laquelle le code est toujours produit dans le but de valider des tests préalablement définis. Le but de cette approche est de garantir une qualité optimale du code à n'importe quelle étape du développement.

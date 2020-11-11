@@ -7,6 +7,7 @@ tags:
     - sma
     - stigmergy
     - mas
+comments: true
 ---
 
 Le développement informatique a connu d'importantes évolutions ces dernières années.

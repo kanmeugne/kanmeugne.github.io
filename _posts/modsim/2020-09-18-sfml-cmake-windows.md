@@ -10,6 +10,7 @@ tags:
     - windows
 categories:
     - modeling & simulation
+comments: true
 ---
 
 Few months ago, I found an [article][3] that explains how to use [GoogleTest and GoogleMock][4] --- as an external dependency --- in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to mimic the paradigm and use *SFML* --- as an external dependency --- in a C++ graphical app.
