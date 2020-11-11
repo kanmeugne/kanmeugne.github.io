@@ -9,6 +9,7 @@ group :jekyll_plugins do
   gem "jekyll-seo-tag", "~> 2.6.1"
   gem 'jekyll-gist'
   gem "jekyll-asciidoc"
+  gem "asciidoctor-diagram"
   gem "jekyll-plantuml"
   gem "jekyll-graphviz"
 
