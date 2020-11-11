@@ -71,10 +71,12 @@ sfml2dgrid
     └── viewers
         ├── include
         │   ├── AbstractViewer.h
-        │   └── GridViewer.h
+        │   ├── GridViewer.h
+        │   └── ObstacleViewer.h
         └── src
             ├── AbstractViewer.cpp
-            └── GridViewer.cpp
+            ├── GridViewer.cpp
+            └── ObstacleViewer.cpp
 ```
 > **Note**: the file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
 
@@ -100,12 +102,13 @@ App object has 2 more methods
 # App::addObstacle
 # App::removeObstacle
 end note
-abstract class AbstractViewer
-interface IGrid
+abstract class AbstractViewer <<viewers>>
+interface IGrid <<env>>
 App o-- AbstractViewer
 App o--> IGrid : controls >
 hide IGrid members
 hide AbstractViewer members
+hide App fields
 
 @enduml
 {% endplantuml %}
@@ -180,7 +183,9 @@ public:
 
 ## IGrid
 
-The *IGrid* interface is augmented with 3 more methods --- *IGrid::iAddObstacle*, *IGrid::iRemoveObstacle* and *IGrid::iIsObstacle* --- necessary to edit the state of a *CELL* status (*IGrid::iAddObstacle* and *IGrid::iRemoveObstacle*) and to check whether a given *CELL* is an obstacle or not (*IGrid::iIsObstacle*). *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells - *env::ICellFunctor* - as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
+The *IGrid* interface is augmented with 3 obstacle-related methods --- *IGrid::iAddObstacle*, *IGrid::iRemoveObstacle* and *IGrid::iIsObstacle* --- necessary to edit the state of a *CELL* status (*IGrid::iAddObstacle* and *IGrid::iRemoveObstacle*) and to check whether a given *CELL* is an obstacle or not (*IGrid::iIsObstacle*).
+
+*IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells --- *env::ICellFunctor* --- as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
 {% plantuml %}
 @startuml
@@ -189,90 +194,167 @@ header
 <i>iAddObstacle</i>, <i>iRemoveObstacle</i> and <i>iIsObstacle</i>
 end header
 scale 0.8
-class App {
-    + {static} const int DEFAULT_HEIGHT
-    + {static} const int DEFAULT_WIDTH
-    + {static} const int DEFAULT_RESX
-    + {static} const int DEFAULT_RESY
-    + void run()
-    + void display()
-}
-class CELL {
+class App 
+class CELL <<env>> {
     + int id
-    + int state
+    + bool mask
 }
-interface ICellFunctor {
-    + virtual void operator(const CELL)
+interface ICellFunctor <<env>> {
+    + void operator(const CELL&)
 }
-interface IGrid {
-    + virtual bool iInitialize()
-    + virtual int iGetSizeX() const
-    + virtual int iGetSizeY() const
-    + virtual int iGetResolutionX() const
-    + virtual int iGetResolutionY() const
-    + virtual int iGetNumberOfCells() const
-    + virtual bool iGetCellPosition(CELL, int&, int&) const
-    + virtual bool iGetCellLocation(CELL, int&, int&) const
-    + virtual bool iGetCellNumber(int, int, CELL&) const
-    + virtual bool iGetContainingCell(const int, const int, CELL) const
-    + virtual bool iIsWithinCell(const int, const int, CELL) const
-    + virtual bool iAddObstacle(const CELL)
-    + virtual bool iRemoveObstacle(const CELL)
-    + virtual bool iIsObstacle(const CELL) const
+interface IGrid <<env>> {
+    + bool iInitialize()
+    + int iGetSizeX()
+    + int iGetSizeY()
+    + int iGetResolutionX()
+    + int iGetResolutionY()
+    + int iGetNumberOfCells()
+    + bool iGetCellPosition(CELL, int&, int&)
+    + bool iGetCellLocation(CELL, int&, int&)
+    + bool iGetCellNumber(int, int, CELL&)
+    + bool iGetContainingCell(const int, const int, CELL&)
+    + bool iIsWithinCell(const int, const int, const CELL&)
+    + bool iAddObstacle(const CELL&)
+    + bool iRemoveObstacle(const CELL&)
+    + bool iIsObstacle(const CELL&)
+    + void iApplyOnCells(ICellFunctor &)
 }
 note right
-IGrid defines 3 more methods :
+IGrid defines 4 more methods :
 # IGrid::iAddObstacle : add an obstacle in the grid
 # IGrid::iRemoveObstacle : remove an obstacle from the grid
 # IGrid::iIsObstacle : to check whether a cell is an obstacle or not
+# IGrid::iApplyOnCells : to apply a function on grid cells
 end note
-class Grid implements IGrid {
-    - int resx
-    - int resy
-    - int sizex
-    - int sizey
+class Grid <<env>> implements IGrid {
 }
-IGrid <.. CELL : subtype <
-IGrid <.. ICellFunctor : subtype <
-ICellFunctor ..> CELL
+IGrid ..> CELL
+IGrid .> ICellFunctor
+ICellFunctor .> CELL
 Grid *--> CELL
-App o--> IGrid : controls >
+App o--> IGrid
 hide App members
 hide IGrid fields
 hide CELL methods
-hide Grid methods
+hide Grid members
 hide ICellFunctor fields
 @enduml
 {% endplantuml %}
 
+**IGrid.h**
+```c++
+#ifndef IGRID_H
+#define IGRID_H
+
+namespace env
+{
+    struct CELL
+    {
+        int _id; // id of the cell
+        bool _mask;
+        CELL() = default;
+        CELL(const CELL &) = default;
+    };
+    // Functor definition to apply on cell
+    // We can inherit from this to function
+    // to apply on cells
+    class ICellFunctor
+    {
+    public:
+        virtual void operator()(
+            const CELL & // cell_id
+            ) = 0;
+    };
+    // IGrid
+    class IGrid
+    {
+    public:
+        virtual ~IGrid() = default;
+        // returns the width
+        virtual int iGetSizeX() const = 0;
+        // returns the height
+        virtual int iGetSizeY() const = 0;
+        // returns the number of cells in the grid
+        virtual int iGetNumberOfCells() const = 0;
+        // gets the width of a cell (in terms of pixels)
+        virtual int iGetResolutionX() const = 0;
+        // gets the height of a cell (in terms of pixels)
+        virtual int iGetResolutionY() const = 0;
+        // applies functor on Cells
+        virtual void iApplyOnCells(ICellFunctor &) const = 0;
+        //-- Test
+        // relative position of a cell according to its id
+        virtual bool iGetCellPosition(
+            const CELL &, // cell
+            int &,        // posx
+            int &         // posy
+        ) const = 0;
+        // coordinates of a cell accoring to its id
+        virtual bool iGetCellCoordinates(
+            const CELL &, // cell
+            int &,        // row_number
+            int &         // column_number
+        ) const = 0;
+        // cell rank of the the cell according
+        // to its relative position in the grid
+        virtual bool iGetCellNumber(
+            int, // row_number
+            int, // column_number
+            CELL &) const = 0;
+        // the containing cell given the coordinates in the 2D space
+        virtual bool iGetContainingCell(
+            int,   // posx
+            int,   // posy
+            CELL & // cell
+        ) const = 0;
+        // checks if a given point is within a given cell
+        virtual bool iIsWithinCell(
+            int,         // posx
+            int,         // posy
+            const CELL & // cell
+        ) const = 0;
+        // initializes the vector of cells, obstacle mask, etc.
+        virtual void iInitialize() = 0;
+        // add obstacle to the grid
+        virtual bool iAddObstacle(const CELL &) = 0;
+        // remove obstacle from the grid
+        virtual bool iRemoveObstacle(const CELL &) = 0;
+        // return the obstacle status : true if obstacle, false otherwise
+        virtual bool iIsObstacle(const CELL &) const = 0;
+    };
+} // namespace env
+#endif // !IGRID_H
+
+```
+
 ## ViewerMgr and ObstacleViewer
 
-*ViewerMgr* is a special *AbstractViewer* that agregates (cf. Composite pattern) other *AbstractViewer* with the method *ViewerMgr::iAddViewer*. I introduce this object in order to separate view concerns and to be able to activate several views at the same time without complicating the relationship between *App* and *AbstractViewer*. We will use this *meta* viewer to attach en *ObstacleViewer* to the App in order to display the grid lines and the obstacles at the same time.
+*ViewerMgr* is a special *AbstractViewer* that agregates (cf. Composite pattern) other *AbstractViewer* with the method *ViewerMgr::iAddViewer*. I introduce this pattern in order to separate view concerns and to be able to activate several views at the same time. We will use this *meta* viewer to attach an *ObstacleViewer* to the App in order to display the grid lines and the obstacles at the same time.
 
 {% plantuml %}
 @startuml
 header
 <font color=blue>Fig. 4.</font> ViewerMgr is a meta viewer that agregates more than one viewer.
 It will be used to add a viewer for obstacle (ObstacleViewer) next to the viewer for
-lines (GridViewer) without changing the relationship between App and AbstractObject
+lines (GridViewer) without changing the relationship between App and AbstractViewer
 end header
 scale 0.9
-interface ICellFunctor {
+interface ICellFunctor <<env>> {
     + virtual void operator(const CELL)
 }
-abstract class AbstractViewer {
-    + virtual void iActivate()
-    + virtual void iDeactivate()
-    + virtual void iIsActive() const
-    + virtual void iSetApp(App*)
-    + virtual void iDisplay();
-    # {abstract} virtual void iDraw()
+abstract class AbstractViewer <<viewers>> {
+    + void iActivate()
+    + void iDeactivate()
+    + void iIsActive()
+    + void iSetApp(App*)
+    + void iDisplay();
+    # {abstract} void iDraw()
     # bool _active = false
 }
-class ObstacleViewer extends AbstractViewer {
+class ObstacleViewer <<viewers>> extends AbstractViewer {
     - drawObstacles(ICellFunctor&)
 }
-class ViewerMgr extends AbstractViewer {
+class ViewerMgr <<viewers>> extends AbstractViewer {
     + void iAddViewer(AbstractManager*)
 }
 ViewerMgr o--> AbstractViewer
@@ -282,11 +364,100 @@ hide ICellFunctor field
 hide ViewerMgr field
 {% endplantuml %}
 
-## Bundle
+**AbstractViewer.h**
+```c++
+#ifndef ABSTRACTVIEWER_H
+#define ABSTRACTVIEWER_H
+#include <vector>
 
-We are ready to instaciate our new App object with all the improvements. The **main.cpp** for the 2D grid demo App with obstacle management is the following :
+class App;
 
-{% highlight c++ %}
+namespace viewers
+{
+	// AbstractViewer
+	class AbstractViewer
+	{
+	public:
+		// activate the viewer. If activated, it provides the desired view
+		virtual void iActivate();
+
+		// deactivate the viewer. Do not display anaything if deactivated
+		virtual void iDeactivate();
+
+		// return True if the viewer is active
+		virtual bool iIsActive() const;
+
+		// display function
+		virtual void iDisplay();
+
+		// attach the application object
+		virtual void iSetApp(App *);
+
+		virtual ~AbstractViewer() = default;
+		AbstractViewer() = default;
+
+	protected:
+		// specific draw method (to be concretized in child classes)
+		virtual void iDraw() = 0;
+		bool _active = false;
+		App *_app;
+	};
+
+	// viewer manager, using the composite pattern to
+	// aggregate several viewers into one
+	class ViewerMgr : public AbstractViewer
+	{
+	public:
+		virtual void iAddViewer(AbstractViewer *);
+		virtual ~ViewerMgr() = default;
+		ViewerMgr() = default;
+		virtual void iSetApp(App *) override;
+
+	protected:
+		virtual void iDraw();
+
+	private:
+		std::vector<AbstractViewer *> _viewers;
+	};
+} // namespace viewers
+
+#endif // ABSTRACTVIEWER_H
+```
+
+**ObstacleViewer.h**
+```c++
+#ifndef OBSTACLEVIEWER_H
+#define OBSTACLEVIEWER_H
+
+#include "AbstractViewer.h"
+
+namespace env
+{
+    class ICellFunctor;
+};
+
+namespace viewers
+{
+    class ObstacleViewer : public AbstractViewer
+    {
+    public:
+        ObstacleViewer() = default;
+        virtual ~ObstacleViewer() = default;
+
+    protected:
+        virtual void iDraw();
+
+    private:
+        void drawObstacles(env::ICellFunctor &);
+    };
+} // namespace viewers
+#endif // !OBSTACLEVIEWER_H
+```
+## Demo
+
+We are ready to run our brand new App with all the improvements. The **main.cpp** for the 2D grid demo App with obstacle management is exactly the following :
+
+```c++
 #include "App.h"
 #include "GridViewer.h"
 #include "ObstacleViewer.h"
@@ -312,44 +483,42 @@ int main()
             (App::DEFAULT_WIDTH*App::DEFAULT_RESX),
             (App::DEFAULT_HEIGHT*App::DEFAULT_RESY)
         ),
-        "SFML 2D Grid",
+        "SFML 2D Grid with obstacles",
         sf::Style::Titlebar | sf::Style::Close, 
         settings
     );
     window.clear(sf::Color::White);
     window.setFramerateLimit(120);
     window.setActive(false);
-    
+
     // -- application
     App app;
     app.setWindow(&window);
-    
+
     //-- grid 2D
-    Grid g;
+    env::Grid g;
     g.setSizeX(App::DEFAULT_WIDTH);
     g.setSizeY(App::DEFAULT_HEIGHT);
     g.setResolutionX(App::DEFAULT_RESX);
     g.setResolutionY(App::DEFAULT_RESY);
     g.iInitialize();
     app.setGrid(&g);
-    
-    //-- viewer
 
-    // grid lines
-    GridViewer gviewer;
+    //-- viewer
+    viewers::GridViewer gviewer;
     gviewer.iActivate();
-    
+
     // grid obstacles
-    ObstacleViewer oviewer;
+    viewers::ObstacleViewer oviewer;
     oviewer.iActivate();
-    
+
     // aggregator
-    ViewerMgr mgr;
+    viewers::ViewerMgr mgr;
     mgr.iAddViewer(&oviewer);
     mgr.iAddViewer(&gviewer);
     app.setViewer(&mgr);
     mgr.iActivate();
-    
+
     // initialize gviewer (only after having attached it to the App object)
     gviewer.initialize();
 
@@ -357,30 +526,33 @@ int main()
     std::thread rendering_thread(&App::display, &app);
     app.run();
     rendering_thread.join();
-    
+
     return 0;
 }
-{% endhighlight %}
+```
 
-The interested reader can fork the complete source code from [here][2] and run the following in a terminal at the project folder root :
+The interested reader can fork the complete source code from [here][2] and run the following in a terminal at the root of the project folder :
 
-{% highlight shell %}
-  # on windows
+### On windows
+
+```shell
   $ cmake  -G "Visual Studio 15 2017" -S . -B ./build 
   $ cmake  --build ./build --config Debug --target app
   $ ./bin/Debug/app
+```
+### On linux
 
-  # on linux
+```shell
   $ mkdir build  
   $ cd build
   $ cmake -G "Unix Makefiles" .. -DCMAKE_BUILD_TYPE=Debug
   $ cmake --build ./ --target app
   $ ../bin/Debug/app
-{% endhighlight %}
+```
 
 The program should display a clickable 2D Grid where the right-click adds an obstacle on the selected cell and the left-click removes it.
 
-![screenshot](/images/2d-grid-obstacles.gif)
+![screenshot](/images/sfml-2d-grid-obstacles.gif)
 
 Enjoy and feel free to send me your feedbacks!
 
