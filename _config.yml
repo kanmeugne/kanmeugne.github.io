@@ -35,8 +35,6 @@ social:
     # The first element serves as the copyright owner's link
     - https://twitter.com/patricksimok      # change to your twitter homepage
     - https://github.com/kanmeugne       # change to your github homepage
-    # Uncomment below to add more social links
-    # - https://www.facebook.com/username
     - https://www.linkedin.com/in/patskan
 
 google_site_verification: google_meta_tag_verification # change to your verification string
@@ -49,10 +47,10 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Europe/Paris
 
 google_analytics:
-  id: ''          # Fill with your Google Analytics ID
+  id: 'G-KFTQ8M8D5N'          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
