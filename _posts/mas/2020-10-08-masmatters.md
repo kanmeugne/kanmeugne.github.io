@@ -16,11 +16,11 @@ Pour être toujours plus proche des besoins --- *accélérer la prise de décisi
 
 Parmi les différentes tendances qui déterminent l'évolution du métier de développeur informatique, on peut distinguer : 
 
-1. **La multiplication des périphériques d'acquisition, de traitement et de restitution de la donnée**. Ces périphériques ou accessoires sont des ordinateurs à part entière car dotés de processeurs et programmables. De par leur petite taille et leur omniprésence dans l'espace vital des utilisateurs, ces objets permettent de diversifier l'offre de services informatiques.
+1. **La multiplication des périphériques d'acquisition, de traitement et de restitution de la donnée**. Ces périphériques ou accessoires sont des ordinateurs à part entière --- car dotés de processeurs et programmables. De par leur petite taille et leur omniprésence dans l'espace vital des utilisateurs, ces objets permettent de diversifier l'offre de services informatiques.
    
 2. **Le développement des technologies de mise en réseau**. Internet a complètement changé le rapport à l'ordinateur pour un développeur informatique. L'ordinateur ne peut plus être vu comme une ressource de calcul isolée et les réseaux informatiques sont devenus la norme. La possibilité de monter plusieurs centaines de milliers d'ordinateurs en réseau et tirer ainsi profit de la somme des ressources de calcul pour l'exécution des programmes informatiques incite à repenser la manière de les concevoir.
    
-3. **L'évolution de la complexité des solutions informatiques**. Pour des raisons à la fois économiques et techniques, il devient de plus en plus difficile de penser une application sans l'intégrer dans un système d'interactions avec des serveurs de base de données ou d'applications tierces. En effet, plusieurs fournisseurs d'application se spécialisent dans des tâches bien précises accessibles via des interfaces d'utilisations rendue publiques. Par ailleurs, il n'est pas toujours possible matériellement, de mettre en place des ressources informatiques réunissant toutes les caractéristiques nécessaires au bon fonctionnement d'une application (capacité de stockage, vitesse d'exécution, communication réseau, etc.), d'où le besoin de les spécialiser.
+3. **L'évolution de la complexité des solutions informatiques**. Pour des raisons à la fois économiques et techniques, il devient de plus en plus difficile de penser une application sans l'intégrer dans un système d'interactions avec des serveurs de base de données ou d'applications tierces. En effet, plusieurs fournisseurs d'applications se spécialisent dans des tâches bien précises accessibles via des interfaces d'utilisation rendues publiques. Par ailleurs, il n'est pas toujours possible matériellement, de mettre en place des ressources informatiques réunissant toutes les caractéristiques nécessaires au bon fonctionnement d'une application (capacité de stockage, vitesse d'exécution, communication réseau, etc.), d'où le besoin de les spécialiser.
    
 4. **Le besoin d'automatisation du traitement de l'information et la robotisation massive du travail manuel**. L'informatique fait de plus en plus de choses pour nous, et ce, sans notre intervention. Des applications M2M (Machine to Machine) se développent de plus en plus, promues par les besoins des utilisateurs et la transformation digitale dans les entreprises et les espaces publiques. Les solutions informatiques se veulent plus pro-actives et embarquées.
    
@@ -46,9 +46,9 @@ Un autre avantage, et non des moindres, est le parallèle extrêmement enrichiss
 
 ## Conclusion
 
-Voilà en quelques mots ce qui me motive à mettre en avant l'approche multi-agent pour les développeurs informatiques. Bien entendu, il faudra apporter des preuves par la pratiques. C'est pourquoi, très prochainement, je reviendrai en détails et plus concrètement sur l'intérêt du paradigme SMA pour  :
-- **le développement web et les microservices**
+Voilà en quelques mots ce qui me motive à mettre en avant l'approche multi-agent pour les développeurs informatique. Bien entendu, il faudra apporter des preuves par la pratique. C'est pourquoi, très prochainement, je reviendrai en détails et plus concrètement sur l'intérêt du paradigme SMA pour  :
+- **le développement web**
 - **l'apprentissage automatique et l'optimisation** 
 - **la simulation comportementale**
 
-D'ici là, merci de vos retours (constructifs ou non).
+D'ici-là, merci de vos retours.
