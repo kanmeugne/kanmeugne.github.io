@@ -186,7 +186,7 @@ If you fork the full source code from [here][1] (to get `App.h` and `App.cpp`), 
 On windows
 ```shell
   # on windows
-  cmake  -G "Visual Studio 15 2017" -S . -B ./build -DCMAKE_BUILD_TYPE=Debug ..
+  cmake  -G "Visual Studio $(Version)" -S . -B ./build -DCMAKE_BUILD_TYPE=Debug ..
   cmake  --build ./build --config Debug --target app
 ```
 On Linux
