@@ -29,7 +29,7 @@ La particularité de cette approche est qu'on définit les tests en premier lieu
 
 ## Le premier test
 
-Pour commencer la production de notre lib *toolset*, il faut donc prélablement définir un test qui est sensé échoué dans l'état actuel du code. Commençons par le test ci-dessous : 
+Pour commencer la production de notre lib *toolset*, il faut donc prélablement définir un test qui est sensé échouer dans l'état actuel du code. Commençons par le test ci-dessous : 
 
 ```c++
 class ParserTest : public Test{};
@@ -53,7 +53,7 @@ Quelques mots clefs dans cette définition nécessitent une petite explication :
 - La déclaration de la classe `ParserTest` (dérivée de `testing::Test`) permet de regrouper les tests par thématique --- comme on le verra plus bas, ce mécanisme permet aussi de définir des [fixtures][4].
 - `Parser_LowerSingleLetter` : est le nom du test. Très utile quand il faudra lire les résultats des tests sur la console.
 
-Le test défini ci-dessus est simple (une assertion) avec un objectif exprimable en langage naturel : *le parseur doit transformer la lettre L (majuscule) en la lettre l (minuscule)*. Produisons maintenant qui permet de le valider.
+Le test défini ci-dessus est simple (une assertion) avec un objectif exprimable en langage naturel : *le parseur doit transformer la lettre L (majuscule) en la lettre l (minuscule)*. Produisons maintenant le code qui permet de le valider.
 
 ## La première validation
 
@@ -195,6 +195,7 @@ On voit que le premier test reste valide --- ce qui signifie qu'il n'y a pas eu 
 - **Red** (le test échoue d'abord),
 - **Green** (le test passe après une modification du code, tous les tests précédents doivent toujours être valides)
 - **Refactor** (on restructure le code pour une cohérence d'ensemble et on revérifie que tous les tests passent toujours)
+  
 On remarque le cycle vertueux qui oblige à avancer lentement mais surement en faisant le moins de dégâts possible.
 
 
@@ -280,7 +281,7 @@ public:
 
 La classe `UniqueParserTest` définit une fixture `UniqueParserTest::_parser` qui est initialisée dans `UniqueParserTest::UniqueParserTest()`.
 
-Les tests `UniqueParserTest` vont permettre de valider, d'une part, que la fonction `utils::getParseur` retoune toujours la même instance, et d'autre part, que toutes les fonctionnalités du parseur sont bien présentes par cette instance.
+Les tests `UniqueParserTest` vont permettre de valider, d'une part, que la fonction `utils::getParseur` retoune toujours la même instance, et d'autre part, que toutes les fonctionnalités du parseur sont bien validées par cette instance.
 
 On définit les nouveaux tests suivants --- on notera l'utilisation de la macro `TEST_F` à la place de `TEST`, ce qui permet exploiter les fixtures dans le test :
 
@@ -412,10 +413,10 @@ Le refactoring et l'ajout de la fonction se sont bien déroulés et l'ensemble d
 
 Le TDD est une approche et pas une technique toute faite. Ce qui signifie qu'il faut s'exercer sur des projets avec rigueur et patience. Plus on s'exerce, plus on a de bons réflexes.
 
-Même si les styles de programmation et les langages varient et qu'il est difficile de faire des généralités, on peut quand même définir quelques bonnes pratiques, valable pour tous types de projet. J'en cite 3 :
-- les tests doivents êtres simples et exprimables en langage naturel
+Même si les styles de programmation et les langages varient et qu'il est difficile de faire des généralités, on peut quand même définir quelques bonnes pratiques, valables pour tout type de projet. J'en cite 3 :
+- les tests doivent êtres simples et exprimables en langage naturel
 - on doit absolument s'interdire de faire évoluer le code sans avoir défini les tests qui permettront de valider la production
-- il faut diversifier au maximum l'objet des tests (ne pas tester les même choses) --- ce qui sera possible en envisageant le maximum de cas d'usage possible. Le lecteur pourra consulter les ouvrages sur le sujet pour se faire une idée plus complète des [méthologies TDD][9].
+- il faut diversifier au maximum l'objet des tests (ne pas tester les mêmes choses) --- ce qui sera possible en envisageant le maximum de cas d'usage possible. Le lecteur pourra consulter les ouvrages sur le sujet pour se faire une idée plus complète des [méthologies TDD][9].
 
 Le code utilisé dans le post est disponible [ici][8]. J'attends vos commentaires...
 
