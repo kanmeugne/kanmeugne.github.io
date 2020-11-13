@@ -205,7 +205,7 @@ Dans l'état actuel, la production de code ne valide toujours pas le test *zero*
 > cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
 {% endhighlight %}
 
-renvoie un code d'erreur car les fichiers sources pour les sous project `tests` et `toolset` sont inexistants! On complète l'initialisation du projet avec le strict minimum pour pouvoir valider la compilation. 
+renvoie un code d'erreur car les fichiers sources pour les sous projets `tests` et `toolset` sont inexistants! On complète l'initialisation du projet avec le strict minimum pour pouvoir valider la compilation. 
 
 Premièrement, le header `./toolset/include/MyParser.h` pour déclarer le *parser* :
 
