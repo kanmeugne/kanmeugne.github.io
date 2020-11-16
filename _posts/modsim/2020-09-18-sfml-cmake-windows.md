@@ -211,6 +211,14 @@ You should be able to launch the executable located in the `bin` folder and see 
 
 Smile! Now you are ready to take your graphical app wherever you want. Enjoy and feel free to send me your feedbacks!
 
+## References
+
+- [https://github.com/kanmeugne/sfmlcmake](https://github.com/kanmeugne/sfmlcmake)
+- [https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
+- [https://crascit.com/2015/07/25/cmake-gtest/](https://crascit.com/2015/07/25/cmake-gtest/)
+- [https://github.com/google/googletest](https://github.com/google/googletest)
+- [https://cmake.org/](https://cmake.org/)
+- [https://www.sfml-dev.org/documentation/2.5.1/](https://www.sfml-dev.org/documentation/2.5.1/)
 
 [1]: https://github.com/kanmeugne/sfmlcmake
 [2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php

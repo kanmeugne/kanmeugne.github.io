@@ -422,6 +422,9 @@ The program should display a clickable 2D Grid where the right-click adds an obs
 
 Enjoy and feel free to send me your feedbacks!
 
+## References
+
+- [https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid](https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid)
 
 [1]: /posts/sfml-2d-grid/
 [2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid

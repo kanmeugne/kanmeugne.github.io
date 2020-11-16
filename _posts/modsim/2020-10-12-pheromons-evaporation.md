@@ -415,6 +415,12 @@ The program should display a clickable 2D Grid where the right-click adds an obs
 
 Enjoy and feel free to send me your feedbacks!
 
+## References
+
+- [https://fr.wikipedia.org/wiki/Stigmergie](https://fr.wikipedia.org/wiki/Stigmergie)
+- [http://homepages.ulb.ac.be/~jldeneub/images/Deneubourgetal1990.pdf](http://homepages.ulb.ac.be/~jldeneub/images/Deneubourgetal1990.pdf)
+- [https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Clock.php](https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Clock.php)
+- [https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-pheromons](https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-pheromons)
 
 [1]: /posts/2d-grid-obstacles/
 [2]: https://fr.wikipedia.org/wiki/Stigmergie

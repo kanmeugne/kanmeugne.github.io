@@ -422,12 +422,13 @@ Le code utilisé dans le post est disponible [ici][8]. J'attends vos commentaire
 
 ## Resources
 
-- [https://cmake.org/cmake/help/v3.8/][1]
-- [https://github.com/google/googletest][4]
-- [https://crascit.com/2015/07/25/cmake-gte][5]
-- [https://github.com/kanmeugne/cppexperiments/tddwithgtest][8]
-- [https://en.wikipedia.org/wiki/Test-driven_development][9]
-
+- [https://cmake.org/cmake/help/v3.8/](https://cmake.org/cmake/help/v3.8/)
+- [https://git-scm.com/](https://git-scm.com/)
+- [https://github.com/google/googletest](https://github.com/google/googletest)
+- [https://crascit.com/2015/07/25/cmake-gte](https://crascit.com/2015/07/25/cmake-gte)
+- [https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019](https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
+- [https://en.wikipedia.org/wiki/Test-driven_development](https://en.wikipedia.org/wiki/Test-driven_development)
+- [https://github.com/kanmeugne/cppexperiments/tddwithgtest](https://github.com/kanmeugne/cppexperiments/tddwithgtest)
 
 [1]: https://cmake.org/cmake/help/v3.8/
 [2]: https://git-scm.com/

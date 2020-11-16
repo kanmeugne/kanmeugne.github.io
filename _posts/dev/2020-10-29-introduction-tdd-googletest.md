@@ -284,6 +284,15 @@ Le plus dur du travail est fait avec cette mise en place. C'est très important 
 
 Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implémentation des fonctionnalités de la lib. On verra que l'approche TDD eprmet d'envisager sereinement l'évolution du code et le refactoring.
 
+## Resources
+
+- [https://cmake.org/cmake/help/v3.8/](https://cmake.org/cmake/help/v3.8/)
+- [https://git-scm.com/](https://git-scm.com/)
+- [https://github.com/google/googletest](https://github.com/google/googletest)
+- [https://crascit.com/2015/07/25/cmake-gte](https://crascit.com/2015/07/25/cmake-gte)
+- [https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019](https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
+- [https://en.wikipedia.org/wiki/Test-driven_development](https://en.wikipedia.org/wiki/Test-driven_development)
+
 [1]: https://cmake.org/cmake/help/v3.8/
 [2]: https://git-scm.com/
 [3]: https://github.com/
@@ -291,4 +300,3 @@ Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implé
 [5]: https://crascit.com/2015/07/25/cmake-gte
 [7]: https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
 [9]: https://en.wikipedia.org/wiki/Test-driven_development
-[10]: /posts/tdd-cycle-vertueux/
