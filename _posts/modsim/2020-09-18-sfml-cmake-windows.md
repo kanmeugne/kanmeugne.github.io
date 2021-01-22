@@ -11,7 +11,9 @@ tags:
 categories:
     - modeling & simulation
 comments: true
+image: "/images/sfmlcmake.jpg"
 ---
+<small>Photo by <a href="https://unsplash.com/@yanphotobook?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yannis H</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 Few months ago, I found an [article][3] that explains how to use [GoogleTest and GoogleMock][4] --- as an external dependency --- in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to mimic the paradigm and use *SFML* --- as an external dependency --- in a C++ graphical app.
 

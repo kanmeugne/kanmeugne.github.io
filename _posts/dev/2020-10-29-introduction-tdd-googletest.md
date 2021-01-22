@@ -1,7 +1,7 @@
 ---
 sidebar: right
-title:  "Introduction au <i>TDD</i>&nbsp; <small>(1/2)</small> : mise en place avec <i>googletest</i> "
-teaser: "Installs and validation of the test zero"
+title:  "Introduction au TDD (I) : Mise en place avec googletest"
+teaser: "Installation de l'environnement de test et validation du test zero"
 categories:
     - software development
 tags:
@@ -9,7 +9,10 @@ tags:
     - c++
     - tdd
 comments: true
+pin: true
+image: /images/test11-unsplash.jpg
 ---
+<small>Photo by <a href="https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Todd Quackenbush</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 Le [TDD][9] --- **Test-Driven Development** --- fait référence à une approche de developpement informatique dans laquelle le code est toujours produit dans le but de valider des tests préalablement définis. Le but de cette approche est de garantir une qualité optimale du code à n'importe quelle étape du développement.
 

@@ -8,7 +8,9 @@ tags:
     - stigmergy
     - mas
 comments: true
+image: "/images/sma.jpg"
 ---
+<small>Photo by <a href="https://unsplash.com/@abebarrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Abraham Barrera</a> on <a href="https://unsplash.com/s/photos/multi-agents?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 Le développement informatique a connu d'importantes évolutions ces dernières années.
 
