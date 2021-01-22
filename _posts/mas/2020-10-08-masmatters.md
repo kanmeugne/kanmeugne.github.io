@@ -11,11 +11,12 @@ comments: true
 image: "/images/sma.jpg"
 author: kanmeugne
 ---
-<small>Photo by <a href="https://unsplash.com/@abebarrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Abraham Barrera</a> on <a href="https://unsplash.com/s/photos/multi-agents?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 Le développement informatique a connu d'importantes évolutions ces dernières années.
 
-Pour être toujours plus proche des besoins --- *accélérer la prise de décision dans les entreprises et les institutions publiques, optimiser les temps de calcul et de de déploiement de nouvelles solutions* --- l'industrie de l'informatique multiplie les moyens techniques et les approches, faisant évoluer le métier de développeur informatique et le rendant de plus en plus complexe. 
+Pour être toujours plus proche des besoins --- *accélérer la prise de décision dans les entreprises et les institutions publiques, optimiser les temps de calcul et de de déploiement de nouvelles solutions* --- l'industrie de l'informatique multiplie les moyens techniques et les approches, faisant évoluer le métier de développeur informatique et le rendant de plus en plus complexe.
+
+<small>Photo by <a href="https://unsplash.com/@abebarrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Abraham Barrera</a> on <a href="https://unsplash.com/s/photos/multi-agents?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 Parmi les différentes tendances qui déterminent l'évolution du métier de développeur informatique, on peut distinguer : 
 
