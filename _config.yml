@@ -202,6 +202,7 @@ plugins:
     - jekyll-paginate
     - jekyll-plantuml
     - jekyll/graphviz
+    - jekyll-seo-tag
 
 graphviz:
   options: "-Tsvg" # 'dot' command option
