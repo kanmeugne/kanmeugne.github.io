@@ -9,6 +9,7 @@ tags:
     - tdd
 comments: true
 image: /images/test12-unsplash.jpg
+author: kanmeugne
 ---
 <small>Photo by <a href="https://unsplash.com/@itsliamtucker?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Liam Tucker</a> on <a href="https://unsplash.com/s/photos/security?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 Dans la [première partie][6] de cet exercice, je me suis concentré sur la mise en place de l'espace de travail et la validation du test zero (qui est tout simplement la compilation).

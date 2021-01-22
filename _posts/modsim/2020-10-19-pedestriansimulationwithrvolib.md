@@ -8,4 +8,5 @@ tags:
     - stigmergy
     - mas
 published: false
+author: kanmeugne
 ---

@@ -33,9 +33,9 @@ social:
   email: patrick.simokanmeugne@outlook.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
+    - https://www.linkedin.com/in/patrick-simo-kanmeugne-127b5281/
     - https://twitter.com/patricksimok      # change to your twitter homepage
     - https://github.com/kanmeugne       # change to your github homepage
-    - https://www.linkedin.com/in/patskan
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 

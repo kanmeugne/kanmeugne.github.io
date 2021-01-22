@@ -11,6 +11,7 @@ categories:
     - modeling & simulation
 comments: true
 image: "/images/sfmlgrid_obs.jpg"
+author: kanmeugne
 ---
 <small>Photo by <a href="https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Iewek Gnos</a> on <a href="https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 

@@ -14,6 +14,7 @@ categories:
 math: true
 comments: true
 image: "/images/sfmlgridobs.jpg"
+author: kanmeugne
 ---
 <small>Photo by <a href="https://unsplash.com/@dannyhowe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Danny Howe</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
