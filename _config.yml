@@ -203,6 +203,7 @@ plugins:
     - jekyll-plantuml
     - jekyll/graphviz
     - jekyll-seo-tag
+    - jekyll-sitemap
 
 graphviz:
   options: "-Tsvg" # 'dot' command option

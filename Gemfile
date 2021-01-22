@@ -12,6 +12,7 @@ group :jekyll_plugins do
   gem "asciidoctor-diagram"
   gem "jekyll-plantuml"
   gem "jekyll-graphviz"
+  gem "jekyll-sitemap"
 
   
 end
