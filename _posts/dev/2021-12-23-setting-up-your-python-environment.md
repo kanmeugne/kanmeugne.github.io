@@ -14,7 +14,13 @@ image: /images/test11-unsplash.jpg
 author: kanmeugne
 ---
 
-I have been talking python with differents kind of programmers -- from beginners to experienced programmers -- and there is this little issue which, surprisingly, does not have a straightforward answer : *what do you need to install to start programming in python ?* I decided that this should be the main concern of this post as I want to take some time explaining what -- in my opinion -- is the easiest path from nothing to a decent python programming environment. So let's start the journey.
+I have been talking python with differents kind of programmers -- from beginners to experienced programmers -- and there is this little issue which, surprisingly, does not have a straightforward answer : *what do you need to install to start programming in python ?* This post is dedicated to this litlle issue and I will try explain what -- in my opinion -- is the easiest path from nothing to a decent python programming environment. Our journey will have several *stops* and you will have to install *stuff* in order to move from one stop to another. 
+
+At the first stop you will have to make sure that you are working on the right Operating System, with the right terminal -- meaning, compatible with this post. Spoil Alert! We will go for a linux OS since it is very popular among programmers.
+
+At the second stop, you should have installed `python 3` on your computer -- we will see that, once installed, you technically have a working python programming environment. We will show off two programming mode : and interactive mode -- where you can type commands and see the result in an interactive prompt -- and scripted mode -- where you write scripts and run them with the python interpreter.
+
+At the third stop we will enrich our environment with high-level python prompt -- like `ipython` and `jupyter` -- and advanced IDEs -- like `vscode`. High-level prompts give more context to the programmers and are clearly a most have if you want to improve your interactive programming mode experience. IDEs, as you might expect, improve the script programming mode experience with embedded tools for : script execution, coding style, code highlighting, testing, etc.
 
 ## 1. The OS : where everything starts
 
@@ -35,11 +41,12 @@ So how do you install the right python interpreter ? (As we have assumed in the 
 $ python --version
 ```
 
-If the result of this command is like `python X.Y.Z` where `X<3` or if the command fails, you should probably install `python 3.X.X`. It is highly recommended since most of the python modules and librairies provided by the community will not be maintained for older versions. So jump to the next point to see ow to install python 3
+If the result of this command looks like `python X.Y.Z` where `X<3` or if the command fails, you should probably install `python 3.X.X`. It is highly recommended since most of the python modules and tools provided by the community will not be maintained for older versions. So how do you install `python 3` ? Jump to the next point to see the answer.
 
-2. This is where problems begin -- you have to install `python 3` but the *how* depends on your linux distribution. Since I don't want to reinvent the wheel, I encourage you to [read this post][3] and get the right instructions for your linux distribution. Come back here when you are done (WSL runs Ubuntu by default).
+2. This is where problems begin -- you have to install `python 3` but the *how* depends on your linux distribution. Since I don't want to re-invent the wheel, I encourage you to [read this post][3] and get the right instructions for your linux distribution. Come back here when you are done (WSL runs Ubuntu by default).
 
-You should have the right version installed so technically you are ready to start programming in Python. It is still possible to improve the programming environment though. Let's write some code first before going further.
+
+Now, you should have the right version installed so technically you are ready to start programming in Python. It is still possible to improve the programming environment though. Let's write some code first before going further.
 
 
 [1]: https://www.geek4geeks.com
