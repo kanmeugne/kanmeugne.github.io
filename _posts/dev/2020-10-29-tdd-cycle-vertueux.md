@@ -8,14 +8,14 @@ tags:
     - c++
     - tdd
 comments: true
-image: /images/test12-unsplash.jpg
 author: kanmeugne
 ---
-Dans la [première partie][6] de cet exercice, je me suis concentré sur la mise en place de l'espace de travail et la validation du test zero (qui est tout simplement la compilation).
 
-On va se concentrer maintenant sur l'implémentation des fonctionnalités de la lib témoin. On verra en quoi l'approche TDD permet d'envisager sereinement l'évolution du code et le refactoring.
 
-<small>Photo by <a href="https://unsplash.com/@itsliamtucker?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Liam Tucker</a> on <a href="https://unsplash.com/s/photos/security?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
+Dans la [première partie][6] de cet exercice, je me suis concentré sur la mise en place de l'espace de travail et la validation du test zero (qui est tout simplement la compilation). On va se concentrer maintenant sur l'implémentation des fonctionnalités de la lib témoin. On verra en quoi l'approche TDD permet d'envisager sereinement l'évolution du code et le refactoring.
+
+![Introduction au TDD Poster](/images/test12-unsplash.jpg){: width="500"}
+_Photo by [Liam Tucker](https://unsplash.com/@itsliamtucker?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
 ## Le mindset
 
