@@ -60,7 +60,7 @@ If you have a linux OS setup, it is highly possible that you already have a `pyt
     $ sudo apt-get update
     $ sudo apt-get install python3.8
    ```
-   Anyway, I encourage you to [read this post][3] and get the right instructions for your linux distribution. Come back here when you are done with `python 3` installation.
+   Anyway, I encourage 💪 you to [read this post][3] and get the right instructions for your linux distribution. Come back here when you are done with `python 3` installation.
 
 Now, you should have the right version installed and technically, you are ready to start programming in Python -- you are ready to experience two different programming modes : the **interactive mode** and the **script mode**.
 
@@ -92,7 +92,7 @@ To experience it now, open your linux terminal and do the following steps :
 
 The animation below looks almost as what you should get if you don't mistype.
 
-![Interactive Mode](/images/interactivemode.gif){: width="500"}
+![Interactive Mode](/images/interactivemode.gif){: width="100%"}
 _Fig. Running python commands interactively using the default python prompt_
 
 ### Script Mode
@@ -127,13 +127,15 @@ For example, let's copy the previous section commands in a file and try them in 
 
 This is it for the script mode. All you need to do, basically, is to save your commands in a text file, and then, run it in a terminal with the appropriate python interpreter.
 
-In the next section will see how you can enrich your programming experience with advanced prompts and code editors.
+In the next section will see how you can enrich your programming experience with advanced prompts and code editors 👌.
 
 ## 3. Enriching your programming environment
 
-You can enrich your environment with advanced prompts and IDEs. I am not going to review all the availables tools in this post, but there two of them that I want to show off.
+**Advanced prompts**
 
-## ipython
+You can enrich your environment with advanced prompts. I am not going to review all the available prompt in this post, but there are two of them that I want to show off.
+
+### ipython
 
 `ipython` is an advanced prompt that you can install on your computer as a python package. All you have to do is the following in a linux terminal : 
 
@@ -141,7 +143,7 @@ You can enrich your environment with advanced prompts and IDEs. I am not going t
 $ pip install ipython --user
 ```
 
-Compared to the default `python` prompt, [`ipython`](https://ipython.org/) is a more colorful prompt and full of helpers that allows for example to : 
+Compared to the default `python` prompt, [`ipython`][7] is a more colorful prompt and full of helpers that allows for example to : 
 - navigate in the filesystem without exiting the prompt
 - highlight your code (cf. animation)
 - auto-complete commands
@@ -150,27 +152,56 @@ Compared to the default `python` prompt, [`ipython`](https://ipython.org/) is a 
 - display the execution time of a command
 - etc.
 
-## Jupyter
+![IPython](/images/ipython.gif){: width="100%"}
+_Fig. IPython in action_
 
-ipython could be use as a core for even more advanced prompt like the famous web-based prompt : Jupyter Notebook.
-[*The Jupyter Notebook is the original web application for creating and sharing computational documents. It offers a simple, streamlined, document-centric experience*](https://jupyter.org/). As for ipython, jupyter notebook is installable as python package :
+### Jupyter
+
+`ipython` could be use as a core for even more advanced prompts like the famous web-based prompt : Jupyter Notebook.
+[*The Jupyter Notebook is the original web application for creating and sharing computational documents. It offers a simple, streamlined, document-centric experience*][6].
+
+As for ipython, jupyter notebook is installable as python package :
 
 ```bash
 $ pip install jupyter
 ```
 
-If the above command does not work, please go the [official installation website](https://jupyter.org/install) to get the most updated procedure. Once installed, run a notebook just by typing the following command on your terminal 
+If the above 👆 command does not work, please go the [official installation website][5] to get the most updated procedure. Once installed, run a notebook just by typing the following command on your terminal : 
 
 ```bash
 jupyter notebook
 ```
 
+Check the animation below 👇 to see jupyter in action
 
+![IPython](/images/jupyter.gif){: width="100%"}
+_Fig. Jupyter notebook in action_
 
+### IDEs
 
+[Python code editors are designed for the developers to code and debug program easily][4]. There are editors for every type of programmers -- the best ones being those you better flow with. Here is an non-exhaustive of features one could be expecting for :
+- a step-by-step debugger
+- code navigation tool
+- syntax highlighting
+- auto completion/importation
+- diff tools to see how the code changes
+- unit/integration test tools integration
+- etc.
 
+Check this [article][4] for a well documented review on python IDEs.
 
+## References
+- [www.geek4geeks.com][1]
+- [www.python.org][2]
+- [docs.python-guide.org/starting/install3/linux/][3]
+- [www.guru99.com/python-ide-code-editor.html][4]
+- [Jupyter.org][6]
+- [ipython.org][7]
 
 [1]: https://www.geek4geeks.com
 [2]: https://www.python.org "see the available version"
 [3]: https://docs.python-guide.org/starting/install3/linux/
+[4]: https://www.guru99.com/python-ide-code-editor.html#:~:text=IDLE%20%28Integrated%20Development%20and%20Learning%20Environment%29%20is%20a,can%20be%20used%20on%20Windows%2C%20macOS%2C%20and%20Unix.
+[5]: https://jupyter.org/install
+[6]: https://jupyter.org/
+[7]: https://ipython.org/
