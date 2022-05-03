@@ -1,6 +1,6 @@
 ---
 sidebar: right
-title:  "Setting Up Your Python Environment"
+title:  "Setting Up Your Python Environment I"
 teaser: "How to set up your python environment quickly"
 categories:
     - software development
