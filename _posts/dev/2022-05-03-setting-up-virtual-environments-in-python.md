@@ -1,6 +1,6 @@
 ---
 sidebar: right
-title:  "Setting Up Your Python Environment II"
+title:  "Setting Up Your Python Environment (II)"
 teaser: "Les environnements virtuels"
 categories:
     - software development
