@@ -13,7 +13,9 @@ comments: true
 author: kanmeugne
 ---
 
-I have been *talking python* with differents kind of programmers -- from beginners to experienced programmers -- and there is this little issue that, surprisingly, does not have a straightforward workaround : **what do you need to install to start programming in python ?** This post is dedicated to this litlle issue and I will try to explain what -- in my opinion -- is the easiest path from... nothing... to... a decent python programming environment. 
+I have been *talking python* with differents kind of programmers -- from beginners to experienced programmers -- and there is this little issue that, surprisingly, does not have a straightforward workaround : **what do you need to install to start programming in python ?**
+
+This post is dedicated to this litlle issue and I will try to explain what -- in my opinion -- is the easiest path from... nothing... to... a decent python programming environment. 
 
 ![Introduction au TDD Poster](/images/test11-unsplash.jpg){: width="500"}
 _Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
