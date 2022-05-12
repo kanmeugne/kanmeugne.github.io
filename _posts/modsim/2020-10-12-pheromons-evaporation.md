@@ -13,15 +13,14 @@ categories:
     - modeling & simulation
 math: true
 comments: true
-image: "/images/sfmlgridobs.jpg"
 author: kanmeugne
 ---
 
-You should now be familiar with our [2D Grid app][6].
+![Pheromon Evaporation Poster](/images/sfmlgridobs.jpg){: width="700" height="400" }
+_Photo by [Danny Howe](https://unsplash.com/@dannyhowe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
-In a [previous post][1], I updated its original object-oriented architecture in order to implement an affordable obstacle feature. Here, I am going to upgrade the architecture again in order to implement a pheromon evaporation feature.
+You should now be familiar with our [2D Grid app][6]. In a [previous post][1], I updated its original object-oriented architecture in order to implement an affordable obstacle feature. Here, I am going to upgrade the architecture again in order to implement a pheromon evaporation feature.
 
-<small>Photo by <a href="https://unsplash.com/@dannyhowe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Danny Howe</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
 
 You can see pheromon like a chemical substance that is dropped somewhere --- as a mark of an organic activity --- and then evaporates overtime. Pheromon paradigm is a very productive way to implement a *stigmergic* behavior --- which is a type of behavior based on indirect communication through a common and shared space. Stigmergy explains the emergence of collective behavior among several social species with limited intellectual abilities. The concept has been first introduced by the french biologist [Pierre-Paul Grassé][2] and systematically studied by [Deneubourg][3] for different ants species.
 
