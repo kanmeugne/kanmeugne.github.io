@@ -7,3 +7,10 @@ _site
 Gemfile.lock
 uml
 *.mkv
+# hidden files
+.*
+!.github
+
+# jekyll cache
+_site
+vendor

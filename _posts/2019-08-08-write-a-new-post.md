@@ -4,7 +4,6 @@ author: Cotes Chung
 date: 2019-08-08 14:10:00 +0800
 categories: [Blogging, Tutorial]
 tags: [writing]
-published: false
 ---
 
 ## Naming and Path
@@ -119,44 +118,22 @@ By default, the image is centered, but you can specify the position by using one
   Image will be left aligned in below sample:
 
   ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .normal}
+  ![Desktop View](/assets/img/sample/mockup.png){: width="350" .normal}
   ```
 
 - **Float to the left**
 
   ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .left}
+  ![Desktop View](/assets/img/sample/mockup.png){: width="240" .left}
   ```
 
 - **Float to the right**
 
   ```markdown
-  ![Desktop View](/assets/img/sample/mockup.png){: .right}
+  ![Desktop View](/assets/img/sample/mockup.png){: width="240" .right}
   ```
 
-**Limitation**: Once you specify the position of an image, it is forbidden to add the image caption.
-
-### CDN URL
-
-If you host the images on the CDN, you can save the time of repeatedly writing the CDN url by assigning the variable `img_cdn` of `_config.yml` file:
-
-```yaml
-img_cdn: https://cdn.com
-```
-
-Once `img_cdn` is assigned, the CDN url will be added to the path of all images (images of site avatar and posts) starting with `/`.
-
-For instance, when using images:
-
-```markdown
-![The flower](/path/to/flower.png)
-```
-
-The parsing result will automatically add the CDN prefix `https://cdn.com` before the image path:
-
-```html
-<img src="https://cdn.com/path/to/flower.png" alt="The flower">
-```
+> **Limitation**: Once you specify the position of an image, it is forbidden to add the image caption.
 
 ## Pinned Posts
 
