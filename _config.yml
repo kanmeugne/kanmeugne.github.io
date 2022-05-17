@@ -1,9 +1,4 @@
-# The Site Settings
-# v2.0
-# https://github.com/cotes2020/jekyll-theme-chirpy
-# © 2017-2019 Cotes Chung
-# MIT licensed
-
+# The Site Configuration
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # --------------------------
@@ -162,7 +157,6 @@ defaults:
           url: /
 
 sass:
-  sass_dir: /assets/css
   style: compressed
 
 compress_html:
@@ -182,6 +176,10 @@ exclude:
   - docs
   - README.md
   - LICENSE
+  - gulpfile.js
+  - node_modules
+  - package.json
+  - package-lock.json
 
 sitemap_exclude:  # Sitemap will exclude the following items.
   fuzzy:
