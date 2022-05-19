@@ -8,94 +8,89 @@
 */
 
 $(function() {
-  const $topbarWrapper = $("#topbar-wrapper");
-  const topbarHeight = $topbarWrapper.outerHeight();
   const $topbarTitle = $("#topbar-title");
-
-  const ATTR_TOC_SCROLLING = "toc-scrolling-up";
-  const SCROLL_MARK = "scroll-focus";
   const REM = 16; // in pixels
-  let tocScrollUpCount = 0;
+  const ATTR_SCROLL_FOCUS = "scroll-focus";
 
   $("a[href*='#']")
     .not("[href='#']")
     .not("[href='#0']")
     .click(function(event) {
-      if (this.pathname.replace(/^\//, "") === location.pathname.replace(/^\//, "")) {
-        if (location.hostname === this.hostname) {
-          const hash = decodeURI(this.hash);
-          let toFootnoteRef = RegExp(/^#fnref:/).test(hash);
-          let toFootnote = toFootnoteRef? false : RegExp(/^#fn:/).test(hash);
-          let selector = hash.includes(":") ? hash.replace(/\:/g, "\\:") : hash;
-          let $target = $(selector);
+      if (this.pathname.replace(/^\//, "") !==
+            location.pathname.replace(/^\//, "")) {
+        return;
+      }
 
-          let parent = $(this).parent().prop("tagName");
-          let isAnchor = RegExp(/^H\d/).test(parent);
-          let isMobileViews = !$topbarTitle.is(":hidden");
+      if (location.hostname !== this.hostname) {
+        return;
+      }
 
-          if (typeof $target !== "undefined") {
-            event.preventDefault();
+      const hash = decodeURI(this.hash);
+      let toFootnoteRef = RegExp(/^#fnref:/).test(hash);
+      let toFootnote = toFootnoteRef ? false : RegExp(/^#fn:/).test(hash);
+      let selector = hash.includes(":") ? hash.replace(/\:/g, "\\:") : hash;
+      let $target = $(selector);
 
-            if (history.pushState) { /* add hash to URL */
-              history.pushState(null, null, hash);
-            }
+      let isMobileViews = $topbarTitle.is(":visible");
+      let isPortrait = $(window).width() < $(window).height();
 
-            let curOffset = isAnchor? $(this).offset().top : $(window).scrollTop();
-            let destOffset = $target.offset().top -= REM / 2;
+      if (typeof $target === "undefined") {
+        return;
+      }
 
-            if (destOffset < curOffset) { // scroll up
-              if (!isAnchor && !toFootnote) { // trigger by ToC item
-                if (!isMobileViews) { // on desktop/tablet screens
-                  $topbarWrapper.removeClass("topbar-down").addClass("topbar-up");
-                  // Send message to `${JS_ROOT}/commons/topbar-switch.js`
-                  $topbarWrapper.attr(ATTR_TOC_SCROLLING, true);
-                  tocScrollUpCount += 1;
-                }
-              }
+      event.preventDefault();
 
-              if ((isAnchor || toFootnoteRef) && isMobileViews) {
-                destOffset -= topbarHeight;
-              }
-            }
+      if (history.pushState) { /* add hash to URL */
+        history.pushState(null, null, hash);
+      }
 
-            $("html").animate({
-              scrollTop: destOffset
-            }, 500, () => {
-              $target.focus();
+      let curOffset = $(window).scrollTop();
+      let destOffset = $target.offset().top -= REM / 2;
 
-              /* clean up old scroll mark */
-              if ($(`[${SCROLL_MARK}=true]`).length) {
-                $(`[${SCROLL_MARK}=true]`).attr(SCROLL_MARK, false);
-              }
+      if (destOffset < curOffset) { // scroll up
+        ScrollHelper.hideTopbar();
+        ScrollHelper.addScrollUpTask();
 
-              /* Clean :target links */
-              if ($(":target").length) { /* element that visited by the URL with hash */
-                $(":target").attr(SCROLL_MARK, false);
-              }
+        if (isMobileViews && isPortrait) {
+          destOffset -= ScrollHelper.getTopbarHeight();
+        }
 
-              /* set scroll mark to footnotes */
-              if (toFootnote || toFootnoteRef) {
-                $target.attr(SCROLL_MARK, true);
-              }
-
-              if ($target.is(":focus")) { /* Checking if the target was focused */
-                return false;
-              } else {
-                $target.attr("tabindex", "-1"); /* Adding tabindex for elements not focusable */
-                $target.focus(); /* Set focus again */
-              }
-
-              if (typeof $topbarWrapper.attr(ATTR_TOC_SCROLLING) !== "undefined") {
-                tocScrollUpCount -= 1;
-
-                if (tocScrollUpCount <= 0) {
-                  $topbarWrapper.attr(ATTR_TOC_SCROLLING, "false");
-                }
-              }
-            });
-          }
+      } else { // scroll down
+        if (isMobileViews && isPortrait) {
+          destOffset -= ScrollHelper.getTopbarHeight();
         }
       }
 
+      $("html").animate({
+        scrollTop: destOffset
+      }, 500, () => {
+        $target.focus();
+
+        /* clean up old scroll mark */
+        if ($(`[${ATTR_SCROLL_FOCUS}=true]`).length) {
+          $(`[${ATTR_SCROLL_FOCUS}=true]`).attr(ATTR_SCROLL_FOCUS, false);
+        }
+
+        /* Clean :target links */
+        if ($(":target").length) { /* element that visited by the URL with hash */
+          $(":target").attr(ATTR_SCROLL_FOCUS, false);
+        }
+
+        /* set scroll mark to footnotes */
+        if (toFootnote || toFootnoteRef) {
+          $target.attr(ATTR_SCROLL_FOCUS, true);
+        }
+
+        if ($target.is(":focus")) { /* Checking if the target was focused */
+          return false;
+        } else {
+          $target.attr("tabindex", "-1"); /* Adding tabindex for elements not focusable */
+          $target.focus(); /* Set focus again */
+        }
+
+        if (ScrollHelper.hasScrollUpTask()) {
+          ScrollHelper.popScrollUpTask();
+        }
+      });
     }); /* click() */
 });

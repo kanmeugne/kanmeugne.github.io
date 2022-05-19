@@ -2,15 +2,15 @@ name: 'Continuous Integration'
 on:
   push:
     branches-ignore:
-      - 'production'
+      - 'release/**'
+      - 'docs'
     tags-ignore:
-      - '*'
+      - '**'
     paths-ignore:
       - '.github/**'
       - '!.github/workflows/ci.yml'
       - '.travis.yml'
       - '.gitignore'
-      - 'docs/**'
       - 'README.md'
       - 'LICENSE'
   pull_request:
