@@ -7,7 +7,7 @@ tags: [google analytics, pageviews]
 ---
 
 
-This post is to enable Page Views on the [**Chirpy**][chirpy-homepage] theme based blog that you just built. This requires technical knowledge and it's recommended to keep the `google_analytics.pv` disabled unless you have a good reason. If your website has low traffic, the page views count would discourage you to write more blogs. With that said, let's start with the setup.
+This post is to enable Page Views on the [**Chirpy**][chirpy-homepage] theme based blog that you just built. This requires technical knowledge and it's recommended to keep the `google_analytics.pv.*` empty unless you have a good reason. If your website has low traffic, the page views count would discourage you to write more blogs. With that said, let's start with the setup.
 
 ## Set up Google Analytics
 
@@ -16,10 +16,10 @@ This post is to enable Page Views on the [**Chirpy**][chirpy-homepage] theme bas
 First, you need to setup your account on Google analytics. While your create your account, you must create your first **Property** as well.
 
 1. Head to <https://analytics.google.com/> and click on **Start Measuring**
-2. Enter your desired *Account Name* and choose the desired checkboxes
-3. Enter your desired *Property Name*. This is the name of the tracker project that appears on your Google Analytics dashboard
-4. Enter the required information *About your business*
-5. Hit *Create* and accept any license popup to setup your Google Analytics account and create your property
+2. Enter your desired _Account Name_ and choose the desired checkboxes
+3. Enter your desired _Property Name_. This is the name of the tracker project that appears on your Google Analytics dashboard
+4. Enter the required information _About your business_
+5. Hit _Create_ and accept any license popup to setup your Google Analytics account and create your property
 
 ### Create Data Stream
 
@@ -39,14 +39,11 @@ Now, click on the new data stream and grab the **Measurement ID**. It should loo
 
 ```yaml
 google_analytics:
-  id: 'G-V6XXXXXXX'          # Fill with your Google Analytics ID
+  id: 'G-V6XXXXXXX'   # fill in your Google Analytics ID
+  # Google Analytics pageviews report settings
   pv:
-    # The Google Analytics pageviews switch.
-    enabled: false
-    # the next options only valid when `google_analytics.pv` is enabled.
-    proxy_url: ''
-    proxy_endpoint: ''
-    cache: false  # pv data local cache, good for the users from GFW area.
+    proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
+    cache_path:       # the local PV cache data, friendly to visitors from GFW region
 ```
 
 When you push these changes to your blog, you should start seeing the traffic on your Google Analytics. Play around with Google Analytics dashboard to get familiar with the options available as it takes like 5 mins to pickup your changes. You should now be able to monitor your traffic in realtime.
@@ -75,9 +72,9 @@ There is a detailed [tutorial](https://developers.google.com/analytics/solutions
 
 8. Click on **Enable APIs and Services** button on the top
 
-9. Enable the following APIs: *Google Analytics API*
+9. Enable the following APIs: _Google Analytics API_
 
-10. On the left, Click on *OAuth Consent Screen* and accept **Configure Consent Screen**. Select **External** since your blog is probably hosted for the public. Click on **Publish** under *Publishing Status*
+10. On the left, Click on _OAuth Consent Screen_ and accept **Configure Consent Screen**. Select **External** since your blog is probably hosted for the public. Click on **Publish** under _Publishing Status_
 
 11. Click on **Credentials** on the left and create a new **OAuth Client IDs** credential. Make sure to add a entry under `Authorized redirect URIs` that matches: `https://<project-id>.<region>.r.appspot.com/admin/auth`
 
@@ -116,10 +113,10 @@ There is a detailed [tutorial](https://developers.google.com/analytics/solutions
 1. Clone the **Google Analytics superProxy** project on Github: <https://github.com/googleanalytics/google-analytics-super-proxy> to your local.
 
 2. Remove the first 2 lines in the [`src/app.yaml`](https://github.com/googleanalytics/google-analytics-super-proxy/blob/master/src/app.yaml#L1-L2) file:
-	```diff
+  ```diff
 - application: your-project-id
 - version: 1
-	```
+  ```
 
 3. In `src/config.py`, add the `OAUTH_CLIENT_ID` and `OAUTH_CLIENT_SECRET` that you gathered from you App Engine Dashboard.
 
@@ -143,7 +140,8 @@ There is a detailed [tutorial](https://developers.google.com/analytics/solutions
     # XSRF Settings
     XSRF_KEY = 'OnceUponATimeThereLivedALegend'
     ```
-**Tip:** You can configure a custom domain instead of `https://PROJECT_ID.REGION_ID.r.appspot.com`. But, for the sake of keeping it simple, we will be using the Google provided default URL.
+
+    **Tip:** You can configure a custom domain instead of `https://PROJECT_ID.REGION_ID.r.appspot.com`. But, for the sake of keeping it simple, we will be using the Google provided default URL.
 
 5. From inside the src/ directory, deploy the app
 
@@ -194,20 +192,17 @@ Head to `https://PROJECT_ID.REGION_ID.r.appspot.com/admin` and create a query af
 The query parameters are as follows:
 
 - **start-date**: fill in the first day of blog posting
-
 - **end-date**: fill in `today` (this is a parameter supported by GA Report, which means that it will always end according to the current query date)
-
 - **metrics**: select `ga:pageviews`
-
 - **dimensions**: select `ga:pagePath`
 
 In order to reduce the returned results and reduce the network bandwidth, we add custom filtering rules [^ga-filters]:
 
-- **filters**: fill in `ga:pagePath=~^/posts/.*/$;ga:pagePath!@=`
+- **filters**: fill in `ga:pagePath=~^/posts/.*/$;ga:pagePath!@=`.
 
-  Among them, `;` means using _logical AND_ to concatenate two rules.
+    Among them, `;` means using _logical AND_ to concatenate two rules.
 
-  If the `site.baseurl` is specified, change the first filtering rule to `ga:pagePath=~^/BASE_URL/posts/.*/$`, where `BASE_URL` is the value of `site.baseurl`.
+    If the `site.baseurl` is specified, change the first filtering rule to `ga:pagePath=~^/BASE_URL/posts/.*/$`, where `BASE_URL` is the value of `site.baseurl`.
 
 After <kbd>Run Query</kbd>, copy the generated contents of **API Query URI** at the bottom of the page, and fill in the **Encoded URI for the query** of SuperProxy on GAE.
 
@@ -226,14 +221,10 @@ Update the `_config.yml` file of [**Chirpy**][chirpy-homepage] project with the 
 
 ```yaml
 google_analytics:
-  id: 'G-XXXXXXXXXX'   # Fill with your Google Analytics ID
+  id: 'G-V6XXXXXXX'   # fill in your Google Analytics ID
   pv:
-    # The Google Analytics pageviews switch.
-    enabled: true
-    # the next options only valid when `google_analytics.pv` is enabled.
-    proxy_url: 'https://PROJECT_ID.REGION_ID.r.appspot.com'
     proxy_endpoint: 'https://PROJECT_ID.REGION_ID.r.appspot.com/query?id=<ID FROM SUPER PROXY>'
-    cache: false      # pv data local cache, good for the users from GFW area.
+    cache_path:       # the local PV cache data, friendly to visitors from GFW region
 ```
 
 Now, you should see the Page View enabled on your blog.
