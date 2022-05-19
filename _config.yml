@@ -3,12 +3,14 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-# Only if your site type is GitHub Project sites and doesn't have a custom domain,
-# change below value to '/projectname'.
+# Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
+# and doesn't have a custom domain.
 baseurl: ''
 
-# the HTML language tag › https://www.w3.org/International/questions/qa-choosing-language-tags
-lang: en-US
+# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
+# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
+# otherwise, the layout language will use the default value of 'en'.
+lang: en
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Asia/Shanghai
@@ -47,7 +49,9 @@ social:
     - https://www.linkedin.com/in/patrick-simo-kanmeugne-127b5281/
 
 google_site_verification: google_meta_tag_verification # change to your verification string
-# --------------------------
+
+# ↑ --------------------------
+
 
 google_analytics:
   id: 'G-KFTQ8M8D5N'              # fill in your Google Analytics ID
@@ -64,14 +68,20 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: light
+theme_mode: dark
 
 # boolean type, global switch for ToC in posts.
 toc: true
 
-disqus:
-  comments: true  # boolean type, the global switch for posts comments.
-  shortname: 'kanmeugne-github-io'    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+comments:
+  active:         # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
+  # The active options are as follows:
+  disqus:
+    shortname: 'kanmeugne-github-io'   # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+  # utterances settings › https://utteranc.es/
+  utterances:
+    repo:   kanmeugne/kanmeugne.github.io      # <gh-username>/<repo>
+    issue_term:  blog  # < url | pathname | title | ...>
 
 paginate: 10
 
@@ -92,7 +102,6 @@ collections:
   tabs:
     output: true
     sort_by: order
-
 
 defaults:
   -
@@ -118,7 +127,6 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-      dynamic_title: true    # Hide title in mobile screens.
 
 sass:
   style: compressed
@@ -141,7 +149,7 @@ exclude:
   - LICENSE
   - gulpfile.js
   - node_modules
-  - '*.json'
+  - package*.json
 
 sitemap_exclude:  # Sitemap will exclude the following items.
   fuzzy:
