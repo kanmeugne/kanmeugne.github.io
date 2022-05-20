@@ -13,40 +13,46 @@ comments: true
 author: kanmeugne
 ---
 
-Dans un aricle précédent, j'expliquais en 3 étapes comment mettre en place un environnement de programmation en Python. Il existe plusieurs options d'installation en réalité (anaconda, winpython, etc.) mais j'ai privilégié la plus "bas niveau".
+Dans un aricle précédent, j'expliquais en 3 étapes comment mettre en place un environnement de programmation en Python.
 
-La procédure que j'ai présentée préssupose l'utilisation d'un système Linux et il ne s'agit de pas d'une contrainte bien au contraire, et pour au moins 2 raisons. Premièrement, Linux est très populaire auprès des développeurs - le débutant pourra donc automatiquement profiter d'une importante communauté d'entraide. Deuxièmement, Windows - qui est de loin l'OS le plus populaire tout court - propose des sous-systèmes Linux natifs dans ses dernières versions. Il est donc très facile de travailler sous linux aujourd'hui (encore plus que pas le passé) quelque soit l'OS installé sur sa machine (pour les utilisateurs de MacOs, l'expérience montre que les procédures d'installation - au moins à partir d'un terminal - sont quasi similaires).
+Il existe plusieurs options d'installation en réalité ([anaconda](https://www.anaconda.com/), [winpython](https://winpython.github.io/), etc.) mais j'ai privilégié la plus "bas niveau".
+
+[La procédure que j'ai présentée](/posts/setting-up-your-python-environment) préssupose l'utilisation d'un système Linux et il ne s'agit de pas d'une contrainte bien au contraire, et pour au moins 2 raisons. Premièrement, Linux est très populaire auprès des développeurs - le débutant pourra donc automatiquement profiter d'une importante communauté d'entraide. Deuxièmement, Windows - qui est de loin l'OS le plus populaire tout court - propose des sous-systèmes Linux natifs dans ses dernières versions. Il est donc très facile de travailler sous linux aujourd'hui (encore plus que pas le passé) quelque soit l'OS installé sur sa machine (pour les utilisateurs de MacOs, l'expérience montre que les procédures d'installation - au moins à partir d'un terminal - sont quasi similaires).
 
 Dans cet article, nous allons un peu plus loin dans l'organisation de l'espace de travail du developpeur python avec la mise en place d'environnments virtuels.
 
 ## Pourquoi un environnement virtuel ?
 
-Le monde des développeurs est un monde complexe, plein de contrariétés et d'épreuves. Il peut arriver par exemple :
+Le monde des développeurs est un monde complexe, plein de contrariétés et d'épreuves.
+
+Il peut arriver par exemple :
 - que vous ayez besoin d'une version bien précise de l'interpréteur python -- différente de la version installée sur votre système -- parceque la `lib X` que vous convoitez ne marche qu'avec cette version-là !
-- que, bien que vous utilisiez une version plus récente de la `lib X` dans l'`app Y`, vous ayez besoin d'une version plus ancienne de la `lib X` pour que votre `app Y` -- que vous avez eu tant de mal à développer -- continue de fonctionner sur votre machine ! 
-- que vous ayez envie, et c'est votre droit le plus strict, d'isoler vos projets python pour avoir une bonne visibilité des dépendances et des lib utilisées. 
+- que, bien que vous utilisiez la version plus récente de la `lib X` dans votre code `Y`, vous ayez besoin d'une version plus ancienne de la `lib X` pour qu'un autre bout de code `Z` -- que vous avez eu tant de mal à développer -- continue de fonctionner sur votre machine ! 
+- que vous ayez envie, et c'est votre droit le plus absolu, d'isoler vos projets python pour avoir une bonne vision des dépendances et des lib utilisées. 
 
 Pour faire simple, vous pouvez confronter à deux cas de figure : 
-- cohabitation : vous avez besoin de faire cohabiter plusieurs d'interpreteur ou de lib python
-- isolement : vous voulez isoler vos projets pour avoir une bonne visibilité sur les libs et les dépendances nécessaires. 
+- cohabitation : vous avez besoin de faire cohabiter plusieurs versions d'interpreteur `python` ou de `lib` `python`
+- isolement : vous voulez isoler vos projets pour avoir une bonne visibilité sur les libs et les dépendances nécessaires poru votre projet. 
 
-Si vous vous retrouvez dans l'un ces deux cas de figure, vous avez certainement besoin d'utiliser un environnement virtuel. 
+Si vous vous retrouvez dans l'un ces deux cas de figure, vous avez certainement besoin d'utiliser un **environnement virtuel**. 
 
 ## Installation et mise en oeuvre
 
-Que faut-il installer pour mettre en oeuvre un environnement virtuel ? et comment ça se passe concrètement ? C'est ce que nous allons voir maintenant. Nous allons considérer que nous sommes dans les configurations de l'article [setting up your python environment](/dev/2021-05-03-setting-up-your-python-environment.md).
+Que faut-il installer pour mettre en oeuvre un environnement virtuel ? et comment ça se passe concrètement ? C'est ce que nous allons voir maintenant.
+
+Nous allons considérer que nous sommes dans les configurations de l'article [setting up your python environment](/posts/setting-up-your-python-environment).
 
 Il faut tout d'abord installer `virtualenv` et `virtualenvwrapper` qui sont des lib python qui permettent :
 - de créer un environnement de dev isolé du reste du système (virtualenv)
 - de gérer les environnements virtuel depuis le terminal (`virtualenvwrapper`)
 
-```python
+```shell
 pip install virtualenv virtualenvwrapper
 ```
 
 `virtualenvwrapper` créé un programme -- `virtualenvwrapper.sh` -- qui doit s'exécuter à chaque début session du terminal pour définir les commandes permettant de gérer les environnements virtuels. Assurez-vous de bien le localiser et de l'exécuter dans votre `~/.bashrc`. Pensez aussi à déclarer le dossier dans lequel les environnements virtuels seront créés `WORKON_DIR`. Ci dessous, un esemple de configuration.
 
-```bash
+```shell
 # ~/.bashrc (ou ~/.zshrc)
 
 # interpréteur par defaut
