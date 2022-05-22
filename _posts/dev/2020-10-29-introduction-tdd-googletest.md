@@ -30,6 +30,7 @@ Le développeur qui adopte le *TDD* suit nécessairement [le cycle suivant][9] :
 7. Retourner à l'étape 1.
 
 > Le [TDD][9] --- **Test-Driven Development** --- fait référence à une approche de developpement informatique dans laquelle le code est toujours produit dans le but de valider des tests préalablement définis. Le but de cette approche est de garantir une qualité optimale du code à n'importe quelle étape du développement.
+{: .prompt-tip }
 
 ## Mise en situation : développement de la lib *toolset*
 
@@ -53,7 +54,8 @@ La première contrainte que l'on se fixe c'est de pouvoir lancer les commandes c
     > cmake --build . --config Debug
     > ../bin/Debug/toolset_test
 {% endhighlight %}
-> **Note**: Le test de compilation est le test le plus fondamental !
+> Le test de compilation est le test le plus fondamental !
+{: .prompt-warning }
 
 Cela suppose de définir les bonnes cibles pour la lib *toolset* et pour les *tests unitaires*.
 
@@ -77,7 +79,8 @@ project
     ├── include
     └── src
 {% endhighlight %}
-> **Note**: Le projet s'organise en deux sous projets. Un pour la lib toolset et un autre pour les tests.
+> Le projet s'organise en deux sous projets. Un pour la lib toolset et un autre pour les tests.
+{: .prompt-tip }
 
 Les sources pour définir la lib *toolset* et l'exécutable de *tests* sont stockées respectivement dans les dossiers `toolset/` et `tests/`. Le makefile global du projet est défini dans `./CMakeLists.txt`, à la racine du dossier.
 
@@ -101,7 +104,8 @@ project (toolset C CXX)
 add_subdirectory ("toolset")
 add_subdirectory("tests")
 ```
-> **Note**: Les lignes 4---10 de `./CMakeLists.txt` définissent les chemins par défaut pour les cibles et les fichiers intermédiaires, selon les configurations (Release ou Debug), et suivant les architectures. Les lignes 14---16 indiquent que le projet contient deux sous-projets : un pour les **tests** et l'autre pour la lib **toolset**.
+> Les lignes 4---10 de `./CMakeLists.txt` définissent les chemins par défaut pour les cibles et les fichiers intermédiaires, selon les configurations (Release ou Debug), et suivant les architectures. Les lignes 14---16 indiquent que le projet contient deux sous-projets : un pour les **tests** et l'autre pour la lib **toolset**.
+{: .prompt-tip }
 
 Bien évidemment dans l'état actuel, la compilation échoue puisque les dossiers des sous-projets sont vides. Pour les configurer, on commence par remplir le fichier `./toolset/CMakeLists.txt`.
 
@@ -119,7 +123,8 @@ file(GLOB_RECURSE TOOLSET_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 include_directories(${TOOLSET_INCLUDE_DIR})
 add_library(${BINARY} ${TOOLSET_SRC_FILES})
 ```
-> **Note**: Le fichier indique que les entêtes se trouvent dans le  dossier `./toolset/include/` (ligne 9) et les sources, dans le dossier .`/toolset/src/` (lignes 8 et 10). Le nom de la cible est indiqué à la ligne 11 en utilisant la varibale `${CMAKE_PROJECT_NAME}`, définie dans le `CMakeLists.txt` global du projet.
+> Le fichier indique que les entêtes se trouvent dans le  dossier `./toolset/include/` (ligne 9) et les sources, dans le dossier .`/toolset/src/` (lignes 8 et 10). Le nom de la cible est indiqué à la ligne 11 en utilisant la varibale `${CMAKE_PROJECT_NAME}`, définie dans le `CMakeLists.txt` global du projet.
+{: .prompt-tip }
 
 Après le makefile de la lib *toolset*, on remplit le fichier `./tests/CMakeLists.txt` pour les *tests unitaires*. Pour cela, on se sert d'une [astuce][5] qui consiste à définir *googletest* comme une dépendance extérieure et à générer toutes ses cibles au moment de la configuration --- la dépendance à *googletest* est déclarée dans un fichier de configuration intermédiaire, `./deps/gtest/CMakeLists.txt.in`.
 
@@ -179,7 +184,8 @@ include_directories(
 add_executable (${BINARY} ${TEST_SRC_FILES})
 target_link_libraries(${BINARY} ${CMAKE_PROJECT_NAME} gmock_main)
 ```
-> **Note**: le makefile des tests fait appel à une dépendance extérieure (ligne 5) pour générer les entêtes et les cibles de *googletest* à la configuration (lignes 5---30). La cible pour l'exécutable des tests est complètement définie de la ligne 51 --- 52.
+> le makefile des tests fait appel à une dépendance extérieure (ligne 5) pour générer les entêtes et les cibles de *googletest* à la configuration (lignes 5---30). La cible pour l'exécutable des tests est complètement définie de la ligne 51 --- 52.
+{: .prompt-tip }
 
 Le fichier `./tests/CMakeLists.txt.in` utilisé pour la dépendence à googletest indique le lien github officiel des sources et le tag à utiliser.
 
@@ -200,7 +206,8 @@ ExternalProject_Add(googletest
   TEST_COMMAND      ""
 )
 ```
-> **Note**: le fichier `./deps/gtest/CMakeLists.txt.in` est utilisé dans `./tests/CMakeLists.txt` au moment de la configuration et de la création des cibles `googletest`. Il indique le lien github pour récupérer les sources et le tag à utiliser.
+> Le fichier `./deps/gtest/CMakeLists.txt.in` est utilisé dans `./tests/CMakeLists.txt` au moment de la configuration et de la création des cibles `googletest`. Il indique le lien github pour récupérer les sources et le tag à utiliser.
+{: .prompt-tip }
 
 ### Code source *TDD*--compatible
 
@@ -268,7 +275,8 @@ La production de code fournie ci-dessus valide notre test *zero* ! La commande `
     └── src
         └── MyParser.cpp
 {% endhighlight %}
-> **Note**: résultat de la commande `cmake --build . --config Debug` sur une machine ubuntu avec gcc-7.5. La lib *toolset* --- `./lib/Debug/libtoolset.a` --- est correctement générée ainsi que l'exécutable pour les *tests* --- `./bin/Debug/toolset`.
+> Résultat de la commande `cmake --build . --config Debug` sur une machine ubuntu avec gcc-7.5. La lib *toolset* --- `./lib/Debug/libtoolset.a` --- est correctement générée ainsi que l'exécutable pour les *tests* --- `./bin/Debug/toolset`.
+{: .prompt-tip }
 
 Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qui nous indique qu'aucun test n'a été défini --- ce qui est tout à fait normal. La suite de l'exercice consiste à définir les tests unitaires qui permettront de valider chacune des fonctionnalités de la lib toolset à terme. 
 
@@ -279,7 +287,8 @@ Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qu
 [==========] 0 tests from 0 test suites ran. (0 ms total)
 [  PASSED  ] 0 tests.
 {% endhighlight %}
-> **Note**: les sources sont disponibles sur [github][8], pour les impatients.
+> Les sources sont disponibles sur [github][8], pour les impatients.
+{: .prompt-tip }
 
 Maintenant que la mise en place de l'espace de travail est faite, on peut véritablement entrer dans le cycle vertueux des *TDD*.
 
@@ -300,7 +309,7 @@ Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implé
 
 [1]: https://cmake.org/cmake/help/v3.8/
 [2]: https://git-scm.com/
-[3]: https://github.com/
+[8]: https://github.com/kanmeugne
 [4]: https://github.com/google/googletest
 [5]: https://crascit.com/2015/07/25/cmake-gte
 [7]: https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
