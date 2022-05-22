@@ -16,7 +16,8 @@ Le développement informatique a connu d'importantes évolutions ces dernières 
 
 Pour être toujours plus proche des besoins --- *accélérer la prise de décision dans les entreprises et les institutions publiques, optimiser les temps de calcul et de de déploiement de nouvelles solutions* --- l'industrie de l'informatique multiplie les moyens techniques et les approches, faisant évoluer le métier de développeur informatique et le rendant de plus en plus complexe.
 
-<small>Photo by <a href="https://unsplash.com/@abebarrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Abraham Barrera</a> on <a href="https://unsplash.com/s/photos/multi-agents?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
+![mas Poster](/images/sma.jpg){: width="500" }
+_Photo by [Abraham Barrera](https://unsplash.com/@abebarrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
 Parmi les différentes tendances qui déterminent l'évolution du métier de développeur informatique, on peut distinguer : 
 
@@ -45,6 +46,8 @@ Le croisement de ces différentes tendances entraîne un changement de perspecti
 L'ingénieur informatique doit dont penser *système* et pas n'importe quel système! L'ingénieur doit penser __*systèmes multi-agents*__ (SMA), c’est-à-dire, des programmes  situés dans des machines et interagissant entre eux pour réaliser une tâche. Il pourra profiter d'une abondante littérature sur les actes de langages, les architectures de décision des agents rationnels, des agents réactifs, ou encore, des modèles d'action inspirés de la robotique et adaptés à un environnement dynamique.
 
 > Les SMA offrent au modélisateur informatique une plus grande liberté de conception pour penser les solutions aux problèmes qui lui sont posés et une manière naturelle d'intégrer les ressources de calculs et de stockage dès la conception.
+{: .prompt-tip }
+
 
 Un autre avantage, et non des moindres, est le parallèle extrêmement enrichissant que l'on peut faire entre les ecosystèmes naturels et l'architecture de solutions informatiques. La dimension réseau étant devenue la norme, comme mentionné plus haut, il est possible de s'inspirer de la nature (fourmis, araignées, bactéries, plantes, etc. rechercher *nature-inspired algorithms*) pour imaginer des modèles d'interactions efficaces entre les programmes.
 

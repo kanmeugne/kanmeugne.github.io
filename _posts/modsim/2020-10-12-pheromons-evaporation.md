@@ -16,7 +16,7 @@ comments: true
 author: kanmeugne
 ---
 
-![Pheromon Evaporation Poster](/images/sfmlgridobs.jpg){: width="700" height="400" }
+![Pheromon Evaporation Poster](/images/sfmlgridobs.jpg){: width="500" }
 _Photo by [Danny Howe](https://unsplash.com/@dannyhowe?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
 You should now be familiar with our [2D Grid app][6]. In a [previous post][1], I updated its original object-oriented architecture in order to implement an affordable obstacle feature. Here, I am going to upgrade the architecture again in order to implement a pheromon evaporation feature.
@@ -72,7 +72,9 @@ sfml2dgrid
             └── PheromonViewer.cpp
 
 ```
-> **Note**: the file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+> The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+{: .prompt-warning }
+
 
 ## Pheromon modeling and evaporation
 

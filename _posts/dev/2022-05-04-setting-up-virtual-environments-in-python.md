@@ -195,6 +195,7 @@ $ workon myenv
 - je sauvegarde l'état du système dans un fichier texte grâce notemment à la commande `pip freeze`.
 
 > A la différence de `pip list`, la commande `pip freeze` affiche les dépendances dans un format directement exploitable pour l'installation. 
+{: .prompt-tip }
 
 ```bash
 (myenv) $ pip freeze

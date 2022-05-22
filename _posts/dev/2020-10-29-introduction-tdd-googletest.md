@@ -290,7 +290,7 @@ Pour l'instant lorsqu'on lance l'exécutable de *tests* on obtient un message qu
 > Les sources sont disponibles sur [github][8], pour les impatients.
 {: .prompt-tip }
 
-Maintenant que la mise en place de l'espace de travail est faite, on peut véritablement entrer dans le cycle vertueux des *TDD*.
+Maintenant que la mise en place de l'espace de travail est faite, on peut véritablement entrer dans [le cycle vertueux des *TDD*][10].
 
 ## Conclusion
 
@@ -314,3 +314,4 @@ Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implé
 [5]: https://crascit.com/2015/07/25/cmake-gte
 [7]: https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
 [9]: https://en.wikipedia.org/wiki/Test-driven_development
+[10]: /posts/tdd-cycle-vertueux/ "Introduction aux TDD: Le cycle vertueux"

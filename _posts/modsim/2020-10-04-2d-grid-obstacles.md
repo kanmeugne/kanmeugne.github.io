@@ -10,13 +10,13 @@ tags:
 categories:
     - modeling & simulation
 comments: true
-image: "/images/sfmlgrid_obs.jpg"
 author: kanmeugne
 ---
 
 Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. 
 
-<small>Photo by <a href="https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Iewek Gnos</a> on <a href="https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
+![2D Grid with obstacles Poster](/images/sfmlgrid_obs.jpg){: width="500" }
+_Photo by [Iewek Gnos]("https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText") on [Unsplash]("https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText")_
 
 In this post, I am upgrading an existing *object oriented architecture* that [I shared recently][1] as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells --- a complete implementation in C++ is also provided for demonstration.
 
@@ -56,7 +56,9 @@ sfml2dgrid
             ├── GridViewer.cpp
             └── ObstacleViewer.cpp
 ```
-> **Note**: the file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+> The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+{: .prompt-tip }
+
 
 Comparing to the [previous version][1], I have updated 3 existing objects --- *App*, *env::IGrid* and *env::Grid* --- and created 3 new objects --- *viewers::ObstacleViewer*, *env::ICellFunctor* and *viewers::ViewerMgr*. More details below.
 
