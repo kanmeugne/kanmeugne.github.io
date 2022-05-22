@@ -50,6 +50,7 @@ TEST(ParserTest, Parser_LowerSingleLetter)
 ```
 
 > **Traduction en langage naturel** : La fonction `convertToLowerCase` du parser convertit la lettre "L" majuscule en "l" minuscule
+{: .prompt-tip }
 
 Quelques mots clefs dans cette définition nécessitent une petite explication :
 - `TEST` est la macro *googletest* qui permet de définir un test unitaire. `ASSERT_EQ` est une autre MACRO qui permet de tester si 2 variables ont la même valeur (voir la [documentation de googletest][4] pour plus d'infos sur les macros disponibles).
@@ -132,7 +133,8 @@ Avec cette implémentation, le test est OK. On a produit le code qui valide notr
 [==========] 1 test from 1 test suite ran. (0 ms total)
 [  PASSED  ] 1 test.
 ```
-> **Note**: la production de code valide le test, on peut avancer dans le développement.
+> La production de code valide le test, on peut avancer dans le développement.
+{: .prompt-tip }
 
 ## Red, Green, Refactor
 

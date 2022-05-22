@@ -194,6 +194,7 @@ Below, a list of IDEs I have already seen in action (⚠ my pick is completely i
 - [PyCharm][10] is an integrated development environment used in computer programming, specifically for the Python programming language. It is developed by the Czech company JetBrains (formerly known as IntelliJ). It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems, and supports web development with Django as well as data science with Anaconda.
 
 > If you want an extensive review, please check this well-documented [article][4] on python IDEs.
+{: .prompt-tip }
 
 ## 4. References
 - [Geek4Geeks.com][1]

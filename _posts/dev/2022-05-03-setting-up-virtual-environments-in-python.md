@@ -13,7 +13,7 @@ comments: true
 author: kanmeugne
 ---
 
-Dans un aricle précédent, j'expliquais en 3 étapes comment mettre en place un environnement de programmation en Python. Il existe plusieurs options d'installation en réalité ([anaconda][1], [winpython][2], etc.) mais j'ai privilégié la plus "bas niveau".
+Dans un [article][6] précédent, j'expliquais en 3 étapes comment mettre en place un environnement de programmation en Python. Il existe plusieurs options d'installation en réalité ([anaconda][1], [winpython][2], etc.) mais j'ai privilégié la plus "bas niveau".
 
 La [procédure][6] que j'ai présentée préssupose l'utilisation d'un système Linux et il ne s'agit de pas d'une contrainte bien au contraire, et pour au moins 2 raisons :
 
@@ -76,6 +76,7 @@ Voilà, vous êtes prêts à tester les environnements virtuels.
 ## Comment utiliser un environnement virtuel ?
 
 >  Le tutoriel est basé sur [`virtualenv`][3] `20.2.2`
+{: .prompt-warning }
 
 ```bash
 $ pip show virtualenv 
@@ -275,6 +276,7 @@ Et voilà, vous avez l'essentiel pour commencer à utiliser les environnements v
 > Très utile : 
 > - l'aide sur la commande `mkvirtualenv` -- `mkvirtualenv --help`
 > - les documentations officielles de [`virtualenv`][3] et [`virtualenvwrapper`][4] pour plus d'options.
+{: .prompt-tip }
 
 ## Références
 
