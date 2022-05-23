@@ -13,7 +13,7 @@ author: kanmeugne
 ---
 
 
-Le [TDD][9] --- **Test-Driven Development** --- fait référence à une approche de developpement informatique dans laquelle le code est toujours produit dans le but de valider des tests préalablement définis. Le but de cette approche est de garantir une qualité optimale du code à n'importe quelle étape du développement.
+Le [TDD][9] --- abbréviation de **Test-Driven Development** --- fait référence à une approche de developpement informatique dans laquelle le code est toujours produit dans le but de valider des tests préalablement définis. Le but de cette approche est de garantir une qualité optimale du code à n'importe quelle étape du développement.
 
 ![Introduction au TDD Poster](/images/test11-unsplash.jpg){: width="500"}
 _Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
