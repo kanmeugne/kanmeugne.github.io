@@ -67,9 +67,6 @@ jobs:
 
       - name: Build Site
         run: |
-          gem install wdm -v 0.1.1
-          gem install tzinfo -v 1.2
-          gem install tzinfo-data
           bash tools/build.sh
 
           if [[ -n $SPEC_TEST ]]; then
