@@ -427,19 +427,28 @@ Le code utilisé dans le post est disponible [ici][8]. J'attends vos commentaire
 
 ## Resources
 
-- [https://cmake.org/cmake/help/v3.8/](https://cmake.org/cmake/help/v3.8/)
-- [https://git-scm.com/](https://git-scm.com/)
-- [https://github.com/google/googletest](https://github.com/google/googletest)
-- [https://crascit.com/2015/07/25/cmake-gte](https://crascit.com/2015/07/25/cmake-gte)
-- [https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019](https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
-- [https://en.wikipedia.org/wiki/Test-driven_development](https://en.wikipedia.org/wiki/Test-driven_development)
-- [https://github.com/kanmeugne/cppexperiments/tddwithgtest](https://github.com/kanmeugne/cppexperiments/tddwithgtest)
+- [CMake.org][1]
+- [Git : official Website][2]
+- [GitHub.com/google/googletest][4]
+- [Crascit.com : cmake-gte][5]
+- [docs.microsoft.com : CMake projects in visual studio][7]
+- [Wikipedia : Test-driven development][9]
+- [Introduction au TDD (II) : le cycle vertueux (code source)][8]
 
-[1]: https://cmake.org/cmake/help/v3.8/
-[2]: https://git-scm.com/
-[4]: https://github.com/google/googletest
-[5]: https://crascit.com/2015/07/25/cmake-gte
-[6]: /posts/introduction-tdd-googletest
-[7]: https://docs.microsoft.com/fr-fr/cpp/build/cmake-projects-in-visual-studio?view=vs-2019
-[9]: https://en.wikipedia.org/wiki/Test-driven_development
-[8]: https://github.com/kanmeugne/cppexperiments/tddwithgtest
+[1]: https://cmake.org/cmake/help/v3.8/ "CMake est un système de construction logicielle multiplateforme"
+[2]: https://git-scm.com/ "Git est un logiciel de gestion de versions décentralisé"
+[4]: https://github.com/google/googletest "GoogleTest is Google’s C++ testing and mocking framework"
+[5]: https://crascit.com/2015/07/25/cmake-gte "Crascit : Building GoogleTest and GoogleMock directly in a CMake project"
+[6]: /posts/introduction-tdd-googletest "Introduction au TDD (I) : Mise en place avec googletest"
+[7]: https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio "CMake est devenu de plus en plus intégré à Visual Studio au cours des dernières versions"
+[9]: https://en.wikipedia.org/wiki/Test-driven_development "Wikipedia : Le Test-Driven Development (TDD), ou développement piloté par les tests en français, est une méthode de développement de logiciel qui consiste à concevoir un logiciel par petites étapes, de façon progressive, en écrivant avant chaque partie du code source propre au logiciel les tests correspondants et en remaniant le code continuellement."
+[10]: /posts/tdd-cycle-vertueux/ "Introduction aux TDD: Le cycle vertueux"
+[8]: https://github.com/kanmeugne/cppexperiments/releases/tag/starting-the-cycle "The source code of this tutorial is forkable from here"
+
+
+
+
+
+
+
+

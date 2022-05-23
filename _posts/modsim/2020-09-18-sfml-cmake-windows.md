@@ -208,6 +208,7 @@ On Linux
   cmake --build ./ --target app --config Debug 
 ```
 > **Note**:  For linux user, you might need to check [this][2] first.
+{: .prompt-warning }
 
 ## Run
 You should be able to launch the executable located in the `bin` folder and see a nice (and clickable) cyan window.
@@ -217,23 +218,21 @@ You should be able to launch the executable located in the `bin` folder and see 
 ```
 
 ![screenshot](/images/sfml-window.gif)
-> On ubuntu 18.08 with gcc 7.5
-{: .prompt-warning }
+_Step by step Demo : launching the SFML app from the terminal. In this tutorial the program is built on ubuntu 18.08 with gcc 7.5_
 
 Smile! Now you are ready to take your graphical app wherever you want. Enjoy and feel free to send me your feedbacks!
 
 ## References
 
-- [https://github.com/kanmeugne/sfmlcmake](https://github.com/kanmeugne/sfmlcmake)
-- [https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
-- [https://crascit.com/2015/07/25/cmake-gtest/](https://crascit.com/2015/07/25/cmake-gtest/)
-- [https://github.com/google/googletest](https://github.com/google/googletest)
-- [https://cmake.org/](https://cmake.org/)
-- [https://www.sfml-dev.org/documentation/2.5.1/](https://www.sfml-dev.org/documentation/2.5.1/)
+- [Cmake.org][5]
+- [Googletest][4]
+- [crascit: CMake-Gtest][3]
+- [SFML-Dev.org : compile with cmake][2]
+- [GitHub.com/kanmeugne/sfmlcmake][1]
 
-[1]: https://github.com/kanmeugne/sfmlcmake
-[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php
-[3]: https://crascit.com/2015/07/25/cmake-gtest/
-[4]: https://github.com/google/googletest
-[5]: https://cmake.org/
-[6]: https://www.sfml-dev.org/documentation/2.5.1/
+[1]: https://github.com/kanmeugne/sfmlcmake "The code of this tutorial is forkable from here"
+[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php "SFML-dev.org : Compiling SFML with CMake"
+[3]: https://crascit.com/2015/07/25/cmake-gtest/ "Crascit : Building GoogleTest and GoogleMock directly in a CMake project"
+[4]: https://github.com/google/googletest "GoogleTest is Google’s C++ testing and mocking framework"
+[5]: https://cmake.org/ ""CMake is an open-source, cross-platform family of tools designed to build, test and package software""
+[6]: https://www.sfml-dev.org/documentation/2.5.1/ "detailed view of all the SFML classes and functions"
