@@ -88,9 +88,9 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo:  kanmeugne/kanmeugne.github.io # <gh-username>/<repo>
-    repo_id:
-    category:
-    category_id:
+    repo_id: MDEwOlJlcG9zaXRvcnkyOTc1NjcwMjA=
+    category: General
+    category_id: DIC_kwDOEbyDLM4CPQDi
     mapping:          # optional, default to 'pathname'
     input_position:   # optional, default to 'bottom'
     lang:             # optional, default to the value of `site.lang`
