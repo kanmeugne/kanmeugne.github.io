@@ -51,6 +51,10 @@ jobs:
         if: steps.bundle-cache.outputs.cache-hit != 'true'
         run: |
           bundle install
+          gem install wdm -v 0.1.1
+          gem install tzinfo -v 1.2
+          gem install tzinfo-data
+
 
       - name: Bundle Install locally
         if: steps.bundle-cache.outputs.cache-hit == 'true'
