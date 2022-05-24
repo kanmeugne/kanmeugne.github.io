@@ -116,7 +116,10 @@ kramdown:
       line_numbers: false
     block:
       line_numbers: true
-      start_line: 1
+      start_line: 1  
+  plantuml:
+    theme:
+      name: spacelab
 
 collections:
   tabs:
@@ -199,6 +202,7 @@ plugins:
     - jekyll/graphviz
     - jekyll-seo-tag
     - jekyll-sitemap
+    - kramdown-plantuml
 
 graphviz:
   options: "-Tsvg" # 'dot' command option

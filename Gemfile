@@ -12,6 +12,7 @@ group :jekyll_plugins do
   gem "jekyll-asciidoc"
   gem "asciidoctor-diagram"
   gem "jekyll-plantuml"
+  gem 'kramdown-plantuml'
   gem "jekyll-graphviz"
   gem "jekyll-gist"
 end
