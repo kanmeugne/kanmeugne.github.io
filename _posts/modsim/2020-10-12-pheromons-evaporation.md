@@ -29,8 +29,22 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
-![Fig. 1.](http://www.plantuml.com/plantuml/svg/JOzHJe0m38RVUugUO8YFP2wG63t7s0eiRenq6qQ9TvSfKVhsV_tx9UrJrfnByB2GjiGTokG-gMiV5CefhXbDz96VHbz8lRXPO2jaKnSA1pQBosHoOS8uOIoCZy_uoixYi6qecwfI0CRhb7xGyGMmQVEcPq9QTuG3y1ouuTtHEt62umvdYe4oV_pIQX92_LMlN8rmiPh_hs1nbZ1G66kzfzMU7ty3)
-_Fig. 1.Architecture of our 2D Grid App_
+```plantuml
+@startuml
+header Fig. 1.
+class App
+package env {}
+package viewers {}
+package geometry {}
+
+App ..> env
+App ..> viewers
+viewers ..> geometry
+
+hide empty members
+@enduml
+```
+> Fig. 1. Architecture of our 2D Grid App
 
 
 ```terminal
@@ -72,8 +86,7 @@ sfml2dgrid
             └── PheromonViewer.cpp
 
 ```
-> The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
-{: .prompt-warning }
+> The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version. 
 
 
 ## Pheromon modeling and evaporation

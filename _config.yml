@@ -119,7 +119,7 @@ kramdown:
       start_line: 1  
   plantuml:
     theme:
-      name: spacelab
+      name:
 
 collections:
   tabs:
