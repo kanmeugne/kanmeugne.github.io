@@ -306,7 +306,8 @@ Dans la [deuxième partie][10] de cet exercice, on va se concentrer sur l'implé
 - [Crascit.com : cmake-gte][5]
 - [docs.microsoft.com : Cmake projects in visual studio][7]
 - [Wikipedia : Test-driven development][9]
-- [Introduction au TDD (I) : Mise en place avec googletest (code source)][8]
+- [Kanmeugne's Blog : Introduction au TDD (I) -- Mise en place avec googletest (code source)][8]
+- [Kanmeugne's Blog : Introduction aux TDD (II) -- Le cycle vertueux][10]
 
 [1]: https://cmake.org/cmake/help/v3.8/ "CMake est un système de construction logicielle multiplateforme"
 [2]: https://git-scm.com/ "Git est un logiciel de gestion de versions décentralisé"

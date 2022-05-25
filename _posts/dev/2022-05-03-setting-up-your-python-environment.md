@@ -17,8 +17,8 @@ I have been *talking python* with differents kind of programmers -- from beginne
 
 This post is dedicated to this litlle issue and I will try to explain what -- in my opinion -- is the easiest path from... nothing... to... a decent python programming environment. 
 
-![Introduction au TDD Poster](/images/test11-unsplash.jpg){: width="500"}
-_Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
+![Setting up environment](/images/amr-taha-qucYweSE3ZY-unsplash.jpg){: width="500"}
+_Photo by [Amr Taha™](https://unsplash.com/@amr_taha?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
 
 
 Our journey will have several *stages*  -- and you will have to do some installation homework in order to travel from one stage to another.
