@@ -20,6 +20,9 @@ La [procédure][6] que j'ai présentée suppose l'utilisation d'un système Linu
 1. Premièrement, Linux est très populaire auprès des développeurs - le débutant pourra donc automatiquement profiter d'une importante communauté d'entraide 💃.
 2. Deuxièmement, Windows -- qui est de loin l'OS le plus populaire tout court -- propose des sous-systèmes Linux natifs dans ses dernières versions. Il est donc très facile de travailler sous linux aujourd'hui (encore plus que par le passé) quelque soit la version récente de Windows installée sur sa machine (pour les utilisateurs de MacOs, l'expérience montre que les procédures d'installation -- au moins à partir d'un terminal -- sont quasi similaires).
 
+![Setting up environment 2](/images/ralston-smith-sEgodrJdMGw-unsplash.jpg){: width="500"}
+_Photo by [Ralston Smith](https://unsplash.com/@ralstonhsmith?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
+
 Dans cet article, nous allons un peu plus loin dans l'organisation de l'espace de travail du developpeur `python` avec la mise en place d'**environnments virtuels**.
 
 ## Pourquoi utiliser un environnement virtuel ?
@@ -293,7 +296,7 @@ Votre environnement est parfaitement cloné ! Et vous voilà initié à l'utilis
 - [Virtualenv.pypa.io][3]
 - [Virtualenvwrapper.readthedocs.io][4]
 - [Ipython.org][5]
-- [Setting Up Your Python Environment][6]
+- [Kanmeugne's Blog : Setting Up Your Python Environment][6]
 
 [1]: https://www.anaconda.com/
 [2]: https://winpython.github.io/

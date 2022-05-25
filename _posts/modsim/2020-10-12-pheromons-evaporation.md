@@ -93,8 +93,63 @@ sfml2dgrid
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
 
-![Fig. 2.](http://www.plantuml.com/plantuml/svg/bPJVRzCm4CVV_LVS4-fWwmPlL5MqgM9JfObDGuZnwCRNzeJZY-nBqORutx7TBBYq555LINptkH-sxklB8DfBrrWLQcqHBiRlbP1OdC0qq3DEtbvKrxGQmxinNBKjQ6TWVkF903Mjvmqsw2HCpnDRgThg43BtGq7ylO4DHzHtRdHI6Wo5rkgdmRXWjg2DkLi4qRN54JavXVZO0JmsiU0n9YUvNwFdXbq15ALnerlsMd2KFJ-LOq7mj5gBcb8LUvzC1cPwJXLy9sjX4HaCBRj02ul0Iv0r3ic87RIUQmnXI59qifEc2sX0E7KARGz0_6i8QB6MwAtHMeNEGEgjFzJPXzjRc4xHRQfgE5ro0cJA_JSwVElNIyjQG7GNDnb1z4jT8yndQErrvsfXlvTlGruwRRSdnIrw7QbHpIv8Rk2aJDNFGPbZQ8FcZeIqfMSSdPJDtg1yYiR7WzQlUzO736oxTBwFHtpxSH-xPe7-Rfas6tR6BBkJ-Pu3fU1YUw_okFJFWq4pPc_8QS7mNt7RVeQ9FCrX1r1seicHMwMWlaBcXy-3eVFmXMHDxaXK_ZmKUrN8xg_Gmo2zuzmy_9kvAYHQGgLAwNDhjE0XRb-pUGwpnWmkoM60Q2pB9D-fwZMd7UY6EoT9n8C0ALfXHHjqkOfIsfcSPhUHN2KbQblxLCf__ATUN-v8kxqXUx6exMiyhdAPObdgKfMBtt1cNv-TdVNhTCzoMkKiQaq6-p9BGcj2jcGK6fGrlrWoqc2QoDvIrjlrf1fzjajqfcliBm00)
-_Fig. 2. App and IGrid improvements_
+```plantuml
+@startuml
+header Fig. 2.
+class App {
+    + void run()
+    + void display()
+    + bool addObstacle(int, int)
+    + bool removeObstacle(int, int)
+    + bool addPheromon(int, int)
+    + void evaporate(int)
+}
+' note right
+' <i>App::evaporate</i> will be responsible of the evaporation process
+' <i>App::addPheromon</i> will be used to add pheromon on a selected cell
+' end note
+class CELL <<env>> {
+    + int id
+    + bool mask
+    + float tau
+}
+interface ICellFunctor <<env>> {
+    + {abstract} void operator(CELL)
+}
+interface IGrid <<env>> {
+	+ {abstract} bool iInitialize()
+	+ {abstract} int iGetSizeX()
+	+ {abstract} int iGetSizeY()
+	+ {abstract} int iGetResolutionX()
+	+ {abstract} int iGetResolutionY()
+	+ {abstract} int iGetNumberOfCells()
+	+ {abstract} bool iGetCellPosition(CELL, int, int)
+	+ {abstract} bool iGetCellCoordinates(CELL, int, int)
+	+ {abstract} bool iGetCellNumber(int, int, CELL)
+	+ {abstract} bool iGetContainingCell (int, int, CELL)
+	+ {abstract} bool iIsWithinCell(int, int, CELL)
+	+ {abstract} void iApplyOnCells(ICellFunctor)
+	+ {abstract} bool iAddObstacle(CELL)
+	+ {abstract} bool iRemoveObstacle(CELL)
+	+ {abstract} bool iIsObstacle(CELL)
+    + bool {abstract} iAddPheromon(CELL)
+    + void {abstract} iUpdatePheromon(CELL)
+}
+' note right
+' <i>IGrid</i> defines <i>iAddPheromon</i>,
+' to add an amount of pheromon in a given CELL
+' and <i>iUpdatePheromon</i> to apply evaporation.
+' end note
+class Grid implements IGrid 
+IGrid ..> CELL
+IGrid ..> ICellFunctor
+ICellFunctor ..> CELL
+Grid *---> CELL
+App o--> IGrid
+hide empty members
+@enduml
+```
+> Fig. 2. `App` and `IGrid` improvements
 
 *App::evaporate* will take a *time interval* as parameter in order to schedule the *evaporation process* --- I use [SFML *clocks*][4] to implement this.
 
@@ -289,8 +344,34 @@ The interested reader can refer to the [source code][5] to check/set the value f
 
 To visualize *pheromons* and especially the *evaporation process*, I added a *PheromonViewer* that will be called in the *App::display* method. *PheromonViewer::iDraw*  applies an *ICellFunctor* on every cell of the grid --- if their corresponding amount of pheromon is greater than zero --- that draws a red mark on the screen according to their current state.
 
-![Fig. 4.](http://www.plantuml.com/plantuml/svg/ZP91Yzim48Nl_XKF2iNU4hU7NffcJSEsMmAxj53ejKoiYIrG92EDaotB_lVAZjnWqqCF0V5cvdjvu_aKXBpqHvErJ8fzjZauAwYTSVvsRtgkxdLJudsvUJiKAlpKV6R_s7Ze0CAHXN0QDKXB0ceyDoGSS7IU1yt2MKuzPROJdBKns3Fwm0hYG4hXB-JWFBgMlJiwY_nxUbrS2rX-4eYBs8aOXedCQCi1-LUlrTHALi7jOxpQ3ALlwJcLprfQrmlgbcoZRJCYFHiIxMneTOSzovdPOjjr8smR2PvgkH0oZbBQMQZ9CDwL7p9jXVs1QiRkZesvxsqjpcEpONkgAZnd0F069-sb9uEJqmgkOq-nAw-ZiU3koyD3aRrabEnG6mfXuHw9AVwLUg7fRItwHC9vCPC_C_sxi0lZn5B-mHA3v_5tim3fq1dwdHSVH_aLdgT_-Z9rU3hdHQhkdJFuDNepRd4W4pYckuIQVzvPA7uIjcgPEsLTGKMFQJgForslPmj_NKmUruFz3_nobIfTKpwrFPAbXltDWB-2tMfLBSzZ4Qqig_b9hE5x6r1bhLQyNCH1ir53PNP7CtroJ-8V)
-_Fig. 4.`ViewerMgr` is a meta viewer that agregates more than one viewer. It will be used to add a viewer for pheromon (`PheromonViewer`) next to the viewers forlines (`GridViewer`) and obstacles (`ObstacleViewer`) without changing the relationship between `App` and `AbstractViewer`_
+```plantuml
+@startuml
+header Fig. 3.
+interface ICellFunctor <<env>> {
+    + {abstract} void operator(CELL)
+}
+abstract AbstractViewer <<viewers>>
+{
+	# boolean _active = false
+	+ {abstract} void iActivate()
+	+ {abstract} void iDeactivate()
+	+ {abstract} void iIsActive()
+	+ {abstract} void iDisplay()
+	# {abstract} void iDraw()
+}
+class PheromonViewer <<viewers>> extends AbstractViewer {
+    - void drawPheromon(env::ICellFunctor)
+}
+class ViewerMgr <<viewers>> extends AbstractViewer
+{
+	+ {abstract} void iAddViewer(AbstractViewer)
+}
+ViewerMgr o--> AbstractViewer
+PheromonViewer ..> ICellFunctor : runs >
+hide empty members
+@enduml
+```
+_Fig. 3.`ViewerMgr` is a meta viewer that agregates more than one viewer. It will be used to add a viewer for pheromon (`PheromonViewer`) next to the viewers forlines (`GridViewer`) and obstacles (`ObstacleViewer`) without changing the relationship between `App` and `AbstractViewer`_
 
 **PheromonViewer.h**
 ```c++
@@ -441,10 +522,12 @@ Enjoy and feel free to send me your feedbacks!
 - [fr.wikipedia.org/wiki/Stigmergie][2]
 - [The self-organizing exploratory pattern of the argentine ant - Deneubourg J, Aron S, Goss S et al. ][3]
 - [kanmeugne/sfml2dgrid : sfml-2d-obstacles-pheromons][5]
+- [Kanmeugne's Blog : Drawing a 2D Grid with SFML][6]
+- [Kanmeugne's Blog : 2D Grid with obstacles][1]
 
-[1]: /posts/2d-grid-obstacles/ "2D Grid with obstacles"
+[1]: /posts/2d-grid-obstacles/ "Kanmeugne's Blog : 2D Grid with obstacles"
 [2]: https://fr.wikipedia.org/wiki/Stigmergie "Stigmergy (/ˈstɪɡmərdʒi/ STIG-mər-jee) is a mechanism of indirect coordination, through the environment, between agents or actions"
 [3]: https://dx.doi.org/10.1007/BF01417909 "The self-organizing exploratory pattern of the argentine ant - Deneubourg J, Aron S, Goss S et al."
 [4]: https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Clock.php "Utility class that measures the elapsed time. "
 [5]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-pheromons "the code of this tutorial is forable from here"
-[6]: /posts/sfml-2d-grid/ "Drawing a 2D Grid with SFML"
+[6]: /posts/sfml-2d-grid/ "Kanmeugne's Blog : Drawing a 2D Grid with SFML"

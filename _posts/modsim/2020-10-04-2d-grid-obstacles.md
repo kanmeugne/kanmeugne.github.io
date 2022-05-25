@@ -91,11 +91,11 @@ class App
     + bool addObstacle(int, int)
     + bool removeObstacle(int, int)
 }
-note right
-    App Object has 2 more methods
-    1. App::addObstacle
-    2. App::removeObstacle
-end note
+' note right
+'     App Object has 2 more methods
+'     1. App::addObstacle
+'     2. App::removeObstacle
+' end note
 abstract AbstractViewer <<viewer>>
 interface IGrid <<env>>
 App o-- AbstractViewer
@@ -192,7 +192,7 @@ interface IGrid <<env>>
 	+ {abstract} int iGetResolutionY()
 	+ {abstract} int iGetNumberOfCells()
 	+ {abstract} bool iGetCellPosition(CELL, int, int)
-	+ {abstract} bool iGetCellCoordinates(const CELL, int, int)
+	+ {abstract} bool iGetCellCoordinates(CELL, int, int)
 	+ {abstract} bool iGetCellNumber(int, int, CELL)
 	+ {abstract} bool iGetContainingCell (int, int, CELL)
 	+ {abstract} bool iIsWithinCell(int, int, CELL)
@@ -201,13 +201,13 @@ interface IGrid <<env>>
 	+ {abstract} bool iRemoveObstacle(CELL)
 	+ {abstract} bool iIsObstacle(CELL)
 }
-note right
-    IGrid defines 4 more methods :
-    1. IGrid::iAddObstacle : adds an obstacle in the grid
-    2. IGrid::iRemoveObstacle : removes an obstacle from the grid
-    3. IGrid::iIsObstacle : to check whether a cell is an obstacle or not
-    4. IGrid::iApplyOnCells : to apply a function on grid cells
-end note
+' note right
+'     IGrid defines 4 more methods :
+'     1. IGrid::iAddObstacle : adds an obstacle in the grid
+'     2. IGrid::iRemoveObstacle : removes an obstacle from the grid
+'     3. IGrid::iIsObstacle : to check whether a cell is an obstacle or not
+'     4. IGrid::iApplyOnCells : to apply a function on grid cells
+' end note
 class Grid <<env>> implements IGrid
 class CELL <<env>> 
 {
@@ -327,7 +327,6 @@ abstract AbstractViewer <<viewers>>
 	+ void iActivate()
 	+ void iDeactivate()
 	+ void iIsActive()
-    + void iSetApp(App)
 	+ void iDisplay()
 	# void {abstract} iDraw()
 }
@@ -337,7 +336,7 @@ class ViewerMgr <<viewers>> extends AbstractViewer
 }
 interface ICellFunctor <<env>> 
 {
-    + {abstract} vid operator(CELL)
+    + {abstract} void operator(CELL)
 }
 class ObstacleViewer <<viewers>> extends AbstractViewer
 {
@@ -545,8 +544,9 @@ Enjoy and feel free to send me your feedbacks!
 
 ## References
 
-- [kanmeugne/sfml2dgrid : sfml-2d-obstacles-grid][2]
+- [kanmeugne/sfml2dgrid : sfml-2d-obstacles-grid][2] 
+- [Kanmeugne's Blog : Kanmeugne's Blog : Drawing a 2D Grid with SFML][1]
 
-[1]: /posts/sfml-2d-grid/ "Drawing a 2D Grid with SFML"
+[1]: /posts/sfml-2d-grid/ "Kanmeugne's Blog : Drawing a 2D Grid with SFML"
 [2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid "The code of this tutorial is available from here"
 
