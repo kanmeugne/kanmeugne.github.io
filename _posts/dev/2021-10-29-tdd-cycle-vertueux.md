@@ -433,7 +433,7 @@ Le code utilisé dans le post est disponible [ici][8]. J'attends vos commentaire
 - [Crascit.com : cmake-gte][5]
 - [docs.microsoft.com : CMake projects in visual studio][7]
 - [Wikipedia : Test-driven development][9]
-- [Introduction au TDD (II) : le cycle vertueux (code source)][8]
+- [Kanmeugne's Blog : Introduction au TDD (II) -- le cycle vertueux (code source)][8]
 
 [1]: https://cmake.org/cmake/help/v3.8/ "CMake est un système de construction logicielle multiplateforme"
 [2]: https://git-scm.com/ "Git est un logiciel de gestion de versions décentralisé"
