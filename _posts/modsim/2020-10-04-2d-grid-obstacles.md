@@ -10,17 +10,33 @@ tags:
 categories:
     - modeling & simulation
 comments: true
-image: "/images/sfmlgrid_obs.jpg"
 author: kanmeugne
 ---
 
 Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space. 
 
-<small>Photo by <a href="https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Iewek Gnos</a> on <a href="https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
+![2D Grid with obstacles Poster](/images/sfmlgrid_obs.jpg){: width="500" }
+_Photo by [Iewek Gnos](https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
 In this post, I am upgrading an existing *object oriented architecture* that [I shared recently][1] as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells --- a complete implementation in C++ is also provided for demonstration.
 
-![Fig. 1.](http://www.plantuml.com/plantuml/svg/JOzHJe0m38RVUugUO8YFP2wG63t7s0eiRenq6qQ9TvSfKVhsV_tx9UrJrfnByB2GjiGTokG-gMiV5CefhXbDz96VHbz8lRXPO2jaKnSA1pQBosHoOS8uOIoCZy_uoixYi6qecwfI0CRhb7xGyGMmQVEcPq9QTuG3y1ouuTtHEt62umvdYe4oV_pIQX92_LMlN8rmiPh_hs1nbZ1G66kzfzMU7ty3)
+
+```plantuml
+@startuml
+header Fig. 1.
+class App
+package env {}
+package viewers {}
+package geometry {}
+
+App ..> env
+App ..> viewers
+viewers ..> geometry
+
+hide empty members
+@enduml
+```
+> Fig. 1. Architecture of our 2D Grid App
 
 ```terminal
 sfml2dgrid
@@ -56,7 +72,8 @@ sfml2dgrid
             ├── GridViewer.cpp
             └── ObstacleViewer.cpp
 ```
-> **Note**: the file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+> The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.
+
 
 Comparing to the [previous version][1], I have updated 3 existing objects --- *App*, *env::IGrid* and *env::Grid* --- and created 3 new objects --- *viewers::ObstacleViewer*, *env::ICellFunctor* and *viewers::ViewerMgr*. More details below.
 
@@ -64,7 +81,29 @@ Comparing to the [previous version][1], I have updated 3 existing objects --- *A
 
 The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). As I teased in the introdution, state variables are associated to grid cells in order to store occupancy information --- this is how the model handle obstacles : if a cell occupied, it is considered as an obstacle.
 
-![Fig. 2.](http://www.plantuml.com/plantuml/svg/NOynR_8m48Rt-nKdVGleAr2nDKejkhJgnDRTiGzobUr3jXDKLVtlTO1K2HcYv7dFp-lRfQnZxho3bhIbM65za93HY9FutBYEr2iVrxXTrviXKFXoEk6--IIJSN7ct6BDIbkxRuh9EAeth507E-18NdgQ9aj8HZl2n_KJ6ATJkkY-0Slp7tjXYx4BY-KKM4udfx_-O2FYSDAuu90ViBnc0_FkoSmFG91C6FdOPXZgvRfDgnDkqKiaz9HRiGd-OSchQb8sehaUA5WShA0BYRhORjlTVZ-OpXInhllBHr8AE6IA1sq8tzyYsv9Hw0k_t6YrkZiwOdMRhj18o55SGWKjsz7YoJV5VqLpnLrMV0ScLxQ47GNRUVSB)
+```plantuml
+@startuml
+header Fig. 2.
+class App 
+{
+    + void run()
+    + void display()
+    + bool addObstacle(int, int)
+    + bool removeObstacle(int, int)
+}
+' note right
+'     App Object has 2 more methods
+'     1. App::addObstacle
+'     2. App::removeObstacle
+' end note
+abstract AbstractViewer <<viewer>>
+interface IGrid <<env>>
+App o-- AbstractViewer
+App o--> IGrid: controls > 
+hide empty members
+@enduml
+```
+> Fig. 2. App Object (with `addObstacle` and `removeObstacle`
 
 **App.h**
 
@@ -140,7 +179,54 @@ The *IGrid* interface is augmented with 3 obstacle-related methods --- *IGrid::i
 
 *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells --- *env::ICellFunctor* --- as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
-![Fig. 3.](http://www.plantuml.com/plantuml/svg/ZLJHQzi-47xtNt7mWvB-bgQ3xc44pxIKjXZAEhg7TO-ATOwFoheWoIbRsVy-ILQ6lAHXBqRttVVTdKvtlhHE63VqgkXGI3H5sR9sqB1Yyscb1gnkQRs0YqLv7XmLt6nP3OvO0xVWEeJwpf04qWvDAngSmmkv3YwWPuFGe-jOMbWM9LLq9UN3oYTi59RdLCqXW8_OynPp78IMqLNR72xGmwbAsmY5y7xniMYKi1QkDXj8n-kR-tieIzJRgeBN0W3WNIWFI2PZnQoW5_Qv-5NygHlgQrJgTj2DOxEdtp99u0qQuRspXhLrCT79QHuZzM8gJlcerkH8AFg9izEygZjqNptuT13zleS-eaqFy7J4jw_xFFGhD0zjkALDtbHQS0Vu2riAubcusJmeJyRlGVOzD-BVsMFwcVT7qXo2wW2LjHEaIQ-3A3KwykFnJMbjlv7hI1zHnUCXRJQLixT8sPGUvzNs62UE4VbXLJyUzFWIax6BuwJP8HXQTwuOvqbYInejVFXxf_w3I5Wkypl04eIK83Jm3Y4TDtNjkPaclrAKcGXCbAtX_f2sjfdECJGTDi_mqg7d6X3Ge590TXAB3MXsMP2y3sCO4H0lRqC_uZz6nymndeq_WD2TjEcJPQD-ex17xMpQmbVVol6qM5Jn6NPcDTdr8ZTWHutC_y_EakbB1GvM355q9142rcCOQnk1bBSbL38XGPlUAo6HCbNbwPFu4hKSUlKR)
+
+```plantuml
+@startuml
+header Fig. 3.
+interface IGrid <<env>>
+{
+	+ {abstract} bool iInitialize()
+	+ {abstract} int iGetSizeX()
+	+ {abstract} int iGetSizeY()
+	+ {abstract} int iGetResolutionX()
+	+ {abstract} int iGetResolutionY()
+	+ {abstract} int iGetNumberOfCells()
+	+ {abstract} bool iGetCellPosition(CELL, int, int)
+	+ {abstract} bool iGetCellCoordinates(CELL, int, int)
+	+ {abstract} bool iGetCellNumber(int, int, CELL)
+	+ {abstract} bool iGetContainingCell (int, int, CELL)
+	+ {abstract} bool iIsWithinCell(int, int, CELL)
+	+ {abstract} void iApplyOnCells(ICellFunctor)
+	+ {abstract} bool iAddObstacle(CELL)
+	+ {abstract} bool iRemoveObstacle(CELL)
+	+ {abstract} bool iIsObstacle(CELL)
+}
+' note right
+'     IGrid defines 4 more methods :
+'     1. IGrid::iAddObstacle : adds an obstacle in the grid
+'     2. IGrid::iRemoveObstacle : removes an obstacle from the grid
+'     3. IGrid::iIsObstacle : to check whether a cell is an obstacle or not
+'     4. IGrid::iApplyOnCells : to apply a function on grid cells
+' end note
+class Grid <<env>> implements IGrid
+class CELL <<env>> 
+{
+    + int id
+    + bool mask
+}
+interface ICellFunctor <<env>>
+{
+    + {abstract} void operator(CELL)
+}
+ICellFunctor ..> CELL
+IGrid ..> ICellFunctor
+IGrid ..> CELL
+App o--> IGrid
+Grid *--> CELL
+hide empty members
+@enduml
+```
+> Fig. 3. Evolution of the `IGrid` interface, with 4 more methods :`iAddObstacle`, `iRemoveObstacle`, `iApplyOnCells` and `iIsObstacle` 
 
 **IGrid.h**
 ```c++
@@ -225,14 +311,43 @@ namespace env
     };
 } // namespace env
 #endif // !IGRID_H
-
 ```
 
 ## ViewerMgr and ObstacleViewer
 
 *ViewerMgr* is a special *AbstractViewer* that agregates (cf. Composite pattern) other *AbstractViewer* with the method *ViewerMgr::iAddViewer*. I introduce this pattern in order to separate view concerns and to be able to activate several views at the same time. We will use this *meta* viewer to attach an *ObstacleViewer* to the App in order to display the grid lines and the obstacles at the same time.
 
-![Fig. 4.](http://www.plantuml.com/plantuml/svg/XL9DYzH04BtthtWWIBAoqOCNTJOuhAuCxE91y2ertJL9Gq_tq5r9LfRzx-OZmMmGF0J2g_UHLodrEGb5QSvErKo6ezgTWXVeu4AyERg6opjR5NXVxDuEWn8_BNSS7we8cq0uin3Q4OFK9A0gSaN22USGUS0yWkUPKwY3eBFEuSXe4Xj801c3nGId416EIKWxHlPzVfjIStX-b44YDQy4obdF2TctQCt2xApKeH7ecdnbVJLA8ZiI6togxGL7bexPOt-vWBp1li-Af6LoKDn3yqwI9iTuLtnGrWl74sd6uPQTkskybX2nsx5lon9F2W3UeBLH6d9eWpK85uxKipBT1mjklzxVv-fPqHm7xIYbJNhlEDLBQzV1pUwrs9Q4i_m5_8NftuD36XLR-0TBNpphdwkDaKqNHx-p_DC8lyBJygNF2oDIb-Npz1Y2mwynct634xd4VRkfrEhtRKlnex0tszvprskOFcDHfsozxDVvOh-wnVyxRxTep8Hd2-s1F5KShmRxlyRX-hhSNiQcLL6KBw_X8sBZ4qfLMyFOi4-MdPacQz4QNz9dy0y0)
+
+```plantuml
+@startuml
+header Fig. 4.
+abstract AbstractViewer <<viewers>>
+{
+	# boolean _active = false
+	+ void iActivate()
+	+ void iDeactivate()
+	+ void iIsActive()
+	+ void iDisplay()
+	# void {abstract} iDraw()
+}
+class ViewerMgr <<viewers>> extends AbstractViewer
+{
+	+ {abstract} void iAddViewer(AbstractManager)
+}
+interface ICellFunctor <<env>> 
+{
+    + {abstract} void operator(CELL)
+}
+class ObstacleViewer <<viewers>> extends AbstractViewer
+{
+    - void drawObstacles(env::ICellFunctor)
+}
+ViewerMgr o--> AbstractViewer
+ObstacleViewer ..> ICellFunctor : runs >
+hide empty members
+@enduml
+```
+> Fig. 4. `ViewerMgr` is a meta viewer that agregates more than one viewer. It will be used to add a viewer for obstacle (`ObstacleViewer`) next to the viewer forlines (`GridViewer`) without changing the relationship between `App` and `AbstractViewer` 
 
 **AbstractViewer.h**
 ```c++
@@ -423,13 +538,15 @@ The interested reader can fork the complete source code from [here][2] and run t
 The program should display a clickable 2D Grid where the right-click adds an obstacle on the selected cell and the left-click removes it.
 
 ![screenshot](/images/sfml-2d-grid-obstacles.gif)
+_Step by step demo : launching the 2D Grid with obstacles SFML App from the terminal (built on ubuntu 18.08 with gcc 7.5)_
 
 Enjoy and feel free to send me your feedbacks!
 
 ## References
 
-- [https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid](https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid)
+- [kanmeugne/sfml2dgrid : sfml-2d-obstacles-grid][2] 
+- [Kanmeugne's Blog : Kanmeugne's Blog : Drawing a 2D Grid with SFML][1]
 
-[1]: /posts/sfml-2d-grid/
-[2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid
+[1]: /posts/sfml-2d-grid/ "Kanmeugne's Blog : Drawing a 2D Grid with SFML"
+[2]: https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid "The code of this tutorial is available from here"
 

@@ -11,13 +11,14 @@ tags:
 categories:
     - modeling & simulation
 comments: true
-image: "/images/sfmlcmake.jpg"
 author: kanmeugne
 ---
 
 Few months ago, I found an [article][3] that explains how to use [GoogleTest and GoogleMock][4] --- as an external dependency --- in a [CMake][5] project. Since the approach is amazingly straightforward, I have managed to mimic the paradigm and use *SFML* --- as an external dependency --- in a C++ graphical app.
 
-<small>Photo by <a href="https://unsplash.com/@yanphotobook?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Yannis H</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></small>
+
+![portable Poster](/images/sfmlcmake.jpg){: width="500" }
+_Photo by [Yannis H](https://unsplash.com/@yanphotobook?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)_
 
 ## The Idea : build the dependency targets at *configuration time*
 
@@ -48,7 +49,8 @@ project/
 ├── lib
 └── build
 ```
-> **Note**: there is a global CMakeLists.txt file to set the targets folders locations. The graphical app target and the SFML dependency configuration are defined in a sub-folder.
+> There is a global CMakeLists.txt file to set the targets folders locations. The graphical app target and the SFML dependency configuration are defined in a sub-folder.
+{: .prompt-tip }
 
 ### The Global *CMakeList.txt*
 
@@ -66,7 +68,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
 project (SFMLCMAKE C CXX)
 add_subdirectory ("App")
 ```
-> **Note**: the dependency and the graphical app targets are defined in a sub-project called App --- see the next paragraphs for further details.
+> The dependency and the graphical app targets are defined in a sub-project called App --- see the next paragraphs for further details.
+{: .prompt-tip }
 
 ### Dependency Location : CMakeList.txt.in
 
@@ -87,7 +90,8 @@ ExternalProject_Add(sfml
   TEST_COMMAND      ""
 )
 ```
-> **Note**: the SFML official repository is pulled at configuration time.
+> The SFML official repository is pulled at configuration time.
+{: .prompt-tip }
 
 ### *CMakeLists.txt* for the targets definition
 
@@ -136,7 +140,8 @@ endif()
 source_group("src" FILES ${APP_SRC_FILES})
 source_group("include" FILES ${APP_INCLUDE_DIR}/*.h)
 ```
-> **Note**: Lines 4 --- 27 set the dependency build --- you can see how the *CMakeList.txt.in* file is consumed at line 5. The graphical app target definition begins at line 34 (the configuration is cross-platform -- linux and windows).
+> Lines 4 --- 27 set the dependency build --- you can see how the *CMakeList.txt.in* file is consumed at line 5. The graphical app target definition begins at line 34 (the configuration is cross-platform -- linux and windows).
+{: .prompt-tip }
 
 ### C++ Code
 
@@ -180,7 +185,8 @@ int main()
   return 0;
 }
 ```
-> **Note**: The main.cpp file launches two threads : one for the logic of the application and another for the display. The source code is cross-platform (Linux and Windows)
+> The main.cpp file launches two threads : one for the logic of the application and another for the display. The source code is cross-platform (Linux and Windows)
+{: .prompt-tip }
 
 
 ## Configuration and build
@@ -202,6 +208,7 @@ On Linux
   cmake --build ./ --target app --config Debug 
 ```
 > **Note**:  For linux user, you might need to check [this][2] first.
+{: .prompt-warning }
 
 ## Run
 You should be able to launch the executable located in the `bin` folder and see a nice (and clickable) cyan window.
@@ -211,22 +218,21 @@ You should be able to launch the executable located in the `bin` folder and see 
 ```
 
 ![screenshot](/images/sfml-window.gif)
-> **Note**: On ubuntu 18.08 with gcc 7.5
+_Step by step Demo : launching the SFML app from the terminal. In this tutorial the program is built on ubuntu 18.08 with gcc 7.5_
 
 Smile! Now you are ready to take your graphical app wherever you want. Enjoy and feel free to send me your feedbacks!
 
 ## References
 
-- [https://github.com/kanmeugne/sfmlcmake](https://github.com/kanmeugne/sfmlcmake)
-- [https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
-- [https://crascit.com/2015/07/25/cmake-gtest/](https://crascit.com/2015/07/25/cmake-gtest/)
-- [https://github.com/google/googletest](https://github.com/google/googletest)
-- [https://cmake.org/](https://cmake.org/)
-- [https://www.sfml-dev.org/documentation/2.5.1/](https://www.sfml-dev.org/documentation/2.5.1/)
+- [Cmake.org][5]
+- [Googletest][4]
+- [crascit: CMake-Gtest][3]
+- [SFML-Dev.org : compile with cmake][2]
+- [GitHub.com/kanmeugne/sfmlcmake][1]
 
-[1]: https://github.com/kanmeugne/sfmlcmake
-[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php
-[3]: https://crascit.com/2015/07/25/cmake-gtest/
-[4]: https://github.com/google/googletest
-[5]: https://cmake.org/
-[6]: https://www.sfml-dev.org/documentation/2.5.1/
+[1]: https://github.com/kanmeugne/sfmlcmake "The code of this tutorial is forkable from here"
+[2]: https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php "SFML-dev.org : Compiling SFML with CMake"
+[3]: https://crascit.com/2015/07/25/cmake-gtest/ "Crascit : Building GoogleTest and GoogleMock directly in a CMake project"
+[4]: https://github.com/google/googletest "GoogleTest is Google’s C++ testing and mocking framework"
+[5]: https://cmake.org/ ""CMake is an open-source, cross-platform family of tools designed to build, test and package software""
+[6]: https://www.sfml-dev.org/documentation/2.5.1/ "detailed view of all the SFML classes and functions"

@@ -17,8 +17,8 @@ I have been *talking python* with different kind of programmers -- from beginner
 
 This post is dedicated to this little issue and I will try to explain what -- in my opinion -- is the easiest path from nothing... to... a decent python programming environment. 
 
-![Introduction au TDD Poster](/images/test11-unsplash.jpg){: width="500"}
-_Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
+![Setting up environment](/images/amr-taha-qucYweSE3ZY-unsplash.jpg){: width="500"}
+_Photo by [Amr Taha™](https://unsplash.com/@amr_taha?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
 
 
 Our journey will have several *stages*  -- and you will have to do some installation homework in order to travel from one stage to another.
@@ -194,6 +194,7 @@ Below, a list of IDEs I have already seen in action (⚠ my pick is completely i
 - [PyCharm][10] is an integrated development environment used in computer programming, specifically for the Python programming language. It is developed by the Czech company JetBrains (formerly known as IntelliJ). It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems, and supports web development with Django as well as data science with Anaconda.
 
 > If you want an extensive review, please check this well-documented [article][4] on python IDEs.
+{: .prompt-tip }
 
 ## 4. References
 - [Geek4Geeks.com][1]
