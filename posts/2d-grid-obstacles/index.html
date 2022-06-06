@@ -1,0 +1,675 @@
+<!DOCTYPE html><html lang="en" data-mode="dark" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="2D Grid with obstacles" /><meta name="author" content="Patrick S. Kanmeugne" /><meta property="og:locale" content="en" /><meta name="description" content="Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space." /><meta property="og:description" content="Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space." /><link rel="canonical" href="https://kanmeugne.github.io/posts/2d-grid-obstacles/" /><meta property="og:url" content="https://kanmeugne.github.io/posts/2d-grid-obstacles/" /><meta property="og:site_name" content="Kanmeugne’s Blog" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-10-04T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="2D Grid with obstacles" /><meta name="twitter:site" content="@patricksimok" /><meta name="twitter:creator" content="@patricksimok" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Patrick S. Kanmeugne","url":"http://kanmeugne.github.io/"},"dateModified":"2022-05-25T21:11:44+08:00","datePublished":"2020-10-04T00:00:00+08:00","description":"Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space.","headline":"2D Grid with obstacles","mainEntityOfPage":{"@type":"WebPage","@id":"https://kanmeugne.github.io/posts/2d-grid-obstacles/"},"url":"https://kanmeugne.github.io/posts/2d-grid-obstacles/"}</script><title>2D Grid with obstacles | Kanmeugne's Blog</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Kanmeugne's Blog"><meta name="application-name" content="Kanmeugne's Blog"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/img/0.jpeg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Kanmeugne's Blog</a></div><div class="site-subtitle font-italic">stigmergy matters</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/kanmeugne" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/patricksimok" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['patrick.simokanmeugne','outlook.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>2D Grid with obstacles</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>2D Grid with obstacles</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1601740800" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Oct 4, 2020 </em> </span> <span> Updated <em class="" data-ts="1653484304" data-df="ll" data-toggle="tooltip" data-placement="bottom"> May 25, 2022 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="http://kanmeugne.github.io/">Patrick S. Kanmeugne</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2068 words"> <em>11 min</em> read</span></div></div></div><div class="post-content"><p>Using a regular 2D Grid to model the navigable space is a good choice if you want to simulate moving agents (ex: vehicules, pedestrians). In fact, 2D Grids can be seen as partitions of the space and, therefore, provide an excellent framework for path planning and collision avoidance algorithms deployment. Moreover, by adding state variables to grid cells, we end up with a very affordable way to manage obstacles and other kind of semantics in the space.</p><p><img data-src="/images/sfmlgrid_obs.jpg" alt="2D Grid with obstacles Poster" width="500" data-proofer-ignore> <em>Photo by <a href="https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Iewek Gnos</a> on <a href="https://unsplash.com/s/photos/grid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></em></p><p>In this post, I am upgrading an existing <em>object oriented architecture</em> that <a href="/posts/sfml-2d-grid/" title="Kanmeugne's Blog : Drawing a 2D Grid with SFML">I shared recently</a> as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells — a complete implementation in C++ is also provided for demonstration.</p><div class="plantuml theme-mars"><svg contentScriptType='application/ecmascript' contentStyleType='text/css' height='424.5px' preserveAspectRatio='none' style='width:309px;height:424px;background:#F9F9F9;' version='1.1' viewBox='0 0 309 424' width='309px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' zoomAndPan='magnify'><defs/><g><text fill='#888888' font-family='sans-serif' font-size='15' lengthAdjust='spacing' textLength='43.5' x='246.75' y='13.9233'>Fig. 1.</text><polygon fill='#F9F9F9' points='24,165.9609,76.5,165.9609,87,199.4063,97.5,199.4063,97.5,244.8516,24,244.8516,24,165.9609' style='stroke:#000000;stroke-width:2.25;'/><line style='stroke:#000000;stroke-width:2.25;' x1='24' x2='87' y1='199.4063' y2='199.4063'/><text fill='#000000' font-family='sans-serif' font-size='21' font-weight='bold' lengthAdjust='spacing' textLength='43.5' x='30' y='188.4536'>env</text><polygon fill='#F9F9F9' points='150,165.9609,253.5,165.9609,264,199.4063,274.5,199.4063,274.5,244.8516,150,244.8516,150,165.9609' style='stroke:#000000;stroke-width:2.25;'/><line style='stroke:#000000;stroke-width:2.25;' x1='150' x2='264' y1='199.4063' y2='199.4063'/><text fill='#000000' font-family='sans-serif' font-size='21' font-weight='bold' lengthAdjust='spacing' textLength='94.5' x='156' y='188.4536'>viewers</text><polygon fill='#F9F9F9' points='140.25,335.4609,263.25,335.4609,273.75,368.9063,284.25,368.9063,284.25,414.3516,140.25,414.3516,140.25,335.4609' style='stroke:#000000;stroke-width:2.25;'/><line style='stroke:#000000;stroke-width:2.25;' x1='140.25' x2='273.75' y1='368.9063' y2='368.9063'/><text fill='#000000' font-family='sans-serif' font-size='21' font-weight='bold' lengthAdjust='spacing' textLength='114' x='146.25' y='357.9536'>geometry</text><rect codeLine='4' fill='#FEFECE' height='48' id='App' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='84' x='93.75' y='27.9609'/><ellipse cx='116.25' cy='51.9609' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M120.7031,60.4219 Q119.8359,60.8672 118.875,61.0781 Q117.9141,61.3125 116.8594,61.3125 Q113.1094,61.3125 111.1172,58.8516 Q109.1484,56.3672 109.1484,51.6797 Q109.1484,46.9922 111.1172,44.5078 Q113.1094,42.0234 116.8594,42.0234 Q117.9141,42.0234 118.875,42.2578 Q119.8594,42.4922 120.7031,42.9375 L120.7031,47.0156 Q119.7656,46.1484 118.875,45.75 Q117.9844,45.3281 117.0469,45.3281 Q115.0313,45.3281 114,46.9453 Q112.9688,48.5391 112.9688,51.6797 Q112.9688,54.8203 114,56.4375 Q115.0313,58.0313 117.0469,58.0313 Q117.9844,58.0313 118.875,57.6328 Q119.7656,57.2109 120.7031,56.3438 L120.7031,60.4219 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='36' x='137.25' y='58.1924'>App</text><path codeLine='9' d='M124.365,76.3509 C113.475,98.2209 96.78,131.7909 83.22,159.0459 ' fill='none' id='App-to-env' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='79.845,165.8259,91.2369,156.4199,83.1905,159.1134,80.4969,151.067,79.845,165.8259' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='10' d='M147.375,76.3509 C158.46,98.2209 175.5,131.7909 189.33,159.0459 ' fill='none' id='App-to-viewers' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='192.78,165.8259,191.9961,151.0735,189.3746,159.1436,181.3044,156.5221,192.78,165.8259' style='stroke:#191919;stroke-width:1.5;'/><path d='M212.25,245.8209 C212.25,270.2109 212.25,301.8309 212.25,327.5259 ' fill='none' id='viewers-to-geometry' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='212.25,335.2959,218.2885,321.8131,212.2714,327.796,206.2886,321.7788,212.25,335.2959' style='stroke:#191919;stroke-width:1.5;'/></g></svg></div><blockquote><p>Fig. 1. Architecture of our 2D Grid App</p></blockquote><div class="language-terminal highlighter-rouge"><div class="code-header"> <span data-label-text="Terminal"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre><td class="rouge-code"><pre><span class="go">sfml2dgrid
+</span><span class="c">.
+</span><span class="go">├── CMakeLists.txt
+├── deps
+│   └── sfml
+│       └── CMakeLists.txt.in
+└── sfml2dgrid
+    ├── CMakeLists.txt
+    ├── main.cpp
+    ├── app
+    │   ├── include
+    │   │   └── App.h
+    │   └── src
+    │       └── App.cpp
+    ├── env
+    │   ├── include
+    │   │   ├── Grid.h
+    │   │   └── IGrid.h
+    │   └── src
+    │       └── Grid.cpp
+    ├── geometry
+    │   └── include
+    │       └── geometry.h
+    └── viewers
+        ├── include
+        │   ├── AbstractViewer.h
+        │   ├── GridViewer.h
+        │   └── ObstacleViewer.h
+        └── src
+            ├── AbstractViewer.cpp
+            ├── GridViewer.cpp
+            └── ObstacleViewer.cpp
+</span></pre></table></code></div></div><blockquote><p>The file tree of the project with the source (.cpp) and header (.h) files. I am just going to discuss about the upgrade that I made from the previous version.</p></blockquote><p>Comparing to the <a href="/posts/sfml-2d-grid/" title="Kanmeugne's Blog : Drawing a 2D Grid with SFML">previous version</a>, I have updated 3 existing objects — <em>App</em>, <em>env::IGrid</em> and <em>env::Grid</em> — and created 3 new objects — <em>viewers::ObstacleViewer</em>, <em>env::ICellFunctor</em> and <em>viewers::ViewerMgr</em>. More details below.</p><h2 id="app"><span class="mr-2">App</span><a href="#app" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>The <em>App</em> object is augmented with <em>App::addObstacle</em> and <em>App::removeObstacle</em> both responsible of <em>adding</em> and <em>removing</em> obstacles in the 2D Grid respectively (see Fig. 2). As I teased in the introdution, state variables are associated to grid cells in order to store occupancy information — this is how the model handle obstacles : if a cell occupied, it is considered as an obstacle.</p><div class="plantuml theme-mars"><svg contentScriptType='application/ecmascript' contentStyleType='text/css' height='345px' preserveAspectRatio='none' style='width:375px;height:345px;background:#F9F9F9;' version='1.1' viewBox='0 0 375 345' width='375px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' zoomAndPan='magnify'><defs/><g><text fill='#888888' font-family='sans-serif' font-size='15' lengthAdjust='spacing' textLength='43.5' x='312' y='13.9233'>Fig. 2.</text><rect codeLine='4' fill='#FEFECE' height='136.8281' id='App' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='286.5' x='59.25' y='27.9609'/><ellipse cx='178.125' cy='51.9609' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M182.5781,60.4219 Q181.7109,60.8672 180.75,61.0781 Q179.7891,61.3125 178.7344,61.3125 Q174.9844,61.3125 172.9922,58.8516 Q171.0234,56.3672 171.0234,51.6797 Q171.0234,46.9922 172.9922,44.5078 Q174.9844,42.0234 178.7344,42.0234 Q179.7891,42.0234 180.75,42.2578 Q181.7344,42.4922 182.5781,42.9375 L182.5781,47.0156 Q181.6406,46.1484 180.75,45.75 Q179.8594,45.3281 178.9219,45.3281 Q176.9063,45.3281 175.875,46.9453 Q174.8438,48.5391 174.8438,51.6797 Q174.8438,54.8203 175.875,56.4375 Q176.9063,58.0313 178.9219,58.0313 Q179.8594,58.0313 180.75,57.6328 Q181.6406,57.2109 182.5781,56.3438 L182.5781,60.4219 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='36' x='208.875' y='58.1924'>App</text><line style='stroke:#A80036;stroke-width:2.25;' x1='60.75' x2='344.25' y1='75.9609' y2='75.9609'/><ellipse cx='75.75' cy='92.4609' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='81' x='89.25' y='97.2766'>void run()</text><ellipse cx='75.75' cy='111.668' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='112.5' x='89.25' y='116.4836'>void display()</text><ellipse cx='75.75' cy='130.875' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='214.5' x='89.25' y='135.6907'>bool addObstacle(int, int)</text><ellipse cx='75.75' cy='150.082' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='247.5' x='89.25' y='154.8977'>bool removeObstacle(int, int)</text><rect codeLine='16' fill='#FEFECE' height='56.9063' id='AbstractViewer' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='189' x='10.5' y='279.9609'/><ellipse cx='33' cy='308.4141' fill='#A9DCDF' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M33.1641,301.4297 L31.4297,309.0469 L34.9219,309.0469 L33.1641,301.4297 Z M30.9375,298.0781 L35.4141,298.0781 L40.4531,316.6641 L36.7734,316.6641 L35.625,312.0703 L30.7031,312.0703 L29.5781,316.6641 L25.9219,316.6641 L30.9375,298.0781 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='81' x='84' y='304.1689'>«viewer»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='141' x='54' y='325.1221'>AbstractViewer</text><rect codeLine='17' fill='#FEFECE' height='56.9063' id='IGrid' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='96' x='252' y='279.9609'/><ellipse cx='274.5' cy='308.4141' fill='#B4A7E5' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M268.3828,302.0625 L268.3828,298.8281 L279.4688,298.8281 L279.4688,302.0625 L275.7656,302.0625 L275.7656,314.1797 L279.4688,314.1797 L279.4688,317.4141 L268.3828,317.4141 L268.3828,314.1797 L272.0859,314.1797 L272.0859,302.0625 L268.3828,302.0625 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='292.5' y='304.1689'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='43.5' x='297.75' y='325.1221'>IGrid</text><path codeLine='18' d='M163.08,182.3109 C146.88,217.0659 129.255,254.8959 117.72,279.6609 ' fill='none' id='App-backto-AbstractViewer' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#F9F9F9' points='171.375,164.4909,162.1319,170.1093,163.7631,180.8022,173.0061,175.1839,171.375,164.4909' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='19' d='M241.2369,180.8022 C241.2369,180.8022 268.095,238.5009 278.91,261.7059 ' fill='none' id='App-IGrid' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#191919' points='287.28,279.6609,287.0229,264.8899,284.1151,272.8614,276.1436,269.9537,287.28,279.6609' style='stroke:#191919;stroke-width:1.5;'/><line style='stroke:#191919;stroke-width:1.5;' x1='284.1151' x2='279.0375' y1='272.8614' y2='261.9759'/><polygon fill='#F9F9F9' points='233.625,164.4909,231.9939,175.1839,241.2369,180.8022,242.8681,170.1093,233.625,164.4909' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#000000' points='276.166,229.1096,274.435,214.9491,266.4423,218.6709,276.166,229.1096' style='stroke:#000000;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='19.5' lengthAdjust='spacing' textLength='76.5' x='286.5' y='229.0613'>controls</text></g></svg></div><blockquote><p>Fig. 2. App Object (with <code class="language-plaintext highlighter-rouge">addObstacle</code> and <code class="language-plaintext highlighter-rouge">removeObstacle</code></p></blockquote><p><strong>App.h</strong></p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+</pre><td class="rouge-code"><pre><span class="cp">#ifndef APP_H
+#define APP_H
+</span>
+<span class="k">namespace</span> <span class="n">sf</span>
+<span class="p">{</span>
+	<span class="k">class</span> <span class="nc">RenderWindow</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">namespace</span> <span class="n">env</span>
+<span class="p">{</span>
+	<span class="k">class</span> <span class="nc">IGrid</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">namespace</span> <span class="n">viewers</span>
+<span class="p">{</span>
+	<span class="k">class</span> <span class="nc">AbstractViewer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">App</span>
+<span class="p">{</span>
+<span class="nl">private:</span>
+	<span class="c1">// sfml render window</span>
+	<span class="n">sf</span><span class="o">::</span><span class="n">RenderWindow</span> <span class="o">*</span><span class="n">_window</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+	<span class="c1">// the 2D grid pointer</span>
+	<span class="n">env</span><span class="o">::</span><span class="n">IGrid</span> <span class="o">*</span><span class="n">_grid</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+	<span class="c1">// a pointer to the viewer</span>
+	<span class="c1">// this could be a set of viewer actually</span>
+	<span class="c1">// if we consider component behavior</span>
+	<span class="n">viewers</span><span class="o">::</span><span class="n">AbstractViewer</span> <span class="o">*</span><span class="n">_viewer</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+	<span class="c1">// theorical width of the environment</span>
+	<span class="c1">// will match the grid width in terms of number of cells.</span>
+	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_WIDTH</span><span class="p">;</span>
+	<span class="c1">// theorical height of the environment.</span>
+	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_HEIGHT</span><span class="p">;</span>
+	<span class="c1">// x-resolution of the grid i.e. the x-size of a cell</span>
+	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_RESX</span><span class="p">;</span>
+	<span class="c1">// y-resolution of the grid i.e. the y-size of a cell</span>
+	<span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_RESY</span><span class="p">;</span>
+	<span class="c1">// attach window to the app</span>
+	<span class="kt">void</span> <span class="n">setWindow</span><span class="p">(</span><span class="n">sf</span><span class="o">::</span><span class="n">RenderWindow</span> <span class="o">*</span><span class="p">);</span>
+	<span class="c1">// attach a specific viewer</span>
+	<span class="kt">void</span> <span class="n">setViewer</span><span class="p">(</span><span class="n">viewers</span><span class="o">::</span><span class="n">AbstractViewer</span> <span class="o">*</span><span class="p">);</span>
+	<span class="c1">// attach a grid (should have been initialized)</span>
+	<span class="kt">void</span> <span class="n">setGrid</span><span class="p">(</span><span class="n">env</span><span class="o">::</span><span class="n">IGrid</span> <span class="o">*</span><span class="p">);</span>
+	<span class="c1">// return the attached grid</span>
+	<span class="n">env</span><span class="o">::</span><span class="n">IGrid</span> <span class="o">*</span><span class="n">getGrid</span><span class="p">();</span>
+	<span class="c1">// return the attached window</span>
+	<span class="n">sf</span><span class="o">::</span><span class="n">RenderWindow</span> <span class="o">*</span><span class="n">getWindow</span><span class="p">();</span>
+	<span class="c1">// run the application (the logic)</span>
+	<span class="kt">void</span> <span class="n">run</span><span class="p">();</span>
+	<span class="c1">// show content (display routines)</span>
+	<span class="kt">void</span> <span class="n">display</span><span class="p">();</span>
+	<span class="c1">// add obstacle control</span>
+	<span class="kt">bool</span> <span class="n">addObstacle</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+	<span class="c1">// remove obstacle control</span>
+	<span class="kt">bool</span> <span class="n">removeObstacle</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+
+	<span class="n">App</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="o">~</span><span class="n">App</span><span class="p">();</span>
+<span class="p">};</span>
+<span class="cp">#endif // !APP_H
+</span></pre></table></code></div></div><h2 id="igrid"><span class="mr-2">IGrid</span><a href="#igrid" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>The <em>IGrid</em> interface is augmented with 3 obstacle-related methods — <em>IGrid::iAddObstacle</em>, <em>IGrid::iRemoveObstacle</em> and <em>IGrid::iIsObstacle</em> — necessary to edit the state of a <em>CELL</em> status (<em>IGrid::iAddObstacle</em> and <em>IGrid::iRemoveObstacle</em>) and to check whether a given <em>CELL</em> is an obstacle or not (<em>IGrid::iIsObstacle</em>).</p><p><em>IGrid</em> defines one more method called <em>IGrid::iApplyOnCells</em> which takes a functor on cells — <em>env::ICellFunctor</em> — as the only parameter and applies it on every cell of the grid. For the record, this method is called in <em>ObstacleViewer::drawObstacles</em> method (see next section), in charge of displaying the obstacles of the grid. <strong>Fig. 3</strong> gives extensive details about the <em>IGrid</em> new look and its relations with other classes definitions.</p><div class="plantuml theme-mars"><svg contentScriptType='application/ecmascript' contentStyleType='text/css' height='909px' preserveAspectRatio='none' style='width:490px;height:909px;background:#F9F9F9;' version='1.1' viewBox='0 0 490 909' width='490.5px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' zoomAndPan='magnify'><defs/><g><text fill='#888888' font-family='sans-serif' font-size='15' lengthAdjust='spacing' textLength='43.5' x='428.25' y='13.9233'>Fig. 3.</text><rect codeLine='4' fill='#FEFECE' height='357.0117' id='IGrid' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='367.5' x='10.5' y='165.9609'/><ellipse cx='163.875' cy='194.4141' fill='#B4A7E5' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M157.7578,188.0625 L157.7578,184.8281 L168.8438,184.8281 L168.8438,188.0625 L165.1406,188.0625 L165.1406,200.1797 L168.8438,200.1797 L168.8438,203.4141 L157.7578,203.4141 L157.7578,200.1797 L161.4609,200.1797 L161.4609,188.0625 L157.7578,188.0625 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='191.625' y='190.1689'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='43.5' x='196.875' y='211.1221'>IGrid</text><line style='stroke:#A80036;stroke-width:2.25;' x1='12' x2='376.5' y1='222.8672' y2='222.8672'/><ellipse cx='27' cy='239.3672' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='127.5' x='40.5' y='244.1829'>bool iInitialize()</text><ellipse cx='27' cy='258.5742' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='120' x='40.5' y='263.3899'>int iGetSizeX()</text><ellipse cx='27' cy='277.7813' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='118.5' x='40.5' y='282.5969'>int iGetSizeY()</text><ellipse cx='27' cy='296.9883' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='174' x='40.5' y='301.804'>int iGetResolutionX()</text><ellipse cx='27' cy='316.1953' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='172.5' x='40.5' y='321.011'>int iGetResolutionY()</text><ellipse cx='27' cy='335.4023' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='201' x='40.5' y='340.218'>int iGetNumberOfCells()</text><ellipse cx='27' cy='354.6094' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='292.5' x='40.5' y='359.425'>bool iGetCellPosition(CELL, int, int)</text><ellipse cx='27' cy='373.8164' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='328.5' x='40.5' y='378.6321'>bool iGetCellCoordinates(CELL, int, int)</text><ellipse cx='27' cy='393.0234' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='294' x='40.5' y='397.8391'>bool iGetCellNumber(int, int, CELL)</text><ellipse cx='27' cy='412.2305' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='322.5' x='40.5' y='417.0461'>bool iGetContainingCell (int, int, CELL)</text><ellipse cx='27' cy='431.4375' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='262.5' x='40.5' y='436.2532'>bool iIsWithinCell(int, int, CELL)</text><ellipse cx='27' cy='450.6445' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='270' x='40.5' y='455.4602'>void iApplyOnCells(ICellFunctor)</text><ellipse cx='27' cy='469.8516' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='205.5' x='40.5' y='474.6672'>bool iAddObstacle(CELL)</text><ellipse cx='27' cy='489.0586' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='243' x='40.5' y='493.8743'>bool iRemoveObstacle(CELL)</text><ellipse cx='27' cy='508.2656' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='186' x='40.5' y='513.0813'>bool iIsObstacle(CELL)</text><rect codeLine='29' fill='#FEFECE' height='56.9063' id='Grid' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='96' x='18.75' y='628.7109'/><ellipse cx='41.25' cy='657.1641' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M45.7031,665.625 Q44.8359,666.0703 43.875,666.2813 Q42.9141,666.5156 41.8594,666.5156 Q38.1094,666.5156 36.1172,664.0547 Q34.1484,661.5703 34.1484,656.8828 Q34.1484,652.1953 36.1172,649.7109 Q38.1094,647.2266 41.8594,647.2266 Q42.9141,647.2266 43.875,647.4609 Q44.8594,647.6953 45.7031,648.1406 L45.7031,652.2188 Q44.7656,651.3516 43.875,650.9531 Q42.9844,650.5313 42.0469,650.5313 Q40.0313,650.5313 39,652.1484 Q37.9688,653.7422 37.9688,656.8828 Q37.9688,660.0234 39,661.6406 Q40.0313,663.2344 42.0469,663.2344 Q42.9844,663.2344 43.875,662.8359 Q44.7656,662.4141 45.7031,661.5469 L45.7031,665.625 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='59.25' y='652.9189'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='37.5' x='67.5' y='673.8721'>Grid</text><rect codeLine='30' fill='#FEFECE' height='107.3203' id='CELL' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='127.5' x='130.5' y='791.4609'/><ellipse cx='167.175' cy='819.9141' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M171.6281,828.375 Q170.7609,828.8203 169.8,829.0313 Q168.8391,829.2656 167.7844,829.2656 Q164.0344,829.2656 162.0422,826.8047 Q160.0734,824.3203 160.0734,819.6328 Q160.0734,814.9453 162.0422,812.4609 Q164.0344,809.9766 167.7844,809.9766 Q168.8391,809.9766 169.8,810.2109 Q170.7844,810.4453 171.6281,810.8906 L171.6281,814.9688 Q170.6906,814.1016 169.8,813.7031 Q168.9094,813.2813 167.9719,813.2813 Q165.9563,813.2813 164.925,814.8984 Q163.8938,816.4922 163.8938,819.6328 Q163.8938,822.7734 164.925,824.3906 Q165.9563,825.9844 167.9719,825.9844 Q168.9094,825.9844 169.8,825.5859 Q170.6906,825.1641 171.6281,824.2969 L171.6281,828.375 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='188.325' y='815.6689'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='42' x='194.325' y='836.6221'>CELL</text><line style='stroke:#A80036;stroke-width:2.25;' x1='132' x2='256.5' y1='848.3672' y2='848.3672'/><ellipse cx='147' cy='864.8672' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;fill:none;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='42' x='160.5' y='869.6829'>int id</text><ellipse cx='147' cy='884.0742' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;fill:none;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='88.5' x='160.5' y='888.8899'>bool mask</text><rect codeLine='35' fill='#FEFECE' height='88.1133' id='ICellFunctor' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='207' x='273.75' y='612.9609'/><ellipse cx='317.85' cy='641.4141' fill='#B4A7E5' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M311.7328,635.0625 L311.7328,631.8281 L322.8188,631.8281 L322.8188,635.0625 L319.1156,635.0625 L319.1156,647.1797 L322.8188,647.1797 L322.8188,650.4141 L311.7328,650.4141 L311.7328,647.1797 L315.4359,647.1797 L315.4359,635.0625 L311.7328,635.0625 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='372.15' y='637.1689'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='111' x='343.65' y='658.1221'>ICellFunctor</text><line style='stroke:#A80036;stroke-width:2.25;' x1='275.25' x2='479.25' y1='669.8672' y2='669.8672'/><ellipse cx='290.25' cy='686.3672' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='168' x='303.75' y='691.1829'>void operator(CELL)</text><rect fill='#FEFECE' height='48' id='App' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='84' x='152.25' y='27.9609'/><ellipse cx='174.75' cy='51.9609' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M179.2031,60.4219 Q178.3359,60.8672 177.375,61.0781 Q176.4141,61.3125 175.3594,61.3125 Q171.6094,61.3125 169.6172,58.8516 Q167.6484,56.3672 167.6484,51.6797 Q167.6484,46.9922 169.6172,44.5078 Q171.6094,42.0234 175.3594,42.0234 Q176.4141,42.0234 177.375,42.2578 Q178.3594,42.4922 179.2031,42.9375 L179.2031,47.0156 Q178.2656,46.1484 177.375,45.75 Q176.4844,45.3281 175.5469,45.3281 Q173.5313,45.3281 172.5,46.9453 Q171.4688,48.5391 171.4688,51.6797 Q171.4688,54.8203 172.5,56.4375 Q173.5313,58.0313 175.5469,58.0313 Q176.4844,58.0313 177.375,57.6328 Q178.2656,57.2109 179.2031,56.3438 L179.2031,60.4219 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='36' x='195.75' y='58.1924'>App</text><path d='M109.785,551.1759 C97.17,581.8209 85.77,609.5109 77.88,628.6809 ' fill='none' id='IGrid-backto-Grid' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='none' points='100.245,546.7509,121.38,523.0059,119.67,554.7459,100.245,546.7509' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='39' d='M334.8,701.6709 C310.065,726.7209 278.52,758.6559 251.58,785.9259 ' fill='none' id='ICellFunctor-to-CELL' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='246.255,791.3109,260.0112,785.9242,251.5261,785.9756,251.4746,777.4905,246.255,791.3109' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='40' d='M298.845,523.0059 C316.695,553.2159 333.87,582.2709 347.565,605.4609 ' fill='none' id='IGrid-to-ICellFunctor' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='351.705,612.4659,349.9978,597.7916,347.8874,606.0103,339.6687,603.8998,351.705,612.4659' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='41' d='M194.25,523.6359 C194.25,614.6409 194.25,719.5059 194.25,783.7659 ' fill='none' id='IGrid-to-CELL' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='194.25,791.4009,200.25,777.9009,194.25,783.9009,188.25,777.9009,194.25,791.4009' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='42' d='M194.25,94.1709 C194.25,94.1709 194.25,127.3509 194.25,145.8459 ' fill='none' id='App-IGrid' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#191919' points='194.25,165.5409,200.25,152.0409,194.25,158.0409,188.25,152.0409,194.25,165.5409' style='stroke:#191919;stroke-width:1.5;'/><line style='stroke:#191919;stroke-width:1.5;' x1='194.25' x2='194.25' y1='158.0409' y2='146.0409'/><polygon fill='#F9F9F9' points='194.25,76.1709,188.25,85.1709,194.25,94.1709,200.25,85.1709,194.25,76.1709' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='43' d='M95.7626,700.8702 C95.7626,700.8702 129.93,750.5109 146.67,774.8259 ' fill='none' id='Grid-CELL' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#191919' points='157.935,791.1909,155.2262,776.6681,153.6839,785.0121,145.34,783.4698,157.935,791.1909' style='stroke:#191919;stroke-width:1.5;'/><line style='stroke:#191919;stroke-width:1.5;' x1='153.6839' x2='146.88' y1='785.0121' y2='775.1259'/><polygon fill='#191919' points='85.56,686.0409,85.7182,696.8564,95.7626,700.8702,95.6044,690.0547,85.56,686.0409' style='stroke:#191919;stroke-width:1.5;'/></g></svg></div><blockquote><p>Fig. 3. Evolution of the <code class="language-plaintext highlighter-rouge">IGrid</code> interface, with 4 more methods :<code class="language-plaintext highlighter-rouge">iAddObstacle</code>, <code class="language-plaintext highlighter-rouge">iRemoveObstacle</code>, <code class="language-plaintext highlighter-rouge">iApplyOnCells</code> and <code class="language-plaintext highlighter-rouge">iIsObstacle</code></p></blockquote><p><strong>IGrid.h</strong></p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+</pre><td class="rouge-code"><pre><span class="cp">#ifndef IGRID_H
+#define IGRID_H
+</span>
+<span class="k">namespace</span> <span class="n">env</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">CELL</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">_id</span><span class="p">;</span> <span class="c1">// id of the cell</span>
+        <span class="kt">bool</span> <span class="n">_mask</span><span class="p">;</span>
+        <span class="n">CELL</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="n">CELL</span><span class="p">(</span><span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="c1">// Functor definition to apply on cell</span>
+    <span class="c1">// We can inherit from this to function</span>
+    <span class="c1">// to apply on cells</span>
+    <span class="k">class</span> <span class="nc">ICellFunctor</span>
+    <span class="p">{</span>
+    <span class="nl">public:</span>
+        <span class="k">virtual</span> <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span>
+            <span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span> <span class="c1">// cell_id</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="c1">// IGrid</span>
+    <span class="k">class</span> <span class="nc">IGrid</span>
+    <span class="p">{</span>
+    <span class="nl">public:</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">IGrid</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="c1">// returns the width</span>
+        <span class="k">virtual</span> <span class="kt">int</span> <span class="n">iGetSizeX</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// returns the height</span>
+        <span class="k">virtual</span> <span class="kt">int</span> <span class="n">iGetSizeY</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// returns the number of cells in the grid</span>
+        <span class="k">virtual</span> <span class="kt">int</span> <span class="n">iGetNumberOfCells</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// gets the width of a cell (in terms of pixels)</span>
+        <span class="k">virtual</span> <span class="kt">int</span> <span class="n">iGetResolutionX</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// gets the height of a cell (in terms of pixels)</span>
+        <span class="k">virtual</span> <span class="kt">int</span> <span class="n">iGetResolutionY</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// applies functor on Cells</span>
+        <span class="k">virtual</span> <span class="kt">void</span> <span class="n">iApplyOnCells</span><span class="p">(</span><span class="n">ICellFunctor</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">//-- Test</span>
+        <span class="c1">// relative position of a cell according to its id</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iGetCellPosition</span><span class="p">(</span>
+            <span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">,</span> <span class="c1">// cell</span>
+            <span class="kt">int</span> <span class="o">&amp;</span><span class="p">,</span>        <span class="c1">// posx</span>
+            <span class="kt">int</span> <span class="o">&amp;</span>         <span class="c1">// posy</span>
+        <span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// coordinates of a cell accoring to its id</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iGetCellCoordinates</span><span class="p">(</span>
+            <span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">,</span> <span class="c1">// cell</span>
+            <span class="kt">int</span> <span class="o">&amp;</span><span class="p">,</span>        <span class="c1">// row_number</span>
+            <span class="kt">int</span> <span class="o">&amp;</span>         <span class="c1">// column_number</span>
+        <span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// cell rank of the the cell according</span>
+        <span class="c1">// to its relative position in the grid</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iGetCellNumber</span><span class="p">(</span>
+            <span class="kt">int</span><span class="p">,</span> <span class="c1">// row_number</span>
+            <span class="kt">int</span><span class="p">,</span> <span class="c1">// column_number</span>
+            <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// the containing cell given the coordinates in the 2D space</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iGetContainingCell</span><span class="p">(</span>
+            <span class="kt">int</span><span class="p">,</span>   <span class="c1">// posx</span>
+            <span class="kt">int</span><span class="p">,</span>   <span class="c1">// posy</span>
+            <span class="n">CELL</span> <span class="o">&amp;</span> <span class="c1">// cell</span>
+        <span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// checks if a given point is within a given cell</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iIsWithinCell</span><span class="p">(</span>
+            <span class="kt">int</span><span class="p">,</span>         <span class="c1">// posx</span>
+            <span class="kt">int</span><span class="p">,</span>         <span class="c1">// posy</span>
+            <span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span> <span class="c1">// cell</span>
+        <span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// initializes the vector of cells, obstacle mask, etc.</span>
+        <span class="k">virtual</span> <span class="kt">void</span> <span class="n">iInitialize</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// add obstacle to the grid</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iAddObstacle</span><span class="p">(</span><span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// remove obstacle from the grid</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iRemoveObstacle</span><span class="p">(</span><span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// return the obstacle status : true if obstacle, false otherwise</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iIsObstacle</span><span class="p">(</span><span class="k">const</span> <span class="n">CELL</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="c1">// namespace env</span>
+<span class="cp">#endif // !IGRID_H
+</span></pre></table></code></div></div><h2 id="viewermgr-and-obstacleviewer"><span class="mr-2">ViewerMgr and ObstacleViewer</span><a href="#viewermgr-and-obstacleviewer" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p><em>ViewerMgr</em> is a special <em>AbstractViewer</em> that agregates (cf. Composite pattern) other <em>AbstractViewer</em> with the method <em>ViewerMgr::iAddViewer</em>. I introduce this pattern in order to separate view concerns and to be able to activate several views at the same time. We will use this <em>meta</em> viewer to attach an <em>ObstacleViewer</em> to the App in order to display the grid lines and the obstacles at the same time.</p><div class="plantuml theme-mars"><svg contentScriptType='application/ecmascript' contentStyleType='text/css' height='618px' preserveAspectRatio='none' style='width:766px;height:618px;background:#F9F9F9;' version='1.1' viewBox='0 0 766 618' width='766.5px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' zoomAndPan='magnify'><defs/><g><text fill='#888888' font-family='sans-serif' font-size='15' lengthAdjust='spacing' textLength='43.5' x='703.5' y='13.9233'>Fig. 4.</text><rect codeLine='4' fill='#FEFECE' height='196.1484' id='AbstractViewer' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='238.5' x='57.75' y='27.9609'/><ellipse cx='102.525' cy='56.4141' fill='#A9DCDF' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M102.6891,49.4297 L100.9547,57.0469 L104.4469,57.0469 L102.6891,49.4297 Z M100.4625,46.0781 L104.9391,46.0781 L109.9781,64.6641 L106.2984,64.6641 L105.15,60.0703 L100.2281,60.0703 L99.1031,64.6641 L95.4469,64.6641 L100.4625,46.0781 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='90' x='153.975' y='52.1689'>«viewers»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='141' x='128.475' y='73.1221'>AbstractViewer</text><line style='stroke:#A80036;stroke-width:2.25;' x1='59.25' x2='294.75' y1='84.8672' y2='84.8672'/><polygon fill='none' points='74.25,93.8672,80.25,99.8672,74.25,105.8672,68.25,99.8672' style='stroke:#B38D22;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='199.5' x='87.75' y='106.1829'>boolean _active = false</text><line style='stroke:#A80036;stroke-width:2.25;' x1='59.25' x2='294.75' y1='116.0742' y2='116.0742'/><ellipse cx='74.25' cy='132.5742' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='123' x='87.75' y='137.3899'>void iActivate()</text><ellipse cx='74.25' cy='151.7813' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='145.5' x='87.75' y='156.5969'>void iDeactivate()</text><ellipse cx='74.25' cy='170.9883' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='121.5' x='87.75' y='175.804'>void iIsActive()</text><ellipse cx='74.25' cy='190.1953' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='118.5' x='87.75' y='195.011'>void iDisplay()</text><polygon fill='#FFFF44' points='74.25,201.9023,80.25,207.9023,74.25,213.9023,68.25,207.9023' style='stroke:#B38D22;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='102' x='87.75' y='214.218'>void iDraw()</text><rect codeLine='13' fill='#FEFECE' height='88.1133' id='ViewerMgr' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='333' x='10.5' y='315.9609'/><ellipse cx='122.625' cy='344.4141' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M127.0781,352.875 Q126.2109,353.3203 125.25,353.5313 Q124.2891,353.7656 123.2344,353.7656 Q119.4844,353.7656 117.4922,351.3047 Q115.5234,348.8203 115.5234,344.1328 Q115.5234,339.4453 117.4922,336.9609 Q119.4844,334.4766 123.2344,334.4766 Q124.2891,334.4766 125.25,334.7109 Q126.2344,334.9453 127.0781,335.3906 L127.0781,339.4688 Q126.1406,338.6016 125.25,338.2031 Q124.3594,337.7813 123.4219,337.7813 Q121.4063,337.7813 120.375,339.3984 Q119.3438,340.9922 119.3438,344.1328 Q119.3438,347.2734 120.375,348.8906 Q121.4063,350.4844 123.4219,350.4844 Q124.3594,350.4844 125.25,350.0859 Q126.1406,349.6641 127.0781,348.7969 L127.0781,352.875 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='90' x='156.375' y='340.1689'>«viewers»</text><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='96' x='153.375' y='361.1221'>ViewerMgr</text><line style='stroke:#A80036;stroke-width:2.25;' x1='12' x2='342' y1='372.8672' y2='372.8672'/><ellipse cx='27' cy='389.3672' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='294' x='40.5' y='394.1829'>void iAddViewer(AbstractManager)</text><rect codeLine='17' fill='#FEFECE' height='88.1133' id='ICellFunctor' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='207' x='472.5' y='519.9609'/><ellipse cx='516.6' cy='548.4141' fill='#B4A7E5' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M510.4828,542.0625 L510.4828,538.8281 L521.5687,538.8281 L521.5687,542.0625 L517.8656,542.0625 L517.8656,554.1797 L521.5687,554.1797 L521.5687,557.4141 L510.4828,557.4141 L510.4828,554.1797 L514.1859,554.1797 L514.1859,542.0625 L510.4828,542.0625 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='54' x='570.9' y='544.1689'>«env»</text><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='111' x='542.4' y='565.1221'>ICellFunctor</text><line style='stroke:#A80036;stroke-width:2.25;' x1='474' x2='678' y1='576.8672' y2='576.8672'/><ellipse cx='489' cy='593.3672' fill='#84BE84' rx='4.5' ry='4.5' style='stroke:#038048;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='16.5' font-style='italic' lengthAdjust='spacing' textLength='168' x='502.5' y='598.1829'>void operator(CELL)</text><rect codeLine='21' fill='#FEFECE' height='88.1133' id='ObstacleViewer' rx='5.25' ry='5.25' style='stroke:#A80036;stroke-width:2.25;' width='360' x='396' y='315.9609'/><ellipse cx='497.625' cy='344.4141' fill='#ADD1B2' rx='16.5' ry='16.5' style='stroke:#A80036;stroke-width:1.5;'/><path d='M502.0781,352.875 Q501.2109,353.3203 500.25,353.5313 Q499.2891,353.7656 498.2344,353.7656 Q494.4844,353.7656 492.4922,351.3047 Q490.5234,348.8203 490.5234,344.1328 Q490.5234,339.4453 492.4922,336.9609 Q494.4844,334.4766 498.2344,334.4766 Q499.2891,334.4766 500.25,334.7109 Q501.2344,334.9453 502.0781,335.3906 L502.0781,339.4688 Q501.1406,338.6016 500.25,338.2031 Q499.3594,337.7813 498.4219,337.7813 Q496.4063,337.7813 495.375,339.3984 Q494.3438,340.9922 494.3438,344.1328 Q494.3438,347.2734 495.375,348.8906 Q496.4063,350.4844 498.4219,350.4844 Q499.3594,350.4844 500.25,350.0859 Q501.1406,349.6641 502.0781,348.7969 L502.0781,352.875 Z ' fill='#000000'/><text fill='#000000' font-family='sans-serif' font-size='18' font-style='italic' lengthAdjust='spacing' textLength='90' x='555.375' y='340.1689'>«viewers»</text><text fill='#000000' font-family='sans-serif' font-size='18' lengthAdjust='spacing' textLength='144' x='528.375' y='361.1221'>ObstacleViewer</text><line style='stroke:#A80036;stroke-width:2.25;' x1='397.5' x2='754.5' y1='372.8672' y2='372.8672'/><rect fill='#F24D5C' height='9' style='stroke:#C82930;stroke-width:1.5;' width='9' x='408' y='384.8672'/><text fill='#000000' font-family='sans-serif' font-size='16.5' lengthAdjust='spacing' textLength='321' x='426' y='394.1829'>void drawObstacles(env::ICellFunctor)</text><path d='M157.98,255.5859 C158.31,277.1709 159.555,298.1709 161.7,315.5259 ' fill='none' id='AbstractViewer-backto-ViewerMgr' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='none' points='147.48,254.9709,158.085,225.0009,168.48,255.0459,147.48,254.9709' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='25' d='M195.0792,297.6243 C195.0792,297.6243 197.205,262.6509 197.25,245.1309 ' fill='none' id='ViewerMgr-AbstractViewer' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#191919' points='197.025,225.0009,191.1737,238.5661,197.1074,232.5005,203.173,238.4342,197.025,225.0009' style='stroke:#191919;stroke-width:1.5;'/><line style='stroke:#191919;stroke-width:1.5;' x1='197.1074' x2='197.235' y1='232.5005' y2='244.5009'/><polygon fill='#F9F9F9' points='193.2,315.5259,200.1068,307.2015,195.0792,297.6243,188.1724,305.9487,193.2,315.5259' style='stroke:#191919;stroke-width:1.5;'/><path d='M322.77,212.1009 C383.715,247.3959 451.905,286.8609 502.155,315.9609 ' fill='none' id='AbstractViewer-backto-ObstacleViewer' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='none' points='317.415,221.1309,296.715,197.0259,327.93,202.9659,317.415,221.1309' style='stroke:#191919;stroke-width:1.5;'/><path codeLine='26' d='M576,404.8359 C576,436.2309 576,478.8609 576,511.9059 ' fill='none' id='ObstacleViewer-to-ICellFunctor' style='stroke:#191919;stroke-width:1.5;stroke-dasharray:7.0,7.0;'/><polygon fill='#191919' points='576,519.6609,582,506.1609,576,512.1609,570,506.1609,576,519.6609' style='stroke:#191919;stroke-width:1.5;'/><polygon fill='#000000' points='583.5,469.8105,587.9084,456.2429,579.0916,456.2429,583.5,469.8105' style='stroke:#000000;stroke-width:1.5;'/><text fill='#000000' font-family='sans-serif' font-size='19.5' lengthAdjust='spacing' textLength='42' x='597' y='469.0613'>runs</text></g></svg></div><blockquote><p>Fig. 4. <code class="language-plaintext highlighter-rouge">ViewerMgr</code> is a meta viewer that agregates more than one viewer. It will be used to add a viewer for obstacle (<code class="language-plaintext highlighter-rouge">ObstacleViewer</code>) next to the viewer forlines (<code class="language-plaintext highlighter-rouge">GridViewer</code>) without changing the relationship between <code class="language-plaintext highlighter-rouge">App</code> and <code class="language-plaintext highlighter-rouge">AbstractViewer</code></p></blockquote><p><strong>AbstractViewer.h</strong></p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+</pre><td class="rouge-code"><pre><span class="cp">#ifndef ABSTRACTVIEWER_H
+#define ABSTRACTVIEWER_H
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span>
+<span class="k">class</span> <span class="nc">App</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">viewers</span>
+<span class="p">{</span>
+	<span class="c1">// AbstractViewer</span>
+	<span class="k">class</span> <span class="nc">AbstractViewer</span>
+	<span class="p">{</span>
+	<span class="nl">public:</span>
+		<span class="c1">// activate the viewer. If activated, it provides the desired view</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iActivate</span><span class="p">();</span>
+
+		<span class="c1">// deactivate the viewer. Do not display anaything if deactivated</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iDeactivate</span><span class="p">();</span>
+
+		<span class="c1">// return True if the viewer is active</span>
+		<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">iIsActive</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+		<span class="c1">// display function</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iDisplay</span><span class="p">();</span>
+
+		<span class="c1">// attach the application object</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iSetApp</span><span class="p">(</span><span class="n">App</span> <span class="o">*</span><span class="p">);</span>
+
+		<span class="k">virtual</span> <span class="o">~</span><span class="n">AbstractViewer</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+		<span class="n">AbstractViewer</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+	<span class="nl">protected:</span>
+		<span class="c1">// specific draw method (to be concretized in child classes)</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iDraw</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="kt">bool</span> <span class="n">_active</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+		<span class="n">App</span> <span class="o">*</span><span class="n">_app</span><span class="p">;</span>
+	<span class="p">};</span>
+
+	<span class="c1">// viewer manager, using the composite pattern to</span>
+	<span class="c1">// aggregate several viewers into one</span>
+	<span class="k">class</span> <span class="nc">ViewerMgr</span> <span class="o">:</span> <span class="k">public</span> <span class="n">AbstractViewer</span>
+	<span class="p">{</span>
+	<span class="nl">public:</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iAddViewer</span><span class="p">(</span><span class="n">AbstractViewer</span> <span class="o">*</span><span class="p">);</span>
+		<span class="k">virtual</span> <span class="o">~</span><span class="n">ViewerMgr</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+		<span class="n">ViewerMgr</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iSetApp</span><span class="p">(</span><span class="n">App</span> <span class="o">*</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+	<span class="nl">protected:</span>
+		<span class="k">virtual</span> <span class="kt">void</span> <span class="n">iDraw</span><span class="p">();</span>
+
+	<span class="nl">private:</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">AbstractViewer</span> <span class="o">*&gt;</span> <span class="n">_viewers</span><span class="p">;</span>
+	<span class="p">};</span>
+<span class="p">}</span> <span class="c1">// namespace viewers</span>
+
+<span class="cp">#endif // ABSTRACTVIEWER_H
+</span></pre></table></code></div></div><p><strong>ObstacleViewer.h</strong></p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre><span class="cp">#ifndef OBSTACLEVIEWER_H
+#define OBSTACLEVIEWER_H
+</span>
+<span class="cp">#include</span> <span class="cpf">"AbstractViewer.h"</span><span class="cp">
+</span>
+<span class="k">namespace</span> <span class="n">env</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">ICellFunctor</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">namespace</span> <span class="n">viewers</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">ObstacleViewer</span> <span class="o">:</span> <span class="k">public</span> <span class="n">AbstractViewer</span>
+    <span class="p">{</span>
+    <span class="nl">public:</span>
+        <span class="n">ObstacleViewer</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">ObstacleViewer</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="nl">protected:</span>
+        <span class="k">virtual</span> <span class="kt">void</span> <span class="n">iDraw</span><span class="p">();</span>
+
+    <span class="nl">private:</span>
+        <span class="kt">void</span> <span class="n">drawObstacles</span><span class="p">(</span><span class="n">env</span><span class="o">::</span><span class="n">ICellFunctor</span> <span class="o">&amp;</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="c1">// namespace viewers</span>
+<span class="cp">#endif // !OBSTACLEVIEWER_H
+</span></pre></table></code></div></div><h2 id="demo"><span class="mr-2">Demo</span><a href="#demo" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>We are ready to run our brand new App with all the improvements. The <strong>main.cpp</strong> for the 2D grid demo App with obstacle management is exactly the following :</p><div class="language-c++ highlighter-rouge"><div class="code-header"> <span data-label-text="C++"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+</pre><td class="rouge-code"><pre><span class="cp">#include</span> <span class="cpf">"App.h"</span><span class="cp">
+#include</span> <span class="cpf">"GridViewer.h"</span><span class="cp">
+#include</span> <span class="cpf">"ObstacleViewer.h"</span><span class="cp">
+#include</span> <span class="cpf">"Grid.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;SFML/Graphics.hpp&gt;</span><span class="cp">
+</span>
+<span class="cp">#ifdef __linux__
+#include</span> <span class="cpf">&lt;X11/Xlib.h&gt;</span><span class="cp">
+#endif
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="cp">#ifdef __linux__
+</span>    <span class="n">XInitThreads</span><span class="p">();</span>
+<span class="cp">#endif
+</span>
+    <span class="c1">// -- sfml windows</span>
+    <span class="n">sf</span><span class="o">::</span><span class="n">ContextSettings</span> <span class="n">settings</span><span class="p">;</span>
+    <span class="n">settings</span><span class="p">.</span><span class="n">antialiasingLevel</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">sf</span><span class="o">::</span><span class="n">RenderWindow</span> <span class="n">window</span><span class="p">(</span>
+        <span class="n">sf</span><span class="o">::</span><span class="n">VideoMode</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_WIDTH</span><span class="o">*</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_RESX</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_HEIGHT</span><span class="o">*</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_RESY</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="s">"SFML 2D Grid with obstacles"</span><span class="p">,</span>
+        <span class="n">sf</span><span class="o">::</span><span class="n">Style</span><span class="o">::</span><span class="n">Titlebar</span> <span class="o">|</span> <span class="n">sf</span><span class="o">::</span><span class="n">Style</span><span class="o">::</span><span class="n">Close</span><span class="p">,</span> 
+        <span class="n">settings</span>
+    <span class="p">);</span>
+    <span class="n">window</span><span class="p">.</span><span class="n">clear</span><span class="p">(</span><span class="n">sf</span><span class="o">::</span><span class="n">Color</span><span class="o">::</span><span class="n">White</span><span class="p">);</span>
+    <span class="n">window</span><span class="p">.</span><span class="n">setFramerateLimit</span><span class="p">(</span><span class="mi">120</span><span class="p">);</span>
+    <span class="n">window</span><span class="p">.</span><span class="n">setActive</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+    <span class="c1">// -- application</span>
+    <span class="n">App</span> <span class="n">app</span><span class="p">;</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">setWindow</span><span class="p">(</span><span class="o">&amp;</span><span class="n">window</span><span class="p">);</span>
+
+    <span class="c1">//-- grid 2D</span>
+    <span class="n">env</span><span class="o">::</span><span class="n">Grid</span> <span class="n">g</span><span class="p">;</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">setSizeX</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_WIDTH</span><span class="p">);</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">setSizeY</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_HEIGHT</span><span class="p">);</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">setResolutionX</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_RESX</span><span class="p">);</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">setResolutionY</span><span class="p">(</span><span class="n">App</span><span class="o">::</span><span class="n">DEFAULT_RESY</span><span class="p">);</span>
+    <span class="n">g</span><span class="p">.</span><span class="n">iInitialize</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">setGrid</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g</span><span class="p">);</span>
+
+    <span class="c1">//-- viewer</span>
+    <span class="n">viewers</span><span class="o">::</span><span class="n">GridViewer</span> <span class="n">gviewer</span><span class="p">;</span>
+    <span class="n">gviewer</span><span class="p">.</span><span class="n">iActivate</span><span class="p">();</span>
+
+    <span class="c1">// grid obstacles</span>
+    <span class="n">viewers</span><span class="o">::</span><span class="n">ObstacleViewer</span> <span class="n">oviewer</span><span class="p">;</span>
+    <span class="n">oviewer</span><span class="p">.</span><span class="n">iActivate</span><span class="p">();</span>
+
+    <span class="c1">// aggregator</span>
+    <span class="n">viewers</span><span class="o">::</span><span class="n">ViewerMgr</span> <span class="n">mgr</span><span class="p">;</span>
+    <span class="n">mgr</span><span class="p">.</span><span class="n">iAddViewer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">oviewer</span><span class="p">);</span>
+    <span class="n">mgr</span><span class="p">.</span><span class="n">iAddViewer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gviewer</span><span class="p">);</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">setViewer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mgr</span><span class="p">);</span>
+    <span class="n">mgr</span><span class="p">.</span><span class="n">iActivate</span><span class="p">();</span>
+
+    <span class="c1">// initialize gviewer (only after having attached it to the App object)</span>
+    <span class="n">gviewer</span><span class="p">.</span><span class="n">initialize</span><span class="p">();</span>
+
+    <span class="c1">//-- launch application</span>
+    <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">rendering_thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">App</span><span class="o">::</span><span class="n">display</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">app</span><span class="p">);</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+    <span class="n">rendering_thread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></table></code></div></div><p>The interested reader can fork the complete source code from <a href="https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid" title="The code of this tutorial is available from here">here</a> and run the following in a terminal at the root of the project folder :</p><h3 id="on-windows"><span class="mr-2">On windows</span><a href="#on-windows" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  <span class="nv">$ </span>cmake  <span class="nt">-G</span> <span class="s2">"Visual Studio </span><span class="si">$(</span>Version<span class="si">)</span><span class="s2">"</span> <span class="nt">-S</span> <span class="nb">.</span> <span class="nt">-B</span> ./build 
+  <span class="nv">$ </span>cmake  <span class="nt">--build</span> ./build <span class="nt">--config</span> Debug <span class="nt">--target</span> app
+  <span class="nv">$ </span>./bin/Debug/app
+</pre></table></code></div></div><h3 id="on-linux"><span class="mr-2">On linux</span><a href="#on-linux" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-shell highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="nv">$ </span><span class="nb">mkdir </span>build  
+  <span class="nv">$ </span><span class="nb">cd </span>build
+  <span class="nv">$ </span>cmake <span class="nt">-G</span> <span class="s2">"Unix Makefiles"</span> .. <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>Debug
+  <span class="nv">$ </span>cmake <span class="nt">--build</span> ./ <span class="nt">--target</span> app
+  <span class="nv">$ </span>../bin/Debug/app
+</pre></table></code></div></div><p>The program should display a clickable 2D Grid where the right-click adds an obstacle on the selected cell and the left-click removes it.</p><p><img data-src="/images/sfml-2d-grid-obstacles.gif" alt="screenshot" data-proofer-ignore> <em>Step by step demo : launching the 2D Grid with obstacles SFML App from the terminal (built on ubuntu 18.08 with gcc 7.5)</em></p><p>Enjoy and feel free to send me your feedbacks!</p><h2 id="references"><span class="mr-2">References</span><a href="#references" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li><a href="https://github.com/kanmeugne/sfml2dgrid/releases/tag/sfml-2d-obstacles-grid" title="The code of this tutorial is available from here">kanmeugne/sfml2dgrid : sfml-2d-obstacles-grid</a><li><a href="/posts/sfml-2d-grid/" title="Kanmeugne's Blog : Drawing a 2D Grid with SFML">Kanmeugne’s Blog : Kanmeugne’s Blog : Drawing a 2D Grid with SFML</a></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/modeling-simulation/'>modeling & simulation</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/sfml/" class="post-tag no-text-decoration" >sfml</a> <a href="/tags/cmake/" class="post-tag no-text-decoration" >cmake</a> <a href="/tags/c/" class="post-tag no-text-decoration" >c++</a> <a href="/tags/simulation/" class="post-tag no-text-decoration" >simulation</a> <a href="/tags/modeling/" class="post-tag no-text-decoration" >modeling</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=2D+Grid+with+obstacles+-+Kanmeugne%27s+Blog&url=https%3A%2F%2Fkanmeugne.github.io%2Fposts%2F2d-grid-obstacles%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=2D+Grid+with+obstacles+-+Kanmeugne%27s+Blog&u=https%3A%2F%2Fkanmeugne.github.io%2Fposts%2F2d-grid-obstacles%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fkanmeugne.github.io%2Fposts%2F2d-grid-obstacles%2F&text=2D+Grid+with+obstacles+-+Kanmeugne%27s+Blog" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/setting-up-your-python-environment/">Setting Up Your Python Environment (I)</a><li><a href="/posts/sfml-2d-grid/">Drawing a 2D Grid with SFML</a><li><a href="/posts/2d-grid-obstacles/">2D Grid with obstacles</a><li><a href="/posts/pheromons-evaporation/">Pheromon evaporation on a 2D Grid</a><li><a href="/posts/introduction-tdd-googletest/">Introduction au TDD (I) : Mise en place avec googletest</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/c/">c++</a> <a class="post-tag" href="/tags/cmake/">cmake</a> <a class="post-tag" href="/tags/modeling/">modeling</a> <a class="post-tag" href="/tags/sfml/">sfml</a> <a class="post-tag" href="/tags/simulation/">simulation</a> <a class="post-tag" href="/tags/ipython/">ipython</a> <a class="post-tag" href="/tags/jupyter/">jupyter</a> <a class="post-tag" href="/tags/programming/">programming</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/tdd/">tdd</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/sfml-2d-grid/"><div class="card-body"> <em class="small" data-ts="1601308800" data-df="ll" > Sep 29, 2020 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Drawing a 2D Grid with SFML</h3><div class="text-muted small"><p> I started studying simulation of moving agents ten years ago and I have come to realize that regular 2D Grids are extraordinary abstractions for the navigable space. In fact, regular 2D grids are v...</p></div></div></a></div><div class="card"> <a href="/posts/pheromons-evaporation/"><div class="card-body"> <em class="small" data-ts="1602432000" data-df="ll" > Oct 12, 2020 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Pheromon evaporation on a 2D Grid</h3><div class="text-muted small"><p> You should now be familiar with our 2D Grid app. In a previous post, I updated its original object-oriented architecture in order to implement an affordable obstacle feature. Here, I am going to up...</p></div></div></a></div><div class="card"> <a href="/posts/sfml-cmake-windows/"><div class="card-body"> <em class="small" data-ts="1600358400" data-df="ll" > Sep 18, 2020 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Building a Portable C++ Graphical App with CMake</h3><div class="text-muted small"><p> Few months ago, I found an article that explains how to use GoogleTest and GoogleMock — as an external dependency — in a CMake project. Since the approach is amazingly straightforward, I have manag...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/sfml-2d-grid/" class="btn btn-outline-primary" prompt="Older"><p>Drawing a 2D Grid with SFML</p></a> <a href="/posts/masmatters/" class="btn btn-outline-primary" prompt="Newer"><p>Sur l'importance de l'approche multi-agents pour les développeurs</p></a></div><script type="text/javascript"> $(function () { const origin = "https://giscus.app"; const iframe = "iframe.giscus-frame"; const lightTheme = "light"; const darkTheme = "dark_dimmed"; let initTheme = lightTheme; if ($("html[data-mode=dark]").length > 0 || ($("html[data-mode]").length == 0 && window.matchMedia("(prefers-color-scheme: dark)").matches)) { initTheme = darkTheme; } let giscusAttributes = { "src": "https://giscus.app/client.js", "data-repo": "kanmeugne/kanmeugne.github.io", "data-repo-id": "MDEwOlJlcG9zaXRvcnkyOTc1NjcwMjA=", "data-category": "General", "data-category-id": "DIC_kwDOEbyDLM4CPQDi", "data-mapping": "pathname", "data-reactions-enabled": "1", "data-emit-metadata": "0", "data-theme": initTheme, "data-input-position": "bottom", "data-lang": "en", "crossorigin": "anonymous", "async": "" }; let giscusScript = document.createElement("script"); Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value)); document.getElementById("tail-wrapper").appendChild(giscusScript); addEventListener("message", (event) => { if (event.source === window && event.data && event.data.direction === ModeToggle.ID) { /* global theme mode changed */ const mode = event.data.message; const theme = (mode === ModeToggle.DARK_MODE ? darkTheme : lightTheme); const message = { setConfig: { theme: theme } }; const giscus = document.querySelector(iframe).contentWindow; giscus.postMessage({ giscus: message }, origin); } }); }); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/patricksimok">Patrick S. Kanmeugne</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/c/">c++</a> <a class="post-tag" href="/tags/cmake/">cmake</a> <a class="post-tag" href="/tags/modeling/">modeling</a> <a class="post-tag" href="/tags/sfml/">sfml</a> <a class="post-tag" href="/tags/simulation/">simulation</a> <a class="post-tag" href="/tags/ipython/">ipython</a> <a class="post-tag" href="/tags/jupyter/">jupyter</a> <a class="post-tag" href="/tags/programming/">programming</a> <a class="post-tag" href="/tags/python/">python</a> <a class="post-tag" href="/tags/tdd/">tdd</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-KFTQ8M8D5N"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-KFTQ8M8D5N'); }); </script>
