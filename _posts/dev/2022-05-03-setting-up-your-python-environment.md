@@ -13,9 +13,9 @@ comments: true
 author: kanmeugne
 ---
 
-I have been *talking python* with differents kind of programmers -- from beginners to experienced programmers -- and there is this little issue that, surprisingly, does not have a straightforward workaround : **what do you need to install to start programming in python ?**
+I have been *talking python* with different kind of programmers -- from beginners to experienced programmers -- and there is this little issue that, surprisingly, does not have a straightforward answer : **what do you need to install to start programming in python ?**
 
-This post is dedicated to this litlle issue and I will try to explain what -- in my opinion -- is the easiest path from... nothing... to... a decent python programming environment. 
+This post is dedicated to this little issue and I will try to explain what -- in my opinion -- is the easiest path from nothing... to... a decent python programming environment. 
 
 ![Introduction au TDD Poster](/images/test11-unsplash.jpg){: width="500"}
 _Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)._
@@ -23,11 +23,11 @@ _Photo by [Todd Quackenbush](https://unsplash.com/@toddquackenbush?utm_source=un
 
 Our journey will have several *stages*  -- and you will have to do some installation homework in order to travel from one stage to another.
 
-**At the first stage**, you will have to make sure that you are working on the right _Operating System_ and with the right _terminal_ -- meaning, compatible with the commands of this post. *Spoiler Alert*! We will go for a _linux OS_ since it is very popular among programmers and easy to set up (don't shoot).
+**At the first stage**, you will have to make sure that you are working on the right _Operating System_ and with the right _terminal_ -- meaning, compatible with the instructions of this post. !!! *Spoiler Alert* !!! We will go for a _linux OS_ since it is very popular among programmers and easy to set up -- don't shoot.
 
 **At the second stage**, you should have installed `python 3` on your computer -- we will see that, once installed, you technically have a working python programming environment. We will show off two programming modes at this stage : an **interactive mode** -- where you can type commands and see the result in an *interactive prompt* -- a **script mode** -- where you can run full python scripts using the *python interpreter* from the *terminal*.
 
-**At the third stage**, we will enrich our programming environment with *high-level* python prompts -- like `ipython` and `jupyter` -- and advanced   Integrated Development Environments (IDEs) -- like `vscode`. High-level prompts give more context to programmers and are clearly a most-have if you want to improve your interactive programming experience. IDEs, as you might expect, improve the script programming experience with embedded tools for : script execution, coding style, code highlighting, testing, among others.
+**At the third stage**, we will enrich our programming environment with *high-level* python prompts -- like `ipython` and `jupyter` -- and advanced   Integrated Development Environments (IDEs) -- like `vscode`. High-level prompts give more context to programmers and are clearly a most-have if you want to improve your interactive programming experience. IDEs, as you might expect, improve the script programming experience with embedded tools for : *script execution*, *coding style*, *code highlighting*, *testing*, etc.
 
 Now, let's begin...
 
@@ -36,7 +36,7 @@ Now, let's begin...
 ![Linux OS](/images/gabriel-heinzer-4Mw7nkQDByk-unsplash.jpg){: width="500"}
 _Photo by [Gabriel Heinzer](https://unsplash.com/@6heinz3r?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/linux-terminal?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)_
 
-I will assume that you are working on a Linux machine. *The first reason* I am confident with this assumption is that Linux is a very popular OS for developers (beginner and experienced ones) and Microsoft (which is the most popular OS among normal human being) provides a descent linux subsystem which is an Ubuntu distribution by default. I am thus pretty sure that if the reader (this is you) is a windows user (which is highly possible), he will be able to set up a Linux machine, even on his windows computer, with little effort -- the interested reader could check this [article][1] to understand how to set it up.
+I will assume that you are working on a Linux machine. *The first reason* I am confident with this assumption is that Linux is a very popular OS for developers (beginners and experienced ones) and [Microsoft][1] (which is the most popular OS among normal human being) provides a descent linux subsystem which is an Ubuntu distribution by default. I am thus pretty sure that if the reader (this is you) is a windows user (which is highly possible), he/she will be able to set up a Linux machine, even on his/her windows computer, with little effort -- the interested reader could check this [article][1] to understand how to set it up.
 
 *The second reason* I am confident is that, if you are a Mac user (which is highly possible), most of the setup and commands I will show in this post will work on your OS with very little or no change at all. Anyway, for the sake of straightforwardness, I will assume a linux OS -- I will focus on MacOs in another post.
 
@@ -102,7 +102,7 @@ As you might have guessed, in the script mode, your commands should be saved in 
 
 For example, let's copy the previous section's commands in a file and try them in a script mode :
 
-- Open an empty text file called `test.py` with your favorite editor and type in the following (make to save the file in your current workspace 😋 :
+- Open an empty text file called `test.py` with your favorite editor and type in the following (make sure to save the file in your current workspace 😋) :
 
     ```python
     #!/usr/bin/python3
@@ -126,13 +126,13 @@ For example, let's copy the previous section's commands in a file and try them i
     the result of func(5) is:  6
     ```
 
-This is it for the script mode. All you need to do, basically, is to save your commands in a text file, and then, run it in a terminal with the appropriate python interpreter. In the next section will see how you can enrich your programming experience with advanced prompts and code editors 👌.
+This is it for the script mode!! All you need to do, basically, is to save your commands in a text file, and then, run it in a terminal with the appropriate python interpreter. In the next section will see how you can enrich your programming experience with advanced prompts and code editors 👌.
 
 ## 3. Enriching your programming environment
 
 **Advanced prompts**
 
-You can enrich your environment with advanced prompts. I am not going to review all the available prompts in this post, but there are two of them that I want to show off.
+You can enrich your environment with advanced prompts. I am not going to review all the available prompts in this post, but there are two of them that I would like to show off.
 
 ### IPython
 
@@ -142,13 +142,13 @@ You can enrich your environment with advanced prompts. I am not going to review 
 $ pip install ipython --user
 ```
 
-Compared to the default `python` prompt, [`ipython`][7] is a more colorful prompt and full of helpers that allows for example to : 
-- navigate in the filesystem without exiting the prompt
-- highlight your code (cf. animation)
-- auto-complete commands
-- see the available attributes and methods of an object
-- display the commands history (cf. animation below)
-- display the execution time of a command
+Compared to the default `python` prompt, [`ipython`][7] is a more colorful prompt and full of helpers that allow for example to : 
+- *navigate in the filesystem without exiting the prompt*
+- *highlight your code* (cf. animation)
+- *auto-complete commands*
+- *see the available attributes and methods of an object*
+- *display the commands history* (cf. animation below)
+- *display the execution time of a command*
 - etc.
 
 ![IPython](/images/ipython.gif){: width="100%"}
@@ -159,7 +159,7 @@ _Fig. IPython in action_
 `ipython` is used as the core for even more advanced prompts like the famous web-based prompt : *Jupyter Notebook*.
 [*The Jupyter Notebook is the original web application for creating and sharing computational documents. It offers a simple, streamlined, document-centric experience*][6].
 
-As for ipython, jupyter notebook is installable as python package :
+As for ipython, jupyter notebook is installable as a python package :
 
 ```bash
 $ pip install jupyter
@@ -178,13 +178,13 @@ _Fig. Jupyter notebook in action_
 
 ### Integrated Development Environments (IDEs)
 
-Python code editors are designed for developers who want their best development tools perfectly integrated. There are editors for every type of programmers -- the best ones being those you better flow with. Here is a non-exhaustive list of features one could be expecting for while looking for the perfect IDE :
-- a step-by-step debugger
-- code navigation tool
-- syntax highlighting
-- auto completion/importation
-- diff tools to see how the code changes
-- unit/integration test tools integration
+Python code editors are designed for developers who want their best development tools perfectly integrated. There are editors for every type of programmers -- the best ones being those you better flow with. Here is a non-exhaustive list of features one could be expecting for, while looking for the perfect IDE :
+- *a step-by-step debugger*
+- *code navigation tool*
+- *syntax highlighting*
+- *auto completion/importation*
+- *diff tools to see how the code changes between files*
+- *unit/integration test tools integration*
 - etc.
 
 Below, a list of IDEs I have already seen in action (⚠ my pick is completely innocent 😁) : 
