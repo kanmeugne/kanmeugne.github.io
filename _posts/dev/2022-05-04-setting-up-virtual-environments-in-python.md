@@ -52,7 +52,7 @@ Commencez par installer [`virtualenv`][3] et [`virtualenvwrapper`][4] qui sont d
 pip install virtualenv virtualenvwrapper
 ```
 
-[`virtualenvwrapper`][4] créé un programme -- `virtualenvwrapper.sh` -- qui doit s'exécuter à chaque début session du terminal pour définir les commandes permettant de gérer les environnements virtuels. Assurez-vous de bien le localiser et de l'exécuter dans votre `~/.bashrc` pour que les commandes soient créées automatiquement à chaque session.
+[`virtualenvwrapper`][4] crée un programme -- `virtualenvwrapper.sh` -- qui doit s'exécuter à chaque début session du terminal pour définir les commandes permettant de gérer les environnements virtuels. Assurez-vous de bien le localiser et de l'exécuter dans votre `~/.bashrc` pour que les commandes soient créées automatiquement à chaque session.
 
 Pensez aussi à déclarer le dossier dans lequel les environnements virtuels seront créés `WORKON_DIR`.
 
@@ -201,8 +201,7 @@ $ workon myenv
 
 (myenv) $ 
 ```
-
-1. je sauvegarde l'état de l'environnement dans un fichier texte, grâce notemment à la commande `pip freeze`.
+2. je sauvegarde l'état de l'environnement dans un fichier texte, grâce notemment à la commande `pip freeze`.
 
 > A la différence de `pip list`, la commande `pip freeze` affiche les dépendances dans un format directement exploitable pour l'installation. 
 {: .prompt-tip }
