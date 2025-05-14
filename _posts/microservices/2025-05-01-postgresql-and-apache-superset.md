@@ -16,6 +16,9 @@ author: kanmeugne
 
 Data is only as valuable as the insights you can extract from it --- and in today’s world, those insights need to be fast, interactive, and visually compelling. 
 
+![Two persons looking at a dahboard](/images/c3c67fbf-9ad2-4445-a261-bb84c7c17d5a.png){: width="90%" }
+_Kanmeugne's Blog : Apache Superset and Postgresql --- connecting your database to a powerful data visualisation engine_
+
 [Apache Superset][1], a powerful open-source data visualization platform, is rapidly becoming the go-to tool for analysts and developers who want to turn raw data into actionable dashboards without wrestling with complex setup processes. Thanks to [Docker][4] and [Docker Compose][3], spinning up a full-featured Superset environment takes just a few minutes, letting you focus on what matters: connecting to your data and building beautiful, [shareable dashboards][2].
 
 ![Apache loves Postgresql Poster](/images/apachesupersetpostgresql.jpg){: width="500" }
@@ -250,7 +253,7 @@ _add connexion to the database - select data source_
 ![img-description](/images/create-connexion-02.png){: width="50%"}
 _add connexion to the database - select database type_
 
-- **use the postgresql credentials** from the `.env` and click *Connexion*, then *Finish*. 
+- **use the postgresql credentials** from the `.env` and click **Connexion**, then **Finish** buttons. 
 
 ![img-description](/images/create-connexion-03.png){: width="50%"}
 _add connexion to the database - set credential and save the connexion_
