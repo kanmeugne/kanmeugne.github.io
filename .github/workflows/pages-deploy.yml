@@ -24,7 +24,7 @@ jobs:
           sudo add-apt-repository ppa:rmescandon/yq
           sudo apt update
           sudo snap install yq --channel=v3/stable
-          sudo apt install graphviz -y
+          sudo apt install graphviz plantuml -y
 
       - name: Checkout
         uses: actions/checkout@v2
