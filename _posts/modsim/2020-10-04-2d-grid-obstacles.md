@@ -21,7 +21,7 @@ _Photo by [Iewek Gnos](https://unsplash.com/@imkirk?utm_source=unsplash&amp;utm_
 In this post, I am upgrading an existing *object oriented architecture* that [I shared recently][1] as a starting point for those who wanted to have a 2D Grid in their simulation app. Back then, the provided features were limited to grid dimension setting and visualization. In this new version, I am adding a simple obstacle management by attaching state variables to grid cells --- a complete implementation in C++ is also provided for demonstration.
 
 
-{% plantuml style="width:80%" %}
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 1.
 class App
@@ -81,7 +81,7 @@ Comparing to the [previous version][1], I have updated 3 existing objects --- *A
 
 The *App* object is augmented with *App::addObstacle* and *App::removeObstacle* both responsible of *adding* and *removing* obstacles in the 2D Grid respectively (see Fig. 2). As I teased in the introdution, state variables are associated to grid cells in order to store occupancy information --- this is how the model handle obstacles : if a cell occupied, it is considered as an obstacle.
 
-{% plantuml style="width:80%" %}
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 2.
 class App 
@@ -181,7 +181,7 @@ The *IGrid* interface is augmented with 3 obstacle-related methods --- *IGrid::i
 *IGrid* defines one more method called *IGrid::iApplyOnCells* which takes a functor on cells --- *env::ICellFunctor* --- as the only parameter and applies it on every cell of the grid. For the record, this method is called in *ObstacleViewer::drawObstacles* method (see next section), in charge of displaying the obstacles of the grid. **Fig. 3** gives extensive details about the *IGrid* new look and its relations with other classes definitions.
 
 
-{% plantuml style="width:80%" %}
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 3.
 interface IGrid <<env>>

@@ -29,7 +29,7 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
-{% plantuml style="width:80%" %}
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 1.
 class App
@@ -94,7 +94,7 @@ sfml2dgrid
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
 
-{% plantuml style="width:80%" %}
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 2.
 class App {
@@ -230,7 +230,7 @@ A special method to apply evaporation is also defined in *IGrid* --- *IGrid::iUp
 
 **IGrid.h**
 
-```c++
+{% highlight c++ %}
 #ifndef IGRID_H
 #define IGRID_H
 
@@ -319,7 +319,7 @@ namespace env
     };
 } // namespace env
 #endif // !IGRID_H
-```
+{% endhighlight %}
 
 Basically, *IGrid::iUpdatePheromon* will update the amount of pheromons for each cell --- *CELL::tau* --- by running the following formula:
 
