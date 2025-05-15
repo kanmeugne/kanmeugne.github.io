@@ -52,7 +52,7 @@ build() {
   fi
 
   # build
-  if [[ -z "${GEMS_PATH}" ]]; then
+  if [[ -v GEMS_PATH ]]; then
     bundle install --path=${GEMS_PATH}
   fi
   JEKYLL_ENV=production bundle exec jekyll b -d "$SITE_DIR$_baseurl" --config "$_config"

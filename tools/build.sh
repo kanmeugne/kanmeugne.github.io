@@ -43,7 +43,7 @@ _install_tools() {
 _init() {
   cd "$WORK_DIR"
   echo "$ cd $(pwd)"
-  if [[ -z "${GEMS_PATH}" ]]; then
+  if [[ -v GEMS_PATH ]]; then
     bundle install --path=${GEMS_PATH}
   fi
 
@@ -68,10 +68,9 @@ _init() {
 _build() {
   cd "$CONTAINER"
   echo "$ cd $(pwd)"
-  if [[ -z "${GEMS_PATH}" ]]; then
+  if [[ -v GEMS_PATH ]]; then
     bundle install --path=${GEMS_PATH}
   fi
-  bundle install --local
   bash "_scripts/sh/create_pages.sh"
   bash "_scripts/sh/dump_lastmod.sh"
 
