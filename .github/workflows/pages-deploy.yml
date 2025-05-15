@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: 3.1.7
 
       - name: Install tools
         run: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Bundle Caching
         id: bundle-cache
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ env.GEMS_PATH }}
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
