@@ -43,6 +43,7 @@ _install_tools() {
 _init() {
   cd "$WORK_DIR"
   echo "$ cd $(pwd)"
+  bundle install --local
 
   if [[ -f Gemfile.lock ]]; then
     rm -f Gemfile.lock
@@ -53,7 +54,6 @@ _init() {
   fi
 
   if [[ -d $dest ]]; then
-    bundle install
     bundle exec jekyll clean
   fi
 
@@ -66,7 +66,7 @@ _init() {
 _build() {
   cd "$CONTAINER"
   echo "$ cd $(pwd)"
-
+  bundle install --local
   bash "_scripts/sh/create_pages.sh"
   bash "_scripts/sh/dump_lastmod.sh"
 
