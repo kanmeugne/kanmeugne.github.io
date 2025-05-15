@@ -64,6 +64,7 @@ jobs:
 
       - name: Build Site
         run: |
+          gem install jekyll
           bash tools/build.sh
 
           if [[ -n $SPEC_TEST ]]; then

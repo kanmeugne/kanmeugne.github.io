@@ -14,7 +14,7 @@ CONTAINER="${WORK_DIR}/.container"
 
 dest="${WORK_DIR}/_site"
 
-cmd="JEKYLL_ENV=production bundle exec ${GEMS_PATH}/jekyll b"
+cmd="JEKYLL_ENV=production bundle exec jekyll b"
 
 docker=false
 
@@ -52,7 +52,7 @@ _init() {
   fi
 
   if [[ -d $dest ]]; then
-    bundle exec ${GEMS_PATH}/jekyll clean
+    bundle exec jekyll clean
   fi
 
   local _temp="$(mktemp -d)"
