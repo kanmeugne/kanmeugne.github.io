@@ -65,7 +65,6 @@ jobs:
 
       - name: Build Site
         run: |
-          gem install jekyll-paginate
           bash tools/build.sh
 
           if [[ -n $SPEC_TEST ]]; then

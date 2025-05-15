@@ -42,6 +42,7 @@ _install_tools() {
 
 _init() {
   cd "$WORK_DIR"
+  echo "$ cd $(pwd)"
 
   if [[ -f Gemfile.lock ]]; then
     rm -f Gemfile.lock
@@ -52,6 +53,7 @@ _init() {
   fi
 
   if [[ -d $dest ]]; then
+    bundle install
     bundle exec jekyll clean
   fi
 
