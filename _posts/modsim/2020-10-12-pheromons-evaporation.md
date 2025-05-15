@@ -29,7 +29,7 @@ The proposed improvements of the previous [object-oriented architecture][1] will
 2. upgrade *IGrid*, and consequently *Grid*,  to declare and implement pheromon related methods
 3. define a new method --- *App::evaporate* --- responsible of the evaporation process.
 
-```plantuml
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 1.
 class App
@@ -43,7 +43,8 @@ viewers ..> geometry
 
 hide empty members
 @enduml
-```
+{% endplantuml %}
+
 > Fig. 1. Architecture of our 2D Grid App
 
 
@@ -93,7 +94,7 @@ sfml2dgrid
 
 The *App* object is augmented with *App::addPheromon* and *App::evaporate* methods both responsible of *adding* a little amount of pheromon in a selected cell, and *evaporating* pheromons over time --- see Fig. 2. 
 
-```plantuml
+{% plantuml style="width:200" %}
 @startuml
 header Fig. 2.
 class App {
@@ -148,7 +149,7 @@ Grid *---> CELL
 App o--> IGrid
 hide empty members
 @enduml
-```
+{% endplantuml %}
 > Fig. 2. `App` and `IGrid` improvements
 
 *App::evaporate* will take a *time interval* as parameter in order to schedule the *evaporation process* --- I use [SFML *clocks*][4] to implement this.
@@ -229,7 +230,7 @@ A special method to apply evaporation is also defined in *IGrid* --- *IGrid::iUp
 
 **IGrid.h**
 
-```c++
+{% highlight c++ %}
 #ifndef IGRID_H
 #define IGRID_H
 
@@ -318,7 +319,7 @@ namespace env
     };
 } // namespace env
 #endif // !IGRID_H
-```
+{% endhighlight %}
 
 Basically, *IGrid::iUpdatePheromon* will update the amount of pheromons for each cell --- *CELL::tau* --- by running the following formula:
 
@@ -344,7 +345,7 @@ The interested reader can refer to the [source code][5] to check/set the value f
 
 To visualize *pheromons* and especially the *evaporation process*, I added a *PheromonViewer* that will be called in the *App::display* method. *PheromonViewer::iDraw*  applies an *ICellFunctor* on every cell of the grid --- if their corresponding amount of pheromon is greater than zero --- that draws a red mark on the screen according to their current state.
 
-```plantuml
+{% plantuml style="width:80%" %}
 @startuml
 header Fig. 3.
 interface ICellFunctor <<env>> {
@@ -370,7 +371,7 @@ ViewerMgr o--> AbstractViewer
 PheromonViewer ..> ICellFunctor : runs >
 hide empty members
 @enduml
-```
+{% endplantuml %}
 _Fig. 3.`ViewerMgr` is a meta viewer that agregates more than one viewer. It will be used to add a viewer for pheromon (`PheromonViewer`) next to the viewers forlines (`GridViewer`) and obstacles (`ObstacleViewer`) without changing the relationship between `App` and `AbstractViewer`_
 
 **PheromonViewer.h**
