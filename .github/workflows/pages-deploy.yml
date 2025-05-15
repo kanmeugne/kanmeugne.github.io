@@ -43,6 +43,7 @@ jobs:
       - name: Bundle config
         run: |
           bundle config path ${{ env.GEMS_PATH }}
+          gem install jekyll bundler
 
       - name: Bundle Install
         if: steps.bundle-cache.outputs.cache-hit != 'true'
@@ -64,7 +65,6 @@ jobs:
 
       - name: Build Site
         run: |
-          gem install jekyll
           bash tools/build.sh
 
           if [[ -n $SPEC_TEST ]]; then
