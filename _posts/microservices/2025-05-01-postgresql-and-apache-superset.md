@@ -26,9 +26,7 @@ _Kanmeugne's Blog : Apache Superset and Postgresql --- connecting your database 
 
 In this hands-on guide, you’ll see how convenient it is to connect [Superset][1] to a [PostgreSQL database][5] using [Docker Compose][3]. Once you’re comfortable with Docker basics, Superset’s streamlined workflow makes dashboard creation not just possible, but enjoyable-even for complex data sources.
 
-## Project files Walkthrough
-
-I will assume you have installed Docker and Docker-compose on your computer --- follow this [installation guide][7] if you haven't, and come back to this stage of the tutorial after. 
+I will assume you have installed Docker and Docker-compose on your computer --- follow this [installation guide][7] if you haven't, and come back to the tutorial after. 
 
 ## Build and run the application
 
@@ -344,7 +342,7 @@ _drag and drop charts into the dashboard_
 ![img-description](/images/dashboard-04.png){: width="100%"}
 _set the dashboard title and save_
 
-You should now see *Product Sales View* under the dashboard tab. Interested readers can check the [Apache Superset][1] website to see how you can add CSS template in order to build even more compeling visuals. 
+You should now see *Product Sales View* under the dashboard tab. Interested readers could check the [Apache Superset][1] website to see how to attach CSS template to get more compeling visuals. 
 
 ## Conclusion
 
