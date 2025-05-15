@@ -42,19 +42,18 @@ jobs:
 
       - name: Bundle config
         run: |
+          gem install jekyll bundler
           bundle config path ${{ env.GEMS_PATH }}
 
       - name: Bundle Install
         if: steps.bundle-cache.outputs.cache-hit != 'true'
         run: |
-          gem install jekyll
           bundle install
 
 
       - name: Bundle Install locally
         if: steps.bundle-cache.outputs.cache-hit == 'true'
         run: |
-          gem install --local jekyll 
           bundle install --local
 
       - name: Check baseurl
@@ -66,6 +65,7 @@ jobs:
 
       - name: Build Site
         run: |
+          bundle install
           bash tools/build.sh
 
           if [[ -n $SPEC_TEST ]]; then
