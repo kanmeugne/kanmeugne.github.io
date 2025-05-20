@@ -99,7 +99,7 @@ Now let's jump to the hands on tutorial. I will mostly focus on high level opera
   $ curl -L -o movieratings.csv https://files.grouplens.org/datasets/movielens/ml-100k/u.data
   $ docker cp movieratings.csv <namenode>:/tmp/ # on the docker host
   ```
-  The [dataset](https://grouplens.org/datasets/movielens/100k/ "MovieLens data sets were collected by the GroupLens Research Project at the University of Minnesota.") comes from [GroupLens](https://grouplens.org/about/what-is-grouplens/), a research lab in the Department of Computer Science and Engineering at the University of Minnesota, Twin Cities specializing in recommender systems, online communities, mobile and ubiquitous technologies, digital libraries, and local geographic information systems.
+  > The [dataset](https://grouplens.org/datasets/movielens/100k/ "MovieLens data sets were collected by the GroupLens Research Project at the University of Minnesota.") comes from [GroupLens](https://grouplens.org/about/what-is-grouplens/), a research lab in the Department of Computer Science and Engineering at the University of Minnesota, Twin Cities specializing in recommender systems, online communities, mobile and ubiquitous technologies, digital libraries, and local geographic information systems.
 
 - **Load the CSV into an HDFS folder within the container:**  
   ```bash
