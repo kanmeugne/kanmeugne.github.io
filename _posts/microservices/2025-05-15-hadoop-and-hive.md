@@ -31,7 +31,9 @@ To learn more about hadoop platform, the interested reader could have a look at 
 
 Now let's jump to the hands on tutorial. I will mostly focus on high level operations -- data i/o and analysis -- for the interested users could easily find more specific tutorials on low-level operations. Here, we will rapidly set up a custom cluster using docker compose, add some data in the corresponding **HDFS** filesystem, and process the data using [**Hive**][2].
 
+### Set the self-hosted cluster
 
+The full code for this tutorial is available [from github][3], you just have to pull and run :
 
 - **Clone and deploy the Hadoop Docker setup:**  
   ```bash
@@ -94,6 +96,10 @@ Now let's jump to the hands on tutorial. I will mostly focus on high level opera
     ...
   ```
 
+### Add data in the cluster 
+
+Let's add some data in the distributed filesystem:
+
 - **Copy your CSV file into the namenode container:**  
   ```bash
   $ curl -L -o movieratings.csv https://files.grouplens.org/datasets/movielens/ml-100k/u.data
@@ -106,6 +112,11 @@ Now let's jump to the hands on tutorial. I will mostly focus on high level opera
   $ docker exec <namenode> hdfs dfs -mkdir -p /input
   $ docker exec <namenode> hdfs dfs -put /tmp/movieratings.csv /input/ # in the docker
   ```
+
+### Explore your data with Hive
+
+Using [Hive][2] you can explore data with SQL-like queries :
+
 - **Access the Hive service container**  
   ```bash
   $ docker exec -it <hive-server> bash # `<hive-server>` is the name of your hive server
@@ -196,8 +207,6 @@ Now let's jump to the hands on tutorial. I will mostly focus on high level opera
 
 Feel free to pull this repo and to send me your comments/remarks.
 
-
 [1]: https://www.oreilly.com/library/view/hadoop-the-definitive/9781491901687/ "Hadoop: The Definitive Guide, 4th Edition, O'Reilly Media, Inc."
-
 [2]: https://hive.apache.org/ "The Apache Hive ™ is a distributed, fault-tolerant data warehouse system that enables analytics at a massive scale and facilitates reading, writing, and managing petabytes of data residing in distributed storage using SQL."
-
+[3]: https://github.com/kanmeugne/modern-data-architectures.git "Kanmeugne's Blog (github) : Tutorials on modern data architectures"
