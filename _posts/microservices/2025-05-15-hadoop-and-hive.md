@@ -15,7 +15,7 @@ comments: true
 author: kanmeugne
 ---
 
-Hadoop is an affordable, reliable and scalable platform for big data storage storage and analysis -- it runs on commodity hardware and it is open source. Technically speaking, the Hadoop platform is the answer to the unevitable question we face one day or another as we live in a data age -- which is : _how do we process tons of data efficiently ?_. It is not just about storage, but also, and even more, about implementing data processing models that can provide insights to decision makers in a competitive world -- where everything has to be fast and resilient.
+Hadoop is an affordable, reliable and scalable platform for big data storage and analysis -- it runs on commodity hardware and it is open source. Technically speaking, the Hadoop platform is the answer to the unevitable question we face one day or another as we live in a data age -- which is : _how do we process tons of data efficiently ?_. It is not just about storage, but also, and even more, about implementing data processing models that can provide insights to decision makers in a competitive world -- where everything has to be fast and resilient.
 
 ![alt text](/images/hive.png){: width="50%" }
 _Kanmeugne's Blog -- Hadoop : query data from a self-hosted hadoop cluster_
@@ -152,23 +152,17 @@ Using [Hive][2] you can explore data with SQL-like queries :
   ```
 - **Query the created table**
   ```bash
-  0: hive2://localhost:10000> select * from movieratings limit 10; # hit enter
+  0: hive2://localhost:10000> select * from movieratings limit 4; # hit enter
   ```
   ```verbatim
-  +----------------------+-----------------------+---------------------+-----------------------+
-  | movierating.user_id  | movierating.movie_id  | movierating.rating  | movierating.datation  |
-  +----------------------+-----------------------+---------------------+-----------------------+
-  | 196                  | 242                   | 3.0                 | 881250949             |
-  | 186                  | 302                   | 3.0                 | 891717742             |
-  | 22                   | 377                   | 1.0                 | 878887116             |
-  | 244                  | 51                    | 2.0                 | 880606923             |
-  | 166                  | 346                   | 1.0                 | 886397596             |
-  | 298                  | 474                   | 4.0                 | 884182806             |
-  | 115                  | 265                   | 2.0                 | 881171488             |
-  | 253                  | 465                   | 5.0                 | 891628467             |
-  | 305                  | 451                   | 3.0                 | 886324817             |
-  | 6                    | 86                    | 3.0                 | 883603013             |
-  +----------------------+-----------------------+---------------------+-----------------------+
+  +----------+-----------+---------+-----------+
+  | user_id  | movie_id  | rating  | datation  |
+  +----------+-----------+---------+-----------+
+  | 196      | 242       | 3.0     | 881250949 |
+  | 186      | 302       | 3.0     | 891717742 |
+  | 305      | 451       | 3.0     | 886324817 |
+  | 6        | 86        | 3.0     | 883603013 |
+  +----------+-----------+---------+-----------+
   ```
 - **Do some analytics using sql queries on the hive table**
   ```bash
