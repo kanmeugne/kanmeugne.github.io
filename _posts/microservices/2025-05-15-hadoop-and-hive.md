@@ -15,7 +15,7 @@ comments: true
 author: kanmeugne
 ---
 
-Hadoop is an affordable, reliable and scalable platform for big data storage and analysis -- it runs on commodity hardware and it is open source. Technically speaking, the Hadoop platform is the answer to the unevitable question we face one day or another as we live in a data age -- which is : _how do we process tons of data efficiently ?_. It is not just about storage, but also, and even more, about implementing data processing models that can provide insights to decision makers in a competitive world -- where everything has to be fast and resilient.
+Hadoop is an affordable, reliable and scalable platform for big data storage and analysis -- it runs on commodity hardware and it is open source. Technically speaking, the Hadoop platform is the answer to the unevitable question we face one day or another as we live in a data age -- which is : _how do we process tons of data efficiently ?_ It is not just about storage, but also, and even more, about implementing data processing models that can provide insights to decision makers in a competitive world -- where everything has to be fast and resilient.
 
 ![alt text](/images/hive.png){: width="50%" }
 _Kanmeugne's Blog -- Hadoop : query data from a self-hosted hadoop cluster_
