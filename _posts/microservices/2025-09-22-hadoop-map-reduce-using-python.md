@@ -99,14 +99,14 @@ $ docker cp reducer.py <namenode-container>:/tmp/
   current_movie = None
   ratings = []
   for line in sys.stdin:
-      movie_id, rating = line.strip().split('\t')
-      if current_movie and movie_id != current_movie:
-          print(current_movie+'\t'+str(round(sum(ratings)/len(ratings), 2)))
-          ratings = []
-      current_movie = movie_id
-      ratings.append(float(rating))
+    movie_id, rating = line.strip().split('\t')
+    if current_movie and movie_id != current_movie:
+        print(current_movie+'\t'+str(round(sum(ratings)/len(ratings), 2)))
+        ratings = []
+    current_movie = movie_id
+    ratings.append(float(rating))
   if current_movie:
-      print(current_movie+'\t'+str(round(sum(ratings)/len(ratings), 2)))
+    print(current_movie+'\t'+str(round(sum(ratings)/len(ratings), 2)))
   ```
   *Explanation:* For each movie, compute and output the average of its ratings.
 

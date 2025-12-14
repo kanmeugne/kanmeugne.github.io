@@ -136,7 +136,7 @@ Using [Hive][2] you can explore data with SQL-like queries :
   ```bash
   0: jdbc:hive2://localhost:10000>
   # This tells Hive to use the CSV at `/input` in HDFS as the data source.
-  CREATE EXTERNAL TABLE IF NOT EXISTS movieratins (
+  CREATE EXTERNAL TABLE IF NOT EXISTS movieratings (
     user_id STRING,
     movie_id STRING,
     rating FLOAT,
@@ -170,8 +170,8 @@ Using [Hive][2] you can explore data with SQL-like queries :
   0: jdbc:hive2://localhost:10000> 
   SELECT movie_id,
   AVG(rating) as rating
-  FROM movierating
-  GROU BY movie_id
+  FROM movieratings
+  GROUP BY movie_id
   ORDER BY LENGTH(movie_id), movie_id
   LIMIT 10;
   ```
