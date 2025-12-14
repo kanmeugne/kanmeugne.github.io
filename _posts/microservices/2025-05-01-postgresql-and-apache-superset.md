@@ -267,7 +267,7 @@ Datasets can be created either directly from sql table or from sql queries. In t
 - Use `(3) SCHEMA` field to pick the right schema. 
 
 ![img-description](/images/create-query-dataset-01.png){: width="50%"}
-_set credentials for the dataset_
+_create the query to be used as the dataset_
 
 - In the right panel, copy the following sql code to collect relevant data about orders, products and sellers
 ```sql
@@ -297,7 +297,7 @@ Let's create 3 charts that we are going to add to a dashboard later.
 - drag `customer_city` from the left panel to the *Dimensions* cell. You should see the following chart (see screenshot). Save it as *total sales per city*
 
 ![img-description](/images/chart-01-06.png){: width="100%"}
-_add connexion to the database - 3_
+_create a chart from the dataset_
 
 *$2^{nd}$ chart : number of different products per city*
 
@@ -305,7 +305,7 @@ _add connexion to the database - 3_
 - use `product_id` as the metric (confirm `COUNT_DISTINCT(product_id)` as the agregation operation), and `product_name` as the dimension. You should see this chart (save it as *number of different products per city*)
 
 ![img-description](/images/chart-01-07.png){: width="100%"}
-_add connexion to the database - 3_
+_create a second chart from the dataset_
 
 *$3^{rd}$ chart : top ten  sales*
 
@@ -314,7 +314,7 @@ _add connexion to the database - 3_
 - use the `ROW LIMIT` option to limit the number of items to `10`. You should see this chart (save it as *top ten sales*)
 
 ![img-description](/images/chart-01-08.png){: width="100%"}
-_add connexion to the database - 3_
+_create a third chart from the dataset_
 
 It is now possible to agregate charts into a dashboard to have an overview of your data
 
