@@ -43,7 +43,7 @@ jobs:
       - name: Bundle config
         run: |
           gem install jekyll bundler
-          bundle config path ${{ env.GEMS_PATH }}
+          bundle config set --local path ${{ env.GEMS_PATH }}
 
       - name: Bundle Install
         if: steps.bundle-cache.outputs.cache-hit != 'true'
