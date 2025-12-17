@@ -44,7 +44,7 @@ _init() {
   cd "$WORK_DIR"
   echo "$ cd $(pwd)"
   if [[ -v GEMS_PATH ]]; then
-    bundle install --path=${GEMS_PATH}
+    bundle config set --local path ${GEMS_PATH}
   fi
 
   if [[ -f Gemfile.lock ]]; then
