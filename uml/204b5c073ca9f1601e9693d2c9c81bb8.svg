@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="214px" preserveAspectRatio="none" style="width:261px;height:214px;" version="1.1" viewBox="0 0 261 214" width="261px" zoomAndPan="magnify"><defs><filter height="300%" id="ftl37o78poo99" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="29" x="220" y="9.2822">Fig. 2.</text><!--MD5=[335f4d9be48430461c68bf6d6fdba145]
+class App--><rect fill="#FEFECE" filter="url(#ftl37o78poo99)" height="86.4141" id="App" style="stroke: #A80036; stroke-width: 1.5;" width="179" x="44.5" y="19.6406"/><ellipse cx="117.75" cy="35.6406" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M120.7188,41.2813 Q120.1406,41.5781 119.5,41.7188 Q118.8594,41.875 118.1563,41.875 Q115.6563,41.875 114.3281,40.2344 Q113.0156,38.5781 113.0156,35.4531 Q113.0156,32.3281 114.3281,30.6719 Q115.6563,29.0156 118.1563,29.0156 Q118.8594,29.0156 119.5,29.1719 Q120.1563,29.3281 120.7188,29.625 L120.7188,32.3438 Q120.0938,31.7656 119.5,31.5 Q118.9063,31.2188 118.2813,31.2188 Q116.9375,31.2188 116.25,32.2969 Q115.5625,33.3594 115.5625,35.4531 Q115.5625,37.5469 116.25,38.625 Q116.9375,39.6875 118.2813,39.6875 Q118.9063,39.6875 119.5,39.4219 Q120.0938,39.1406 120.7188,38.5625 L120.7188,41.2813 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="24" x="138.25" y="39.7949">App</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="45.5" x2="222.5" y1="51.6406" y2="51.6406"/><rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="52.5" y="59.6406"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="153" x="64.5" y="65.8511">sf::RenderWindow _window</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="45.5" x2="222.5" y1="72.4453" y2="72.4453"/><ellipse cx="55.5" cy="83.4453" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="54" x="64.5" y="86.6558">void run()</text><ellipse cx="55.5" cy="96.25" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="75" x="64.5" y="99.4604">void display()</text><!--MD5=[9b631eb75cfa94d536624ca68efd4537]
+class AbstractViewer--><rect fill="#FEFECE" filter="url(#ftl37o78poo99)" height="37.9375" id="AbstractViewer" style="stroke: #A80036; stroke-width: 1.5;" width="126" x="6" y="165.6406"/><ellipse cx="21" cy="184.6094" fill="#A9DCDF" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M21.1094,179.9531 L19.9531,185.0313 L22.2813,185.0313 L21.1094,179.9531 Z M19.625,177.7188 L22.6094,177.7188 L25.9688,190.1094 L23.5156,190.1094 L22.75,187.0469 L19.4688,187.0469 L18.7188,190.1094 L16.2813,190.1094 L19.625,177.7188 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="60" x="52" y="181.7793">«viewers»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="94" x="35" y="195.748">AbstractViewer</text><!--MD5=[d7185908a6772df83b4264cc3b1e73e4]
+class IGrid--><rect fill="#FEFECE" filter="url(#ftl37o78poo99)" height="37.9375" id="IGrid" style="stroke: #A80036; stroke-width: 1.5;" width="64" x="167" y="165.6406"/><ellipse cx="182" cy="184.6094" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M177.9219,180.375 L177.9219,178.2188 L185.3125,178.2188 L185.3125,180.375 L182.8438,180.375 L182.8438,188.4531 L185.3125,188.4531 L185.3125,190.6094 L177.9219,190.6094 L177.9219,188.4531 L180.3906,188.4531 L180.3906,180.375 L177.9219,180.375 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="36" x="194" y="181.7793">«env»</text><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="29" x="197.5" y="195.748">IGrid</text><!--MD5=[264e1efd5905a6b0eec6422f4f027f95]
+reverse link App to AbstractViewer--><path d="M104.74,117.6606 C95.44,134.8206 85.79,152.6506 78.86,165.4406 " fill="none" id="App&lt;-AbstractViewer" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#FFFFFF" points="111.08,105.9506,104.703,109.3171,105.3578,116.4984,111.7348,113.1319,111.08,105.9506" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8c48ca0678a07abf55c7a7d174685988]
+link App to IGrid--><path d="M162.6422,116.4984 C162.6422,116.4984 176.96,142.9506 182.91,153.9306 " fill="none" id="App-IGrid" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="189.14,165.4406,188.3738,155.6216,186.76,161.0434,181.3382,159.4296,189.14,165.4406" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="186.76" x2="182.95" y1="161.0434" y2="154.0056"/><polygon fill="#FFFFFF" points="156.92,105.9506,156.2652,113.1319,162.6422,116.4984,163.297,109.3171,156.92,105.9506" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[8471e49fb90b54eec12e8cca0851eb2e]
+@startuml
+header Fig. 2.
+class App
+{
+	- sf::RenderWindow _window
+	+ void run()
+	+ void display()
+}
+abstract AbstractViewer <<viewers>>
+interface IGrid <<env>>
+
+App o- - AbstractViewer
+App o- -> IGrid
+hide empty members
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 18:22:07 CST 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 11.0.29+7
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
